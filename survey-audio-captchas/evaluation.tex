@@ -1,0 +1,79 @@
+\section{Experimental Evaluation}\mbox{} \
+\label{sec:evaluation}
+
+In this section, we evaluate our automated system against all the previously mentioned CAPTCHAs. We launch an attack on the demo or live pages of these services, grab the audio element and transcribe it with our automated solver and record the results.\newline
+
+\subsection{Parameters for our attack} \mbox{} \
+
+We tried testing our solvers on a minimum of 50 audio CAPTCHAs to get started and discover the best solver for each service. The first service which we went for was the No CAPTCHA ReCAPTCHA, which we found to be the hardest. We tuned our automated solver to work for an iteration of i<=100 and ran it against the same reCAPTCHA demo page using IBM Watson US solver.\newline
+
+While testing for i<=100, we hit an interesting roadblock. Our system was performing very well till the first seven iterations and after the seventh iteration, we observed that all our challenges failed. After close examination, we found that Google's reCAPTCHA system was blocking requests from us after the seventh try. It was returning an audio file with the message saying "We're sorry. Your network or computer might be sending us automated queries. To protect our users, we can't process your request right now." So our system which was trying to convert words to digits returned all zeroes, indicating that the challenge could not be solved.\newline
+
+We tried various things to get past this defense implemented by Google for Denial-Of-Service attack (DOS) attacks. The following is the list of avenues that we explored, but failed:\newline
+
+\begin{itemize}
+
+  \item \textbf{Incognito:} Opened the driver in incognito mode, so that the server did not associate the requests from our system to our user cookies.
+  \item \textbf{Cache:} Cleared the cache in the driver's browser to remove any temporary files that might have been stored from the last time we visited the URL.
+  \item \textbf{Session:} Set the \textit{ensureCleanSession} variable to true to remove all session information, even though we did not log in.
+  \item \textbf{Window size:} Changed the window size for each iteration, to fool the system into thinking that a human might be using the system.
+  \item \textbf{User Agent:} Gave a valid User Agent string, to make sure that an invalid entry does not make us look any suspicious.
+  \item \textbf{Tor:} Crawled the page using the selenium browser extension on Tor, to mask the IP address. But could not get to the iFrame containing the Audio challenge, because of a difference in the DOM structure in Firefox, which Selenium was not able to detect.
+\end{itemize}
+
+\begin{lstlisting}[caption={Setting up arguments for ChromeDriver in Python using Selenium }, label={lst:listing2}]
+
+   capabilities = DesiredCapabilities.CHROME
+   capabilities['ensureCleanSession'] = True
+   options = webdriver.ChromeOptions()
+   options.add_argument("-incognito")
+   options.add_argument("-disable-cache")
+   options.add_argument("'chrome.prefs': {'profile.managed_default_content_settings.images': 2}")
+   options.add_argument('--window-size=1903,719')
+   options.add_argument(
+      '--user-agent' + "Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36")
+   options.add_experimental_option("excludeSwitches", ["ignore-certificate-errors"])
+   options.add_argument('--clear-token-service')
+
+\end{lstlisting}
+We tried all the above settings individually and together, but all to no avail (Listing~\ref{lst:listing2}). After all these failed attempts, two different approaches worked for us and helped us get past the 7 CAPTCHAs/day/IP/cookie limit.
+
+\begin{itemize}
+	\item \textbf{Web Proxy services:} We looked for free web proxies on a website - www.proxylist.hidemyass.com. We filtered the list to select the fastest ones and with the highest anonymity level. A web proxy server acts as a gateway or tunnel, forwarding requests and responses unmodified. We included the IP address of the web proxy server in the driver settings, so that our IP would be masked.\newline  
+    
+With this minor modification, we could get more than 100 CAPTCHAs per day. But one limitation with this approach, as we found with our experiments, was that the response time depended on the availability of the proxy server to serve our requests and its location. Since the reCAPTCHA system only had a 2-minute time window and our Python scripts were programmed to wait for certain periods of time, late responses resulted in a \textit{TimeoutException}. This resulted in a very low accuracy rate.\newline
+
+We made two interesting observations from these experiments. One was that the location of the web proxy server and hence the Origin of the request, did not affect the accent of the audio challenges. We tried using web proxy servers from US, UK, Russia, Canada, Mexico, South Africa, Korea, China, Hong Kong and India. The reCAPTCHA system returned similar audio files for requests from all these web proxy services.\newline
+
+Another observation that was made was the requests from US proxy services were trusted more than the ones in other countries. Also, the requests got served faster when compared to requests from other countries.\newline
+
+	\item \textbf{Unique User Agents:} We wanted a better solution so that the accuracy of our solver could be determined properly. We generated a completely unique and gibberish User Agent string to fool the defense system that the requests were not coming from the same user (Listing~\ref{lst:listing3}). Surprisingly, the reCAPTCHA DOS defense system does not check any of the other fields - IP, cookies - User/HTTP, legitimate user behavior when it encounters a User Agent string that it was not expecting. This is a bug in the implementation of the defense system in ReCAPTCHA that we discovered. \newline
+    
+    \begin{lstlisting}[caption={Generating unique User Agents with current time }, label={lst:listing3}]
+
+  timestr = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+  options.add_argument("user-agent="+timestr+"lol")
+
+\end{lstlisting}
+
+We leveraged this bug to attain and solve more than 1000 CAPTCHA challenges per day, even from the same IP address. 
+
+\end{itemize}
+
+Once we exploited this vulnerability in ReCAPTCHA (which as now been fixed), we used the same parameters for all the other services had did not encounter any rate limiting problems (Except for Apple, which we described earlier).
+
+
+\begin{lstlisting}[caption={Returned response from Google Speech Api for an acoustic captcha sample }, label={lst:listing4}]
+
+{"results": [{"alternatives": [{"transcript": "eight", "confidence": 0.982679}]}, {"alternatives": [{"transcript": " three", "confidence": 0.7421026}]}, {"alternatives": [{"transcript": " eight", "confidence": 0.59319055}]}
+, {"alternatives": [{"transcript": " nine", "confidence": 0.6004673}]}, {"alternatives": [{"transcript": " five", "confidence": 0.982679}]}]}
+
+\end{lstlisting}
+
+
+\subsection{Improving Accuracy}\mbox{}\
+\label{accuracy}
+
+To further improve our accuracy rates, we looked at a feature that was available in both IBM Watson's Speech to Text and Google Speech API. The converters could be configured to look for a specific set of words or a dictionary, which improved our accuracy. For the ReCAPTCHA system, we configured the converters to look for the 10 digits, including zero. For Captchas.net, we added a dictionary of all the 26 NATO phonetic alphabets.\newline
+
+Also, we tried to customize our solvers specifically for each of these CAPTCHA services. We looked for words that sounded similar to digits in case of the reCAPTCHA system and the NATO alphabets in case of Securimage. We manually listened to over 50 challenges from each service to build a corpus of the common words that were misidentified. This greatly increased the accuracy of our solvers. Noise reduction would be a good way to further increase the accuracy.\newline

@@ -1,0 +1,22 @@
+\section{Breaking Audio CAPTCHAs - Our Approach}
+\label{sec:ourapproach}
+
+We did a large-scale study of the security of audio challenges from eight different CAPTCHA providers and websites including Apple, BotDetect, CaptchasNet, Live, Google reCAPTCHA v1, Google reCAPTCHA v2, SecureImage and Telerik. We built web crawlers to scrape the audio challenges from these services, solve them using solvers based on speech recognition services and input back the results in the CAPTCHA textbox. We evaluated our system initially with 50 CAPTCHAs each to identify the best solver and then tested the best solver for each CAPTCHA system with 1000 challenges.\newline
+
+The results of our experiments are given in Fig 2. We found that all of the 8 CAPTCHA systems that we analyzed could be broken with our solvers, despite background noises and the rate limiting that some providers implement. This includes the most popular CAPTCHA system in use - Google's reCAPTCHA (98.3\%) and BotDetect (24.6\%), which is popularly used in government websites. \newline
+
+In this paper, we propose to improve the accuracy of our automated solvers by using audio processing techniques. We identify a sequence of actions like Amplification, Noise Reduction, Low-pass audio filtering, etc that work best for each CAPTCHA system in reducing background noise and making the audio more discernible. For this, we use a free open-source cross-platform audio editor called Audacity. We build Action Chains that describe the set of actions specific to each CAPTCHA system and pass our audio file obtained while solving the CAPTCHAs, real-time, to Audacity. Audacity then cleans up the audio using predefined Action Chains and gives the denoised file back to our system. We observe that the accuracy of our solvers improves significantly for certain CAPTCHA systems like Telerik, Apple and Captchas.net.\newline
+
+Finally, we build an offline neural network based classifier with Intel's Deep Learning system for speech called the \textbf{deepspeech}. We initially build this for SecureImage, identified to have the strongest audio challenges among the eight, based on the very low rate of accuracy from our experiments (3\%). We plan to extend this idea and create classification models for each of the other CAPTCHA systems as a possible future work.\newline
+
+Since SecureImage is an open-source CAPTCHA system, we create a training dataset of 1000 audio sample files mixed with their background noises and train our deepspeech classifier with the truth values. We train our system to create a deep learning model and evaluate the model with a test dataset.\newline
+
+We consider the following to be our main technical contributions in this paper:
+
+\begin{itemize}
+\item We present a novel, low-cost approach to breaking audio CAPTCHAs and improving their accuracy by audio processing techniques.
+\item We evaluate our improvised system against all eight services by breaking 1000 CAPTCHAs each using the best solver identified after denoising and observe improvement in accuracy. 
+\item Our biggest contribution was in proving that audio CAPTCHAs can be solved by open-source services and audio tools that are readily available in the market, with very less effort. This is because speech recognition services developed by big companies like Google, IBM Watson, etc, themselves do a lot of audio processing, noise filtering and machine learning in the background.
+\item We are also in the process of creating a neural-network based classifier for speech recognition that can work as an offline audio CAPTCHA solver.
+\end{itemize}
+

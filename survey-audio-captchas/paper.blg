@@ -1,0 +1,62 @@
+This is BibTeX, Version 0.99d (TeX Live 2016/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: paper.aux
+The style file: abbrv.bst
+Database file #1: paper.bib
+Warning--to sort, need author or key in media
+Warning--to sort, need author or key in radcaptcha
+Warning--empty author in media
+Warning--empty booktitle in media
+Warning--empty year in media
+Warning--empty author in radcaptcha
+Warning--empty booktitle in radcaptcha
+Warning--empty year in radcaptcha
+Warning--can't use both volume and number fields in bigham2008inspiring
+Warning--empty booktitle in ebay:machine-noise
+Warning--empty year in ebay:machine-noise
+Warning--empty booktitle in recurrent:machine-noise
+Warning--empty year in recurrent:machine-noise
+Warning--empty booktitle in distil
+Warning--empty year in distil
+You've used 19 entries,
+            2118 wiz_defined-function locations,
+            593 strings with 7172 characters,
+and the built_in function-call counts, 7534 in all, are:
+= -- 739
+> -- 321
+< -- 14
++ -- 130
+- -- 108
+* -- 485
+:= -- 1123
+add.period$ -- 61
+call.type$ -- 19
+change.case$ -- 111
+chr.to.int$ -- 0
+cite$ -- 34
+duplicate$ -- 348
+empty$ -- 644
+format.name$ -- 108
+if$ -- 1689
+int.to.chr$ -- 0
+int.to.str$ -- 19
+missing$ -- 19
+newline$ -- 91
+num.names$ -- 34
+pop$ -- 185
+preamble$ -- 1
+purify$ -- 92
+quote$ -- 0
+skip$ -- 238
+stack$ -- 0
+substring$ -- 404
+swap$ -- 125
+text.length$ -- 14
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 76
+warning$ -- 15
+while$ -- 67
+width$ -- 21
+write$ -- 199
+(There were 15 warnings)

@@ -1,0 +1,86 @@
+\documentclass[conference]{sig-alternate-05-2015}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{epsfig}
+\usepackage{color}
+\usepackage{pseudocode}
+\usepackage{listings}
+\usepackage{etoolbox}
+\usepackage[table]{xcolor}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage[boxruled]{algorithm2e}
+\usepackage{ragged2e}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{xspace} %for leaving a space after a string macro, see http below
+\usepackage{cite}
+\usepackage{amssymb}
+\usepackage[bookmarks=false]{hyperref}
+\usepackage[font=bf]{caption}
+\usepackage{fp}
+\usepackage{subcaption}
+\usepackage{siunitx}
+\usepackage{listings}
+\lstset{
+    frame=single,
+    breaklines=true,
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}
+}
+
+% caption setup
+\captionsetup[table]{position=below}
+\captionsetup[figure]{position=below}
+
+% thousand comma separator
+\sisetup{group-separator = {,}}
+
+\newcommand{\note}[1]{\textcolor{blue}{[#1]}}
+\newcommand{\jason}[1]{\textcolor{red}{[#1]}}
+
+
+\makeatletter
+\def\@copyrightspace{\relax}
+\makeatother
+
+\begin{document}
+\title{An Improved Approach to breaking Audio CAPTCHAs using Noise Removal and Deep Learning}
+\numberofauthors{2}
+\author{
+\alignauthor Varshini Sampath\\
+\affaddr{University of Illinois at Chicago}\\
+\affaddr{Chicago, IL, USA}\\
+\affaddr{vsampa3@uic.edu}
+%\affaddr{Computer Science Dept.}\\
+%
+\alignauthor Iasonas Polakis\\
+\affaddr{University of Illinois at Chicago}\\
+\affaddr{Chicago, IL, USA}\\
+\affaddr{polakis@uic.edu}
+}
+
+\maketitle
+
+\input{abstract}
+\input{introduction}
+\input{previouswork}
+\input{ourapproach}
+\input{noisereduction}
+\input{design}
+\input{analysis}
+\input{evaluation}
+\input{discussion}
+\input{deeplearning}
+\input{futurework}
+\input{conclusions}
+\input{references}
+
+\end{document}
+
+

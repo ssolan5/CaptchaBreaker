@@ -1,0 +1,8 @@
+\section{Deep Learning}
+\label{sec:deeplearning}
+
+Deep Learning is relatively new area in Machine learning that uses many layers of processing units to extract feature information and create a classification model. It is intended to make a system more artificially intelligent by training on huge datasets. We looked at this class of machine learning for creating an offline solver for Audio CAPTCHAs. Since we had very low rates of accuracy for Securimage and Live, we looked to create separate classification models for them.\newline
+
+To do this, we used Intel NervanaSystem's open-source deep learning library for speech recognition called \textbf{deepspeech}. The source code for this library can be accessed from their GitHub URL (https://github.com/NervanaSystems\newline deepspeech). Their implementation is based on Baidu SVAIL's Deep Speech 2 in neon [].\newline
+
+We installed deepspeech on a machine with 16GB RAM and an NVIDIA Titan X GPU card. We are in the process of training the system with a dataset of 10,000 CAPTCHA files from Securimage along with their truth values. Once trained, the model can be used to predict transcriptions for audio CAPTCHAs obtained at real-time. 

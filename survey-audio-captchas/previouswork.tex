@@ -1,0 +1,16 @@
+
+
+\section{Previous Work}\mbox{} \
+\label{sec:previous}
+
+Although not as extensively studied as the text versions of CAPTCHAs, there have been several studies in the past which have tested and evaluated of audio challenges. The challenge in breaking an audio CAPTCHA lies in automatically recognizing the sequence of spoken words in the audio while ignoring the noise that is added to the file. There is no universally agreed upon value for the success rate to consider a system broken, although the fact that the trade-off between security and usability needs to be taken into account as well. The study by Chellapilla et al. \cite{chellapilla2005designing} suggests that the success rate of a bot must be less than 0.01\%, whereas Bursztein et al. \cite{bursztein2011failure} suggest that the success rate be 1\%, and 5\% by Tam et al. \cite{meutzner2016toward}. \newline
+
+The above numbers depend heavily upon many other factors than just being able to successfully transcribing the audio. This implies that the threat model should not take into account just the transcription, but also factors like rate-limiting and the threat also increases with increase in the number of resources that is at the attacker's disposal. \newline
+
+Recent years have seen an increase in the number of studies in breaking audio challenges. It has been shown that audio challenges very prone to attack with ever increasing advancements in the domain of machine learning. As audio challenges consist of a very limited corpus in the form of digits and alphabets and a narrow form of accents, the defense of audio challenges is very less. Existing studies show that most audio CAPTCHAs can be broken by means of machine learning techniques at relatively low costs \cite{bursztein2011failure,meutzner2016toward,bursztein2009decaptcha}. Hence, additional defenses in the form of IP address geo location, mouse movement, response times, user agents, cookies, etc. are deployed. \newline
+
+Sivakorn et al. \cite{sivakorn2016robot} demonstrate an extremely effective system that solves the state-of-the-art ReCAPTCHA's image based CAPTCHAs with an accuracy of over 70\% and Facebook's image CAPTCHA with an accuracy of over 83\%. This led us to test the accuracy of audio based CAPTCHA systems from different services. We found that the existing mechanisms in place include rate limiting the number of challenges that are served per IP for every device, including background noise to prevent speech recognizers from recognizing the audio CAPTCHAs automatically. We demonstrate that these limits can be bypassed and that the speech recognizers can be tuned to recognize digits, alphabets and words even with background noise.\newline
+
+The success rates for breaking audio CAPTCHAs reported in recent studies are very high. Bursztein et al. \cite{bursztein2011failure} broke the audio challenges of Yahoo, Microsoft, and eBay with a success rate of 45\%, 49\%, and 83\% respectively. Sano et al. \cite{sano2013solving} and Meutzner et al. \cite{meutzner2014using} broke Google's reCAPTCHA with 52\% and 63\% accuracy respectively. There have also been studies that have used state-of-the-art automatic speech recognition techniques, based on hidden Markov models (HMMs).
+
+

@@ -1,0 +1,15 @@
+\section{Introduction}\mbox{}\
+\label{sec:intro}
+
+In this work, we consider multiple leading CAPTCHA providers which also provide an optional audio challenge along with the traditional text or image challenge. To solve these challenges, we consider multiple online speech recognition APIs (which we will henceforth refer to as "solvers"). \newline
+
+A CAPTCHA is a type of challenge-response test used in computing to determine whether or not the user is human. CAPTCHAs based on reading text or other visual-perception tasks prevent blind or visually impaired users from accessing the protected resource. These accessibility limitations of CAPTCHAs made the CAPTCHA providers feel that they must cater to people who cannot perform such tasks. The solution that was devised to tackle this problem was to provide an alternative, special type of challenge in the form of audio which speaks out digits, characters or other types of text (like NATO alphabets or a few common words from English vocabulary) with some background noise. This can be heard by users and solved to pass the Turing test. Despite the fact that Audio CAPTCHAs have been demonstrated insecure, it is essential to provide these services for the visually challenged. \newline
+
+We provide results for our experiments by solving 50 challenges with each CAPTCHA provider-solver pair to determine the best solver. We then solve 1000 challenges for each of the best provider-solver pair. Prior work on breaking CAPTCHAs states that if the accuracy of the automated CAPTCHA solver is above 0.7\%, the particular CAPTCHA service is considered to be broken. We show that we were able to break the state-of-the-art CAPTCHA service by Google, called the 'No CAPTCHA ReCAPTCHA' with 98.4\% accuracy. We also present results for seven other CAPTCHA services which too we now consider to be broken.\newline
+
+We consider the following to be our main technical contributions:
+\begin{itemize}
+\item We present the first large scale study of almost all the CAPTCHA systems that offer an alternative audio challenge along with their text-based challenge.
+\item We build and evaluate a novel, low-cost system to solve the audio challenges of eight different CAPTCHA services using five different solvers. As two of the Speech Recognition services offer transcriptions in 2 different accents, we consider them to be separate solvers. 
+\item Using different accents and acoustic models offered by the speech recognition services, we determine the best method to recognize the digits/characters/words in the challenge to achieve higher efficiency.
+\end{itemize}

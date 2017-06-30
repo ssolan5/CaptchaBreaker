@@ -1,0 +1,110 @@
+\begin{thebibliography}{10}
+
+\bibitem{media}
+The chromium projects: Media internals.
+
+\bibitem{radcaptcha}
+Radcaptcha - telerik asp.net captcha.
+
+\bibitem{bigham2008inspiring}
+J.~P. Bigham, M.~B. Aller, J.~T. Brudvik, J.~O. Leung, L.~A. Yazzolino, and
+  R.~E. Ladner.
+\newblock Inspiring blind high school students to pursue computer science with
+  instant messaging chatbots.
+\newblock In {\em ACM SIGCSE Bulletin}, volume~40, pages 449--453. ACM, 2008.
+
+\bibitem{bigham2009evaluating}
+J.~P. Bigham and A.~C. Cavender.
+\newblock Evaluating existing audio captchas and an interface optimized for
+  non-visual use.
+\newblock In {\em Proceedings of the SIGCHI Conference on Human Factors in
+  Computing Systems}, pages 1829--1838. ACM, 2009.
+
+\bibitem{bursztein2011failure}
+E.~Bursztein, R.~Beauxis, H.~Paskov, D.~Perito, C.~Fabry, and J.~Mitchell.
+\newblock The failure of noise-based non-continuous audio captchas.
+\newblock In {\em Security and Privacy (SP), 2011 IEEE Symposium on}, pages
+  19--31. IEEE, 2011.
+
+\bibitem{ebay:machine-noise}
+E.~Bursztein and S.~Bethard.
+\newblock Decaptcha: Breaking 75\% of ebay audio captchas.
+
+\bibitem{bursztein2009decaptcha}
+E.~Bursztein and S.~Bethard.
+\newblock Decaptcha: breaking 75\% of ebay audio captchas.
+\newblock In {\em Proceedings of the 3rd USENIX conference on Offensive
+  technologies}, page~8. USENIX Association, 2009.
+
+\bibitem{chan2003using}
+T.-Y. Chan.
+\newblock Using a test-to-speech synthesizer to generate a reverse turing test.
+\newblock In {\em Tools with Artificial Intelligence, 2003. Proceedings. 15th
+  IEEE International Conference on}, pages 226--232. IEEE, 2003.
+
+\bibitem{chellapilla2005designing}
+K.~Chellapilla, K.~Larson, P.~Simard, and M.~Czerwinski.
+\newblock Designing human friendly human interaction proofs (hips).
+\newblock In {\em Proceedings of the SIGCHI conference on Human factors in
+  computing systems}, pages 711--720. ACM, 2005.
+
+\bibitem{kochanski2002reverse}
+G.~Kochanski, D.~P. Lopresti, and C.~Shih.
+\newblock A reverse turing test using speech.
+\newblock In {\em INTERSPEECH}, 2002.
+
+\bibitem{recurrent:machine-noise}
+A.~L.~Maas, V.~L. Quoc, and T.~M.~O'Neil.
+\newblock Recurrent neural networks for noise reduction in robust asr.
+
+\bibitem{meutzner2016toward}
+H.~Meutzner, S.~Gupta, V.-H. Nguyen, T.~Holz, and D.~Kolossa.
+\newblock Toward improved audio captchas based on auditory perception and
+  language understanding.
+\newblock {\em ACM Transactions on Privacy and Security (TOPS)}, 19(4):10,
+  2016.
+
+\bibitem{meutzner2014using}
+H.~Meutzner, V.-H. Nguyen, T.~Holz, and D.~Kolossa.
+\newblock Using automatic speech recognition for attacking acoustic captchas:
+  The trade-off between usability and security.
+\newblock In {\em Proceedings of the 30th Annual Computer Security Applications
+  Conference}, pages 276--285. ACM, 2014.
+
+\bibitem{distil}
+D.~Networks.
+\newblock Distil networks study reveals captchas have negative impact on web
+  traffic and leads.
+
+\bibitem{sano2013solving}
+S.~Sano, T.~Otsuka, and H.~G. Okuno.
+\newblock Solving google's continuous audio captcha with hmm-based automatic
+  speech recognition.
+\newblock In {\em International Workshop on Security}, pages 36--52. Springer,
+  2013.
+
+\bibitem{sauer2008towards}
+G.~Sauer, H.~Hochheiser, J.~Feng, and J.~Lazar.
+\newblock Towards a universally usable captcha.
+\newblock In {\em Proceedings of the 4th Symposium on Usable Privacy and
+  Security}, volume~6, page~1, 2008.
+
+\bibitem{schluessler2007bot}
+T.~Schluessler, S.~Goglin, and E.~Johnson.
+\newblock Is a bot at the controls?: Detecting input data attacks.
+\newblock In {\em Proceedings of the 6th ACM SIGCOMM workshop on Network and
+  system support for games}, pages 1--6. ACM, 2007.
+
+\bibitem{shirali2011accessibility}
+S.~Shirali-Shahreza and M.~H. Shirali-Shahreza.
+\newblock Accessibility of captcha methods.
+\newblock In {\em Proceedings of the 4th ACM workshop on security and
+  artificial intelligence}, pages 109--110. ACM, 2011.
+
+\bibitem{sivakorn2016robot}
+S.~Sivakorn, I.~Polakis, and A.~D. Keromytis.
+\newblock I am robot:(deep) learning to break semantic image captchas.
+\newblock In {\em Security and Privacy (EuroS\&P), 2016 IEEE European Symposium
+  on}, pages 388--403. IEEE, 2016.
+
+\end{thebibliography}

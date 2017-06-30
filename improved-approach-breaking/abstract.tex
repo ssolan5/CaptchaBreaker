@@ -1,0 +1,8 @@
+\begin{abstract}
+	CAPTCHAs are challenge-response tests to distinguish legitimate human users from bots. CAPTCHAs based on reading and perceiving text or images restrict blind and partially sighted users from freely accessing the web. Thus, audio CAPTCHAs were introduced as an alternative to visual challenges to make the web friendly and equally accessible to visually impaired people. Most commercial and non-commercial CAPTCHA systems now offer an alternative audio challenge to their more popular visual challenges. \newline
+   
+    	We conducted a large-scale study of audio CAPTCHA systems in the wild, which we believe was the first study of its kind, and built light-weight automated solvers for each one of them using off-the-shelf speech recognition services. We found that 6 out of the 8 CAPTCHA systems that we analyzed were vulnerable to this attack with Google's NoCAPTCHA reCAPTCHA being the most vulnerable(98.3\%).\newline
+
+		To further improve the accuracy of our automated solvers, in this paper, we build an improvised system that employs audio processing techniques specific to each CAPTCHA system using an open-source tool called Audacity. We evaluate our improvised solvers with 1000 challenges each and observe a significant increase in accuracy with a less than 25s latency for noise reduction. We are also building an offline solver for SecureImage, the strongest of the 8 audio CAPTCHA systems we analyzed, with Intel's open-source deep learning library for speech recognition.\newline
+
+\end{abstract}
