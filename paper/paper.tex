@@ -1,0 +1,124 @@
+\documentclass[sigconf,
+	anonymous,
+%	timestamp,
+]{acmart}
+\pagestyle{plain}
+\settopmatter{printccs=false,printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+
+
+\usepackage{booktabs} % For formal tables
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tabulary}
+\usepackage{mathabx}
+\usepackage{stmaryrd}
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+
+\newcommand*\rot{\rotatebox{78}}
+\newcommand{\tmark}{\textcolor{black}{\ding{51}}}
+\newcommand{\xmark}{\textcolor{red}{\ding{55}}}
+\newcommand{\note}[1]{\textbf{\textcolor{blue}{[#1]}}}
+\newcommand\xxx[1]{%
+	\textcolor{red}{[\textbf{XXX:}
+	\ignorespaces #1%
+	\ifhmode
+		\unskip
+	\fi
+	]}%
+}
+
+\setlist{leftmargin=2\parindent,
+         labelindent=\parindent,
+	 labelwidth=*,
+	 labelsep*=.5em}
+
+% Print a big black box next to any overfull hboxes.
+\overfullrule=5pt
+
+%%%%%%%%command for circles with alphanumeric inside
+\definecolor{azure}{RGB}{0,127,255}
+
+\newcommand*\circlea[1]{\protect\tikz[baseline=(char.base)]{
+\node[shape=circle, white, font=\sffamily\bfseries, draw=black,
+fill=black,inner sep=2pt] (char) {#1};}}
+
+\newcommand*\circleaa[1]{\protect\tikz[baseline=(char.base)]{
+\node[shape=circle, white, font=\sffamily\bfseries, draw=black,
+fill=black,inner sep=1pt] (char) {#1};}}
+
+\newcommand*\circleb[1]{\protect\tikz[baseline=(char.base)]{
+\node[shape=circle, white, font=\sffamily\bfseries, draw=red,
+fill=red,inner sep=2pt] (char) {#1};}}
+
+\newcommand*\circlebb[1]{\protect\tikz[baseline=(char.base)]{
+\node[shape=circle, white, font=\sffamily\bfseries, draw=red,
+fill=red,inner sep=1pt] (char) {#1};}}
+
+\newcommand*\circlec[1]{\protect\tikz[baseline=(char.base)]{
+\node[shape=circle, white, font=\sffamily\bfseries, draw=azure,
+fill=azure,inner sep=2pt] (char) {#1};}}
+%%%%%%%%
+
+%% Copyright
+%%\setcopyright{none}
+%%\setcopyright{acmcopyright}
+%%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%%\setcopyright{usgov}
+%%\setcopyright{usgovmixed}
+%%\setcopyright{cagov}
+%%\setcopyright{cagovmixed}
+%
+%
+%% DOI
+%\acmDOI{xxx}
+%
+%% ISBN
+%\acmISBN{xxx}
+%
+%%Conference
+%\acmConference[CCS'17]{ACM Symposium on Computer and Communication
+%Security}{November 2017}{Dallas, TX, USA} 
+%\acmYear{2017}
+%\copyrightyear{2017}
+%
+%\acmPrice{00.00}
+%
+%\acmSubmissionID{xxx-xxx-xx}
+%
+\title{In (Cyber)Space They \emph{Can} Hear You Scream: \\ Automated Low-Cost Attacks Against Audio CAPTCHAs}
+
+% We can actually set the authors now and remove the `anonymous` class option
+% above for camera ready.
+\author{Anonymous}
+\begin{document}
+
+% The new ACM template is dumb. The abstract needs to be defined before the
+% \maketitle! See acmart.pdf.
+\input{abstract}
+\maketitle
+
+\input{introduction}
+\input{background}
+\input{system}
+\input{services}
+\input{evaluation}
+\input{discussion}
+\input{related}
+\input{conclusions}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{paper}
+
+\end{document}
