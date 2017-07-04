@@ -2,3 +2,38 @@
 \label{sec:related}
 
 \cite{sivakorn:eurosp16} broke Google's reCaptcha.
+
+Tam et al.~\cite{tam2008improving} were the first to evaluate the robustness of audio captchas against automated attacks.
+
+``Sauer et al. found that
+six blind participants had a success rate of only 46\% in
+solving the audio version of the popular reCAPTCHA''~\cite{sauer2008towards}.
+
+Meutzner et al.~\cite{meutzner2014using} broke reCaptcha.
+
+According to Shirali-Shahreza et al. \cite{shirali2011accessibility} three groups of people
+have trouble with visual challenges - Visually impaired, who constitute 2.6\% of the world's
+population, users with dyslexia, and users suffering from motor impairment diseases like Parkinson's.
+
+Chellapilla et al. \cite{chellapilla2005designing} on designing Human-friendly Interaction Proofs (HIPs)
+argue that HIPs must approach a success rate of at least 90\%. Adding to this, they also state that the
+attack on such a system by automated computer software/scripts must not be successful for more than 1 in
+10,000 challenges (0.01\%). A study conducted by Sauer et al. \cite{sauer2008towards} which dealt with
+evaluating audio CAPTCHAs with visually impaired users found that they could only solve the challenges
+at a rate of 46\%, 44\% less then what is supposed to be. They also found that the average amount of time
+taken to correctly solve an audio challenge was 65.64 seconds, which is greater than the 51 seconds that
+is suggested as the time to complete a CAPTCHA \cite{schluessler2007bot}.
+
+While conducting a study with blind high school students to inspire them to pursue Computer Science, Bigham et al.
+found that when the students were presented with an audio CAPTCHA, none of them were able to solve the challenge and
+their sighted instructors ended up solving the visual version instead \cite{bigham2008inspiring}. In a subsequent
+study conducted by Bigham et al with 89 blind users, they found that the users achieved only a 43\% success rate in
+solving 10 popular audio CAPTCHAs \cite{bigham2009evaluating}. 
+
+In the same study \cite{bigham2009evaluating}, it was also found that screen readers used by blind users speak over
+playing CAPTCHAs. As users navigate to the answer box, the accessibility software continue speaking the interface while
+talking over the playing audio challenge. A playing audio challenge does not pause for solvers as they type their answer
+and reviewing an audio CAPTCHA is cumbersome, often requiring the user to start again from the beginning. Also, replaying
+an audio CAPTCHA requires solvers to navigate away from the answer box in order to access the controls of the audio player.
+Thus, the authors proposed a system and optimized the interface of popular audio CAPTCHA services without altering the
+underlying implementation and found that the performance increased to 59\%. 
