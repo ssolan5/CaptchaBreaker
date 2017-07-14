@@ -1,7 +1,15 @@
 \section{System Overview}
 \label{sec:system}
 
-Describe our modular system. What components, how they have been implemented, how we create modules for each captcha service, and each speech recognition service.
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{figures/breaker_arch.pdf}
+\caption{Overview of the CaptchaBreaker system.}
+\label{fig:breaker}
+\end{figure}
+
+Describe our modular system. What components, how they have been implemented, 
+how we create modules for each captcha service, and each speech recognition service.
 
 
 We built a series of selenium bots that loads each service, obtains the audio file from the captcha for solving via the off the shelf voice recognition service. After the data is received it is post processed and specialzed for each serivce 
