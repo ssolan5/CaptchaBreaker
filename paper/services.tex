@@ -1,10 +1,31 @@
 \section{Audio Captcha Services}
 \label{sec:services}
 
+\jason{Also add section describing the 3 speech APIs in system.tex.}
 Describe all the services we will break in the paper. Describe vocabulary, level/type of noise,
 system component implementation details (how is the captcha presented, what page elements are handled etc).
 
 \subsection{Recaptcha by Google}
+
+\begin{figure*}[tp]
+\begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figures/recaptcha1.pdf}
+        \caption{\re v1}
+        \label{fig:recaptcha1}
+\end{subfigure} \hspace{0.03\textwidth}
+\begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figures/recaptcha2a.pdf}
+        \caption{\re v2.a}
+        \label{fig:recaptcha2a}
+\end{subfigure}\hspace{0.03\textwidth}
+\begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figures/recaptcha2a.pdf}
+        \caption{\re v2.b}
+        \label{fig:recaptcha2b}
+\end{subfigure}
+\caption{Waveforms and corresponding spectrograms for a sample audio challenge from the different versions of Google \re.}
+\label{fig:examples}
+\end{figure*}
 
 Google's Recaptcha system is the most widely deployed captcha system, which is continuously tweaked to 
 adapt to publicized attacks. During our experiments there was a significant change in the audio challenges,
@@ -63,6 +84,41 @@ text from a failed OCR scan while digitizing physical books and other printed ma
 being a ``control'' word, which is known. This helped transcribe the unknown words and digitize them, and 
 in 2012, photographs of house numbers taken from Google's Street View project began to be used, in 
 addition to scanned words. 
+
+\begin{figure*}[tp]
+\begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figures/apple.pdf}
+        \caption{Apple}
+        \label{fig:apple}
+\end{subfigure} \hspace{0.03\textwidth}
+\begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figures/botdetect.pdf}
+        \caption{BotDetect}
+        \label{fig:botdetect}
+\end{subfigure}\hspace{0.03\textwidth}
+\begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figures/captchas.pdf}
+        \caption{Captchas.net}
+        \label{fig:captchas}
+\end{subfigure} \\
+\begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figures/live.pdf}
+        \caption{Microsoft}
+        \label{fig:live}
+\end{subfigure}\hspace{0.03\textwidth} 
+\begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figures/secure.pdf}
+        \caption{SecurImage}
+        \label{fig:secure}
+\end{subfigure}\hspace{0.03\textwidth}
+\begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figures/telerik.pdf}
+        \caption{Telerik}
+        \label{fig:telerik}
+\end{subfigure}
+\caption{Waveforms and corresponding spectrograms for a sample audio challenge from every captcha service.}
+\label{fig:examples}
+\end{figure*}
 
 \subsection{Securimage}
 
