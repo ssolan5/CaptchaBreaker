@@ -8,6 +8,31 @@ system component implementation details (how is the captcha presented, what page
 level of noise (moderate, high, etc)).}
 \jason{What are the checks deployed by each service? How do we bypass them? E.g., highlighting boxes etc.}
 
+\begin{table}[H]
+\centering
+\caption{Description and characteristics of the captcha services that we evaluate.}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Service}& \textbf{Dictionary}& \textbf{Length} & \textbf{Noise} \\
+\hline
+Recaptcha v1 & Digits (1-9) & 5 & None \\
+\rowcolor{Gray}
+Recaptcha v2.a & Digits (1-9) & 10 & None \\
+Recaptcha v2.b & Digits (1-9) & 10 & None \\
+\rowcolor{Gray}
+Apple & Numbers (10-99) & 4 & None \\
+BotDetect & Digits, Alphabet & 1-13 & High \\
+\rowcolor{Gray}
+Captchas.net & NATO alphabet & ? & None \\
+Microsoft Live & Words & 5-7 & None \\
+\rowcolor{Gray}
+SecurImage & Numbers & ? & None \\
+Telerik & Digits, NATO alphabet & ?  & None \\
+\bottomrule
+\end{tabular}
+\label{tab:services}
+\end{table}
+
 \subsection{Recaptcha by Google}
 
 \begin{figure*}[tp]
@@ -32,7 +57,7 @@ level of noise (moderate, high, etc)).}
 
 Google's Recaptcha system is the most widely deployed captcha system, which is continuously tweaked to 
 adapt to publicized attacks. During our experiments there was a significant change in the audio challenges,
-and we will differentiate between the 2 versions in the remainder of the paper.
+and we will differentiate between the 2 versions in the remainder of the paper. \jason{Does it include 0? Update table.}
 
 %Google provides a demo page for Recaptcha, its state-of-the-art captcha system (the version 2 of Recaptcha), 
 %accessible via the following URL (https://www.google.com/\newline recaptcha/api2/demo), for anyone who wants 
