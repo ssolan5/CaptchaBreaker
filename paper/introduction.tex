@@ -27,7 +27,7 @@ that achieve high accuracy by building customs classifiers using machine learnin
 However, the tremendous advancements of the past years in deep learning technology, have
 resulted in significant improvements in speech recognition systems, recently achieving
 results that approach human performance~\cite{ibm_blog,saon2017english}. Motivated
-by these advancements, and the recent work by Sivakorn et al. against visual
+by these advancements, and the recent work by Sivakorn et al. against image 
 captchas~\cite{sivakorn:eurosp16}, we investigate how speech recognition services
 can be misused for breaking existing audio captcha systems. By exploring how effective
 widely-available speech recognition systems are at transcribing audio challenges despite 
@@ -55,8 +55,16 @@ Surprising findings: every single one broken. Accent matters. Higher accuracy th
 visual captchas. Old \re harder than new \re. 
 Apart from facilitating visually-impaired users, audio captchas introduce an attack
 surface that presents a significantly smaller obstacle to attackers compared to visual captchas.
+Services employ various safeguards against bots.
 
-\note{Important takeaways. Broader impact.}
+In the continuing effort to mitigate harmful automated activities, much effort has been applied in 
+designing and developing visual captcha systems that raise the bar for attackers while remaining 
+solvable by legitimate users. Our comprehensive evaluation of the audio captcha ecosystem highlights
+a troubling reality. Audio captchas currently offer an insecure alternative entry point for fraudsters,
+as off-the-shelf options allow them to solve audio challenges with much higher accuracy than their visual
+counterparts. We argue that it is critical to explore alternative captcha methods for visually-impaired users,
+as audio captchas increase the attack surface of popular web services and undermine the security
+(albeit imperfect) offered by visual challenges.
 
 Overall, the main contributions of our work are:
 
