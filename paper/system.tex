@@ -35,9 +35,11 @@ service that also supports audio challenges.
 (e.g., account creation, message posting, etc.). After identifying the captcha element within 
 the page, the audio challenge is extracted.
 
-\protect\circlea{\small 2} The audio file is passed to the pre-processing component. The audio 
-file is then converted to a lossless format. Then, based on the captcha service, our system 
-selects the speech recognition service with the best results for the specific challenge. 
+\protect\circlea{\small 2} The audio file is passed to the pre-processing component, which is responsible 
+for preparing the audio file that will be passed to the speech recognition service. If there are audio 
+instructions at the beginning of the audio challenge they are removed, and the final audio
+recording is then converted to a lossless format. Then, based on the captcha service, our system
+selects the speech recognition service with the best results for the specific challenge.
 
 \protect\circlea{\small 3} The audio file is uploaded for transcription by the module that handles that solver, 
 together with a predetermined configuration. The configuration allows us to fine-tune the transcription process
@@ -49,9 +51,10 @@ numbers) as well as the accent classifier to use (services may support multiple 
 and passed to the post-processing component. Based on the originating captcha service, the corresponding  
 module will process the transcription and prepare the solution to the challenge. If a service employs the 
 NATO phonetic alphabet, the transcribed words will be mapped to the letters they represent. For instance, 
-``Alpha Bravo'' will be substituted with ``AB''. Furthermore, \note{we have created a manually curated dictionary 
-per service and solver with homophones that may lead to errors. For example, $\{two,too,to\}$ should all 
-be mapped to $\{2\}$ in a captcha service that only employs numerals in the audio challenges.}
+``Alpha Bravo'' will be substituted with ``AB''. Furthermore, we have created manually curated dictionaries
+per captcha service and speech recognition engine for further processing the transcriptions. This processing
+also handles cases of homophones; for instance, $\{two,too,to\}$ are all
+mapped to $\{2\}$ for captcha services that only contain numerals in the audio challenges.
 
 \protect\circlea{\small 5} The final solution is passed to the browser automation module,
 which is responsible for passing the captcha challenge.
@@ -63,46 +66,36 @@ It also verifies whether the solution was accepted by the captcha service.
 \subsection{Implementation Details}
 
 \textbf{Browser automation.}
-To create the bot we utilized the browser automation framework known as selenium. This was 
-the tool of our choice as it is hard to detect scraping/botting written utilizing the selenium 
-webdriver and your browser of choice. Selenium communicates with browsers via a special protocol 
-native to each browser and has access to everything loaded for a web site, the JavaScript, the DOM 
-and even the secure cookies. The special protocol is required as  Selenium RC uses generic javascript 
-for browser automation however executing simply generic javascript violates same origin policy. For 
-every website the browser creates a sandbox for the website's javascript, this way the javascript that 
-belongs to one website does not execute on another website that is currently loaded on the browser. 
-(more detail on cross site scripting). To overcome this Selenium acts as an HTTP Proxy server, when 
-we launch the browser through selenium scripts, javascript (Selenium Core) is injected into the browser, 
-all subsequents requests are therefore through Selenium. In essence selenium makes the browser think that 
-the web application is served from Selenium's domain rather than the actual web server hosting our web 
-application.
+Our browser automation components is built upon the Selenium framework~\cite{selenium}. This offers
+flexibility in setting up our environment (e.g., browser), as well as advanced functionality
+and configurability that allow us to implement scraping behavior that does not trigger bot detection
+mechanisms currently deployed by certain services\footnote{There is no straightforward way to detect 
+automation apart for checking some predefined variables (which can be modified). Most websites do not 
+check these in practice.}.
+Selenium communicates with the browser via a special protocol 
+native to each browser, and has access to everything loaded for the visited web site, including all Javascript, DOM 
+elements and even ``Secure'' HTTP cookies. The special protocol is required for communication with the browser,
+and enables execution of the automation scripts without violating the same origin policy.
+%In more detail, a sandbox is created for
+%every website the browser creates a sandbox for the website's javascript, this way the javascript that 
+%belongs to one website does not execute on another website that is currently loaded on the browser. 
+%(more detail on cross site scripting). To overcome this 
+Specifically, Selenium acts as an HTTP Proxy server when
+the browser is launched through Selenium scripts, and Javascript (Selenium Core) is injected into the browser;
+all subsequents requests are then handled through Selenium. In essence, the browser perceives the
+web page as being served from Selenium's domain rather than the actual web server hosting the website.
+As such, the automation scripts appear to belong to the same origin with the web page. This approach, 
+however, faces certain limitations, which are handled by ``WebDriver'' an object oriented API
+%as the Core is limited by the JavaScript sandbox of 
+%the browser (Due to same origin policy). The Webdriver, 
+which handles the browser from outside. 
+%This was 
+%the marked difference between Selenium 1.0 and Selenium 2.0 as by being limited by the sandbox and therefore 
+%has reduced functional test coverage. 
 
-Selenium driving the browser from within by sitting in as injected Javascript provides certian limitations 
-which is handled by "WebDriver" an object oriented api, as the Core is limited by the JavaScript sandbox of 
-the browser (Due to same origin policy). The Webdriver, handles the browser from outside the browser. This was 
-the marked difference between Selenium 1.0 and Selenium 2.0 as by being limited by the sandbox and therefore 
-has reduced functional test coverage. 
-
-[graphic of selenium driving browsers with injected javascript]
-
-\note{Why selenium is better than other botting/scrapers out there --
-}
-
-Almost no way to detect the automation except for checking some predefined variables which most websites do not do.
-
-\note{source : https://stackoverflow.com/a/41220267
-}
-
-Web Driver is the nearest you can get to an actual person driving the browser automation. Quote:  "Driving a browser natively as a user would either locally or on a remote machine using the Selenium Server it marks a leap forward in terms of browser automation."
-
-\note{source: http://www.seleniumhq.org/projects/webdriver/
-}
-
-\note{need better ways to say this}
 
 \note{how do you automatically identify the captcha service being used on a random page?}
-
-\textbf{Speech recognition APIs.} Give some details about the API exposed by each service.
+\textbf{Speech recognition APIs.} \jason{Give some details about the API exposed by each service.}
 
 We utilized three different voice recognition services for our system, the python google cloud speech api, 
 the ibm bluemix, Wit ai voice recognition services.
