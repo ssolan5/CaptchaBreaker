@@ -31,7 +31,16 @@ Telerik  & 21\% (142/670)  & \textbf{97\%} (452/466) & 12.7\% (47/364) & 74.4\% 
 
 \note{Rate limit of speech recognition services.}
 
+\begin{figure*}
+\centering
+\includegraphics[width=0.8\textwidth]{figures/captcha_length.eps}
+\caption{Variation of audio captcha length in \re v2.a over time.}
+\label{fig:length}
+\end{figure*}
+
 \note{Length of audio captcha}
+While by default the length of \re is 5 digits, we found that after multiple captcha solutions by our system,
+\re would randomly return captchas with more digits. In Figure~\ref{fig:length} we present a representative experiment.
 
 \note{Time to solve captcha per speech service}
 
@@ -40,3 +49,4 @@ Telerik  & 21\% (142/670)  & \textbf{97\%} (452/466) & 12.7\% (47/364) & 74.4\% 
 \note{economic analysis: length of challenge, cost per minute for solver. reselling solved tokens. How much profit?}
 
 \note{plot length of recaptcha over time, similar to number of captchas per cookie from eurosp paper.}
+
