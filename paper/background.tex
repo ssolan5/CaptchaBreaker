@@ -1,18 +1,40 @@
-\section{Background}
+\section{Background and Threat Model}
 \label{sec:background}
 
 Give more background information about captchas and audio captchas.
+While text-based challenges with distorted letters first appeared around 1997,
+the term CAPTCHA was coined in 2003 by Von Ahn et al.~\cite{captcha}. Since 
+then, captcha challenges have been widely adopted for preventing Internet 
+miscreants from conducting automated illicit actions at a large scale, such as 
+creating email accounts or posting spam messages. According to earlier estimations~\cite{captcha_stats}
+approximately 200 million captchas were being solved each day, resulting in a
+cumulative loss of over 500,000 man hours per day. In an attempt to apply that 
+effort to a more meaningful task, the \re system released a captcha scheme that
+leveraged users for Google's project on the digitization of books. However, 
+text-based captchas are considered a significant nuisance for users~\cite{scientific_american},
+and \re has evolved considerably in the past few years in an attempt to strike 
+a balance between security and usability~\cite{recaptcha}. While \re is the
+most prevalent captcha system, numerous web services and research groups have 
+proposed alternative captcha schemes over the years (e.g.,~\cite{Chew04,asirra,dcaptcha}).
 
-Hard for non-native speakers~\cite{yan2008usability} or users of 
-younger ages or with learning or language disabilities~\cite{schlaikjer2007dual}.
-\jason{How many language options do popular audio captchas have?} 
+However, visual captchas prohibit a significant portion of users from accessing 
+web services, and audio captchas have long been the de facto solution for
+enabling accessibility. Despite their limitations of being hard for
+non-native speakers~\cite{yan2008usability} or users of younger ages 
+or with learning or language disabilities~\cite{schlaikjer2007dual},
+no other alternative has been widely deployed.
+%\jason{How many language options do popular audio captchas have?} 
+To prevent a straightforward solution from bots, audio captchas 
+typically rely on some form of distortion or perceptual interference~\cite{shinn2008object}.
 
-Talk about threat model, and what \% accuracy previous work has
-set as a threshold for considering a captcha system broken:
-Chellapilla et al. \cite{Chellapilla} 0.01\%,
-whereas Bursztein et al. \cite{bursztein2011failure} suggest that
-the success rate be 1\%
-
-``The simplest form of perceptual interference occurs when a competing source renders portions of a target imperceptible
-This kind of interference, known in auditory circles as energetic masking, occurs when the response on the sensory epithelium.
-to the target is disrupted because the system is responding to a competing source''~\cite{shinn2008object}.
+\textbf{Threat model.} In this paper we are motivated by the recent advancements 
+in deep learning, and explore how successful existing speech recognition services
+are at transcribing audio captchas in the context of a low-cost automated attack. 
+Thus, we consider an attacker that uses popular speech recognition systems off-the-shelf --
+there is no extra training phase (e.g., using a labelled dataset of challenges from 
+a specific captcha scheme) or any modification for improving the quality of the audio 
+signal (e.g., some form of ``de-noising''). For evaluating the robustness of the 
+audio captcha systems, we follow the guidelines of prior work~\cite{bursztein2011failure}
+While other researchers have set lower thresholds for considering a captcha scheme 
+broken, (e.g.,~\cite{Chellapilla} set a threshold of 0.01\% due to the scale of 
+automated attacks), we opt for the more lenient threshold of of 1\%.
