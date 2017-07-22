@@ -14,12 +14,12 @@ well as the extra countermeasures deployed by each service for preventing automa
 \toprule
 \textbf{Service}& \textbf{Dictionary}& \textbf{Length} & \textbf{Noise} \\
 \hline
-Recaptcha v1 & Digits (1-9) & \jason{?} & None \\
+Recaptcha v1 & Digits & \jason{?} & None \\
 \rowcolor{Gray}
-Recaptcha v2.a & Digits (1-9) & 5 & None \\
-Recaptcha v2.b & Digits (1-9) & 10 & None \\
+Recaptcha v2.a & Digits & 5 & None \\
+Recaptcha v2.b & Digits & 10 & None \\
 \rowcolor{Gray}
-Apple & Numbers (10-99) & 4 & None \\
+Apple & Numbers (10-99) & \jason{4} & None \\
 BotDetect & Digits, Alphabet & 1-13 & High \\
 \rowcolor{Gray}
 Captchas.net & NATO alphabet & \jason{?} & Low \\
@@ -33,18 +33,18 @@ Telerik & Digits, NATO alphabet & \jason{?}  & None \\
 \end{table}
 
 \begin{figure}[tp]
-\begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\textwidth]{figures/recaptcha1.pdf}
-        \caption{\re v1}
-        \label{fig:recaptcha1}
-\end{subfigure} %\hspace{0.03\textwidth}
-\begin{subfigure}{0.3\textwidth}
+%\begin{subfigure}{0.3\textwidth}
+%        \includegraphics[width=\textwidth]{figures/recaptcha1.pdf}
+%        \caption{\re v1}
+%        \label{fig:recaptcha1}
+%\end{subfigure} %\hspace{0.03\textwidth}
+\begin{subfigure}{0.23\textwidth}
         \includegraphics[width=\textwidth]{figures/recaptcha2a.pdf}
         \caption{\re v2.a}
         \label{fig:recaptcha2a}
-\end{subfigure}\hspace{0.03\textwidth}
-\begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\textwidth]{figures/recaptcha2a.pdf}
+\end{subfigure}\hspace{0.01\textwidth}
+\begin{subfigure}{0.23\textwidth}
+        \includegraphics[width=\textwidth]{figures/recaptcha2b.pdf}
         \caption{\re v2.b}
         \label{fig:recaptcha2b}
 \end{subfigure}
@@ -101,6 +101,7 @@ of~\cite{meutzner2014using} so as to compare the effectiveness of our attack tha
 off-the-shelf speech recognition systems against previous studies that used custom
 machine learning classifiers.
 
+\note{Actions.} Google: If the web application is detecting bot behavior based upon time differences.
 
 \begin{figure*}[tp]
 \begin{subfigure}{0.3\textwidth}
@@ -187,6 +188,29 @@ still in the process of creating the account.
 %\item Status and volume of active audio streams. These are not yet associated with a particular tab.
 %\item Cache activity, including reads from and writes to the media cache.\newline
 %\end{itemize}
+
+\textbf{Crawling.} Apple has introduced various safeguards for obstructing automated actions.
+
+\emph{Obtain audio.} By deploying their own HTML5 audio player Apple has made it 
+difficult to obtain the audio recording, as opposed to other services like \re
+that allow a straightforward fetching of the mp3 file. As a workaround, we access 
+the browser's media stack\footnote{Through chrome://media-internals.} and obtain the 
+audio recording in base64 format.
+
+\emph{Form filling.} Form elements are not accessible via HTML ids/tags; instead we enumerate them 
+using XPath (input[@type='text']), and access them according to attribute values.
+Furthermore, the system requires mouse interaction for actually accessing an element, otherwise the 
+form's validation script will not execute if the answer box has not been ``touched''. We automate this 
+process using PyWinAuto~\cite{pywinauto}.
+%basically having 
+%something like a js framework or html5 template to create the web application GUI makes it slightly more difficult to bot. (very slightly)
+
+\note{Use user agent spoofing to hide your behaviour.}
+
+\textbf{Pre-processing.} The audio challenge starts with spoken instructions directing the user to 
+``Please enter the $n$ numbers in the text box provided'', where $n$ denotes how many double digit numbers will be spoken
+in the captcha file. We remove the 4.35 seconds of the message from the audio file that will be sent to the service.
+
 
 \subsection{RadCaptcha by Telerik}
 
