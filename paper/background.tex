@@ -29,11 +29,16 @@ typically rely on some form of distortion or perceptual interference~\cite{shinn
 
 \textbf{Threat model.} In this paper we are motivated by the recent advancements 
 in deep learning, and explore how successful existing speech recognition services
-are at transcribing audio captchas in the context of a low-cost automated attack. 
+are at transcribing audio captchas in the context of a low-cost automated attack.
 Thus, we consider an attacker that uses popular speech recognition systems off-the-shelf --
 there is no extra training phase (e.g., using a labelled dataset of challenges from 
 a specific captcha scheme) or any modification for improving the quality of the audio 
-signal (e.g., some form of ``de-noising''). For evaluating the robustness of the 
+signal (e.g., some form of ``de-noising''). Our goal is to demonstrate how current 
+state-of-the-art deep learning systems have significantly lowered the bar for attackers
+that can now deploy effective attacks without the need of developing sophisticated 
+custom classifiers (as that has been demonstrated in prior work against audio captchas).
+
+For evaluating the robustness of the 
 audio captcha systems, we follow the guidelines of prior work~\cite{bursztein2011failure}
 While other researchers have set lower thresholds for considering a captcha scheme 
 broken, (e.g.,~\cite{Chellapilla} set a threshold of 0.01\% due to the scale of 

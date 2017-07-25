@@ -1,14 +1,14 @@
 \section{Introduction}
 \label{sec:intro}
 
-While automated attacks continue to plague the Internet,
-the number of of online users around the world has reached unprecedented levels.
+As automated attacks continue to plague the Internet,
+the number of online users around the world has reached unprecedented levels.
 Thus, it is crucial to deploy user-friendly mechanisms for preventing bots without
-becoming obstacles to legitimate users. Traditionally captchas comprise the first 
-line of defense, and attempt to differentiate between actual users and bots by 
+becoming obstacles to legitimate users. Traditionally, captchas comprise a first
+line of defense and attempt to differentiate between actual users and bots by 
 presenting a challenge that requires some form of task that is considered hard 
 for a computer~\cite{captcha}. While visual captchas (i.e., text and image based challenges) 
-have evolved significantly since their initial incarnation, with Google's recent \re system 
+have evolved significantly since their initial incarnation, with Google's recent \re system
 attempting to bridge the gap between security and usability, audio captchas have remained 
 relatively unchanged.
 
@@ -16,7 +16,7 @@ Audio captchas are deployed as an alternative type of challenge, targeting
 visually-impaired users that would otherwise not be able to pass the presented
 challenge. According to the World Health Organization 285 million people have 
 some form of visual impairment~\cite{impaired}, rendering audio captchas a
-crucial component of an inclusive world wide web. While audio captchas may still present
+crucial component of an accessible world wide web. While audio captchas may still present
 an obstacle to certain users~\cite{sauer2008towards,bigham2008inspiring,bigham2009evaluating},
 they are currently the de facto alternative offered by captcha services.
 
@@ -24,30 +24,31 @@ While audio captchas have not received as much attention from the security commu
 previous work has presented automated attacks against audio captchas~\cite{Sano2013,Bursztein2009,
 meutzner2014using,tam2009breaking,bursztein2011failure}. These studies have demonstrated attacks
 that achieve high accuracy by building customs classifiers using machine learning techniques.
-However, the tremendous advancements of the past years in deep learning technology, have
+However, the tremendous advancements of the past years in deep learning technology have
 resulted in significant improvements in speech recognition systems, recently achieving
 results that approach human performance~\cite{ibm_blog,saon2017english}. Motivated
 by these advancements, and the recent work by Sivakorn et al. against image 
-captchas~\cite{sivakorn:eurosp16}, we investigate how speech recognition services
+\re~\cite{sivakorn:eurosp16}, we investigate how speech recognition services
 can be misused for breaking existing audio captcha systems. By exploring how effective
 widely-available speech recognition systems are at transcribing audio challenges despite 
-the presence of noise, typically present in captcha challenges, we can assess the robustness 
-of the captcha ecosystem.
+the presence of noise typically present in captcha challenges, we can assess the robustness 
+of the audio captcha ecosystem.
 
 In this work we present \system, a modular system that leverages existing speech recognition services
 for solving audio captcha challenges. Specifically, we leverage the
-APIs offered by IBM's Watson, Facebook's Wit, and Google's Cloud Speech. In a nutshell, our system works as
+APIs offered by IBM's Bluemix (Watson), Facebook's Wit, and Google's Cloud Speech. In a nutshell, our system works as
 follows. First, our browser automation module visits a page protected by one of the captcha services,
-and obtains the audio challenge. Next, after minimal preprocessing, the audio recording is submitted 
-to one of the speech recognition services. Upon receiving the transcription from the service, we 
-process the text based on the properties of the specific captcha service (e.g., transcribing to alphanumeric 
+and obtains the audio challenge. Next, after minimal preprocessing (removing audio instructions and 
+converting to different format), the audio recording is submitted 
+to one of the speech recognition services. We then process the transcription returned by the service
+based on the properties of the specific captcha scheme (e.g., transcribing to alphanumeric 
 from NATO's phonetic alphabet) and prepare the response to the challenge. This is then handled by
 the browser automation module that inputs the response and checks whether it was accepted by the captcha
 service.
 
 We evaluate \system again \no captcha systems, including popular services like Google \re,
 Apple's and Microsoft's captchas. Our experiments demonstrate the effectiveness of our approach,
-as we are able to (greatly) surpass the threshold commonly set in prior work for considering
+as we are able to \note{greatly} surpass the threshold commonly set in prior work for considering
 a captcha system broken, with the highest accuracy achieved against \re -- the most prevalent 
 captcha system.
 
@@ -59,24 +60,24 @@ Services employ various safeguards against bots.
 
 In the continuing effort to mitigate harmful automated activities, much effort has been applied in 
 designing and developing visual captcha systems that raise the bar for attackers while remaining 
-solvable by legitimate users. Our comprehensive evaluation of the audio captcha ecosystem highlights
+solvable by actual users. Our extensive evaluation of the audio captcha ecosystem highlights
 a troubling reality. Audio captchas currently offer an insecure alternative entry point for fraudsters,
 as off-the-shelf options allow them to solve audio challenges with much higher accuracy than their visual
 counterparts. We argue that it is critical to explore alternative captcha methods for visually-impaired users,
 as audio captchas increase the attack surface of popular web services and undermine the security
-(albeit imperfect) offered by visual challenges.
+(albeit limited~\cite{185128,sivakorn:eurosp16}) offered by visual challenges.
 
 Overall, the main contributions of our work are:
 
 \begin{itemize}
 
-\item We present the first, to our knowledge, comprehensive evaluation of 
-the audio captcha ecosystem against low-cost 
-%by demonstrating how available   services 
-%can be broken using 
-attacks using off-the-shelf speech recognition services.
+\item We present an in-depth exploration of the current audio captcha ecosystem and identify the characteristics 
+of each captcha scheme, and also examine the safeguards deployed by services as ancillary obstacles to automated
+attacks.
 
-\item We bla bla bla.
+\item We experimentally evaluate the robustness of prevalent audio captcha services against
+off-the-shelf speech recognition services, and demonstrate the effectiveness and efficiency 
+of our low-cost attacks against all services.
 
 \item We bla bla bla.
 

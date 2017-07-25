@@ -22,7 +22,7 @@ BotDetect  & 1.23\% (11/894)  & 1.38\% (19/138) & 6.67\% (12/180) & \textbf{9.5\
 Captchas.net  & 0\% (0/1008) & 1.1\% (9/778)  & 0.3\% (3/1010)  & 2.7\% (16/593) & \textbf{22.3\%} (230/1030) \\
 \rowcolor{Gray}
 Microsoft Live & &  &  & & \\
-SecurImage  & 0\% (0/1000)  & 0\% (0/1000) & 0\% (0/1000) & 0.1\% (0/1000) & \textbf{3\%} (30/1000) \\
+Securimage  & 0\% (0/1000)  & 0\% (0/1000) & 0\% (0/1000) & 0.1\% (0/1000) & \textbf{3\%} (30/1000) \\
 \rowcolor{Gray}
 Telerik  & 21.2\% (142/668)  & \textbf{97\%} (452/466) & 12.9\% (47/364) & 74.2\% (150/202) & 49.3\% (112/217) \\
 \bottomrule
@@ -117,9 +117,9 @@ BotDetect  & 5.53s  & 4.21s & 5.72s & \textbf{3.40s} & 3.05s \\
 Captchas.net  & 19.92s  & 14.62s  & 15.65s  & 7.56s & \textbf{7.79s} \\
 \rowcolor{Gray}
 Microsoft Live & &  &  & & \\
-SecurImage  & 34.31s & 23.60s & 25.10s  & 27.29s & \textbf{35.28s} \\
+Securimage  & 34.31s & 23.60s & 25.10s  & 27.29s & \textbf{35.28s} \\
 \rowcolor{Gray}
-Telerik  & & & & & \\
+Telerik  & 7.53s & \textbf{5.56s} & 6.65s & 3.86s & 3.83s \\
 \bottomrule
 \end{tabular}
 \label{tab:solution_time}
@@ -131,6 +131,55 @@ accuracy for that captcha scheme.
 
 \note{How many mistakes allowed for a correct answer?}
 
-\textbf{Economic analysis.}
-\note{Length of challenge, cost per minute for solver. reselling solved tokens. How much profit?}
-IBM Watson: It is available for free for the first 1000 min/per month for each account, after which each additional minute is charged \$0.02.
+\begin{table}[t]
+\centering
+\caption{Estimated daily profit per captcha service, for an attacker using a single Google Speech API account
+(with the most accurate accent configuration) for that captcha scheme.}
+\begin{tabular}{lccc}
+\toprule
+& & \textbf{Solved} & \textbf{Daily} \\
+\textbf{Captcha}&  \textbf{Duration} & \textbf{Challenges} & \textbf{Profit} \\
+\hline
+Recaptcha v2.a & & & \\
+\rowcolor{Gray}
+Recaptcha v2.b & & & \\
+Apple  & & & \\
+\rowcolor{Gray}
+BotDetect  & 6 sec & 28,215 & \$56.4 \\
+Captchas.net & 14 sec & 28,385 & \$56.8 \\
+\rowcolor{Gray}
+Microsoft Live & & & \\
+Securimage & & & \\
+\rowcolor{Gray}
+Telerik & 7 sec & 188,892 & \$377.8 \\
+\bottomrule
+\end{tabular}
+\label{tab:money}
+\end{table}
+
+\textbf{Cost constraints.} Our study's goal is to explore the feasibility of low-cost attacks 
+against popular captcha services; thus, the scale of such an attack is naturally constrained by the rate
+limiting enforced by the speech recognition APIs. While an attacker could build an offline solver
+using a deep learning framework like TensorFlow~\cite{abadi2016tensorflow}\footnote{(researchers are already
+releasing such prototypes--{https://github.com/mozilla/DeepSpeech}.} to overcome this constraint,
+our threat model explicitly includes non-sophisticated attackers that do not develop or train their own 
+classifiers. As such, the rate limits of each speech recognition service become relevant as they could significantly 
+constrain our attacks. 
+
+Surprisingly, these services have very lax limits that would enable fraudsters to misuse
+them for maintaining large scale audio captcha solving campaigns. For instance, Google's Speech API allows up
+to 250,000 requests per day, where multiple audio files can be submitted per request, allowing for a maximum 
+480 hours of audio processing\footnote{https://cloud.google.com/speech/limits}. Assuming an average 
+market price of \$2 per 1,000 solved captchas and the accuracy from Table~\ref{tab:combinations}, 
+in Table~\ref{tab:money} we estimate the profit that an attacker could yield against each captcha service
+per day using a single Google API account.
+
+On the other hand, IBM Watson allows 1 free month per account\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}.
+Finally, Wit does not have an explicit rate limit. However, it is open to commercial
+apps and requests notification for rates of 1 request per second. As all these services 
+only require a new email address for creating an account, attackers could trivially register 
+new email addresses periodically for increasing their overall allowed throughput.
+
+%In comparison Clarifai,
+%the most accurate image annotation service used against \re~\cite{sivakorn:eurosp16}, only allows 5,000
+%free operations per month\footnote{https://developer.clarifai.com/pricing/}.
