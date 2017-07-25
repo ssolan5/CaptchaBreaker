@@ -108,16 +108,16 @@ version with 5 digits, the most common variation we came across contained 9 digi
 & & \textbf{(US)} & \textbf{(UK)} & \textbf{(US)} & \textbf{(UK)} \\
 \textbf{Captcha}&  \textbf{Wit} & \textbf{IBM} & \textbf{IBM} & \textbf{Google} & \textbf{Google} \\
 \hline
-Recaptcha v2.a & 13.85s & 10.56s  & 12.25s & 18.46s & 20.41s \\
+Recaptcha v2.a & 13.85s & 10.56s  & 12.25s & \textbf{18.46s} & 20.41s \\
 \rowcolor{Gray}
 Recaptcha v2.b &  &  &  & & \\
-Apple  & 36.4s & 33.4s  & 34.7s & 15.5s & 13.9s \\
+Apple  & 36.4s & 33.4s  & 34.7s & 15.5s & \textbf{13.9s} \\
 \rowcolor{Gray}
-BotDetect  & 5.53s  & 4.21s & 5.72s & 3.40s & 3.05s \\
-Captchas.net  & 19.92s  & 14.62s  & 15.65s  & 7.56s & 7.79s \\
+BotDetect  & 5.53s  & 4.21s & 5.72s & \textbf{3.40s} & 3.05s \\
+Captchas.net  & 19.92s  & 14.62s  & 15.65s  & 7.56s & \textbf{7.79s} \\
 \rowcolor{Gray}
 Microsoft Live & &  &  & & \\
-SecurImage  & 34.31s & 23.60s & 25.10s  & 27.29s & 35.28s \\
+SecurImage  & 34.31s & 23.60s & 25.10s  & 27.29s & \textbf{35.28s} \\
 \rowcolor{Gray}
 Telerik  & & & & & \\
 \bottomrule
@@ -125,7 +125,9 @@ Telerik  & & & & & \\
 \label{tab:solution_time}
 \end{table}
 
-\textbf{Solution time.} \note{Time to solve captcha per speech service}
+\textbf{Solution time.} In Table~\ref{tab:solution_time} we include the average time required by each speech recognition 
+service for returning a transcription of the audio captcha. The bold values denote the combination that achieved the highest 
+accuracy for that captcha scheme.
 
 \note{How many mistakes allowed for a correct answer?}
 
