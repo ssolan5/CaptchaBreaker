@@ -41,18 +41,18 @@ instructions at the beginning of the audio challenge they are removed, and the f
 recording is then converted to a lossless format. Then, based on the captcha service, our system
 selects the speech recognition service with the best results for the specific challenge.
 
-\protect\circlea{\small 3} The audio file is uploaded for transcription by the module that handles that solver, 
-together with a predetermined configuration. The configuration allows us to fine-tune the transcription process
+\protect\circlea{\small 3} The audio file is uploaded for "transcript"ion by the module that handles that solver, 
+together with a predetermined configuration. The configuration allows us to fine-tune the "transcript"ion process
 for better results; specifically we restrict the dictionary used by the solver (e.g., to only expect  
 numbers) as well as the accent classifier to use (services may support multiple English accents 
 -- British, American etc.).
 
-\protect\circlea{\small 4} The transcription of the audio challenge is obtained from the solver 
+\protect\circlea{\small 4} The "transcript"ion of the audio challenge is obtained from the solver 
 and passed to the post-processing component. Based on the originating captcha service, the corresponding  
-module will process the transcription and prepare the solution to the challenge. If a service employs the 
+module will process the "transcript"ion and prepare the solution to the challenge. If a service employs the 
 NATO phonetic alphabet, the transcribed words will be mapped to the letters they represent. For instance, 
 ``Alpha Bravo'' will be substituted with ``AB''. Furthermore, we have created manually curated dictionaries
-per captcha service and speech recognition engine for further processing the transcriptions. This processing
+per captcha service and speech recognition engine for further processing the "transcript"ions. This processing
 also handles cases of homophones; for instance, $\{two,too,to\}$ are all
 mapped to $\{2\}$ for captcha services that only contain numerals in the audio challenges.
 
@@ -70,8 +70,8 @@ Our browser automation components is built upon the Selenium framework~\cite{sel
 flexibility in setting up our environment (e.g., browser), as well as advanced functionality
 and configurability that allow us to implement scraping behavior that does not trigger bot detection
 mechanisms currently deployed by certain services\footnote{There is no straightforward way to detect 
-automation apart for checking some predefined variables (which can be modified). Most websites do not 
-check these in practice.}.
+automation apart for checking some predefined variables (which can be easily modified).}
+%Most websites do not check these in practice.}.
 Selenium communicates with the browser via a special protocol 
 native to each browser, and has access to everything loaded for the visited web site, including all Javascript, DOM 
 elements and even ``Secure'' HTTP cookies. The special protocol is required for communication with the browser,
@@ -95,7 +95,34 @@ which handles the browser from outside.
 
 
 \note{how do you automatically identify the captcha service being used on a random page?}
-\textbf{Speech recognition APIs.} \jason{Give some details about the API exposed by each service.}
 
-We utilized three different voice recognition services for our system, the python google cloud speech api, 
-the ibm bluemix, Wit ai voice recognition services.
+\textbf{Speech recognition APIs.}
+We used three different voice recognition services for our system: Google's Cloud Speech API,
+IBM Watsons Text-to-Speech API, and Facebook's Wit.ai voice recognition service. Below we 
+provide some details regarding these services.
+
+\begin{lstlisting}[language=json,firstnumber=1,caption={Example response from IBM Watson's API for an audio challenge from Google \re v2.a.},label={lst:IBM}]
+{
+"results": [
+{"alternatives": [{"transcript":"eight", "confidence":0.982679}]},
+{"alternatives": [{"transcript":"three", "confidence":0.742102}]},
+{"alternatives": [{"transcript":"eight", "confidence":0.593190}]},
+{"alternatives": [{"transcript":"nine", "confidence":0.6004673}]},
+{"alternatives": [{"transcript":"five", "confidence":0.982679}]}
+]
+}
+
+\end{lstlisting}
+
+\emph{IBM Watson.} IBM Watson's Speech To Text service provides a public REST API, and the website provides 
+sample code in multiple programming languages to facilitate integration.
+%in Curl, Ruby and Node.JS with best practices for using their REST API. The API is also very well documented.
+Their service accepts various audio file formats as input, and returns a 
+with the timestamps of each recognized word, a confidence score, and alternative an hypothesis (if there is 
+another interpretation for the word). It provides support for various languages 
+like Spanish, Brazilian, Mandarin, Arabic, and two different accents in English - British and American.
+%is available for free for the first 1000 min/per month for each 
+%account, after which each additional minute is charged \$0.02. We used multiple accounts each to access the free 
+%version of the software for the term of our project.
+
+

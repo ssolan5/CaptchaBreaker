@@ -24,6 +24,7 @@
 \usepackage[export]{adjustbox}
 \usepackage{multirow}
 \usepackage{subcaption}
+\usepackage{listings}
 \usepackage{color, colortbl}
 
 \definecolor{Gray}{gray}{0.9}
@@ -75,6 +76,55 @@ fill=red,inner sep=1pt] (char) {#1};}}
 \newcommand*\circlec[1]{\protect\tikz[baseline=(char.base)]{
 \node[shape=circle, white, font=\sffamily\bfseries, draw=azure,
 fill=azure,inner sep=2pt] (char) {#1};}}
+
+%%%%%%%%%%%%%%%%%%json listings
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\newcommand\JSONnumbervaluestyle{\color{blue}}
+\newcommand\JSONstringvaluestyle{\color{red}}
+
+\lstdefinelanguage{json}{
+    basicstyle=\scriptsize\ttfamily,
+    showstringspaces=false,
+    keywords={transcript,confidence,alternatives},
+    keywordstyle=\color{blue},
+    breaklines=true,
+    morestring          = [s]{""}{""},
+    stringstyle=\color{red},
+    float=t,
+    frame=single,
+    breakatwhitespace=true,
+    captionpos=b,
+    comment=[l]{//},
+    commentstyle=\itshape\color{green!40!black},
+    stringstyle=\color{orange},
+    backgroundcolor=\color{background},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {A}{{{\color{numb}A}}}{1}
+      {B}{{{\color{numb}B}}}{1}
+      {C}{{{\color{numb}C}}}{1}
+      {E}{{{\color{numb}E}}}{1}
+      {F}{{{\color{numb}F}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
 %%%%%%%%
 
 %% Copyright
