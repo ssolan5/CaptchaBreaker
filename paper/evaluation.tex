@@ -53,50 +53,9 @@ was consistently more accurate across all captchas; however, Google's speech rec
 results for \note{X} out of the \note{Y} captcha schemes. While attackers could increase the attacks' accuracy
 by first pre-processing the audio challenges so as to reduce the noise, the motivation behind our study is to 
 demonstrate how attackers can employ off-the-shelf systems for breaking existing captcha systems.
+Based on these results, we find that \system would be an effective replacement to the human solvers employed by
+captcha solving services, as humans are often hindered by audio captchas~\cite{captchas-are-hard}.
 
-\note{Rate limit of speech recognition services.}
-\textbf{Solution flexibility.} \note{How many wrong digits allowed per service?}
-
-\begin{figure*}[tp]
-\begin{subfigure}{0.75\textwidth}
-    \centering
-    \includegraphics[width=1\textwidth]{figures/captcha_length.eps}
-    \label{fig:length_time}
-\end{subfigure} %\hspace{0.03\textwidth}
-\begin{subfigure}{0.2\textwidth}
-    \centering
-    %\caption{Average solution time for each recognition service and accent against the audio captcha services we evaluated.}
-    \label{tab:length}
-    \begin{tabular}{lc}
-    \toprule
-    \textbf{Digits} & \textbf{\# of Captchas} \\
-    \hline
-    5 & 95 (31.3\%) \\
-    \rowcolor{Gray} 
-    6 & 14 (4.6\%) \\
-    7 & 34 (11.2\%) \\
-    \rowcolor{Gray} 
-    8 & 51 (16.8\%) \\
-    9 & 68 (22.4\%) \\
-    \rowcolor{Gray} 
-    10 & 41 (13.5\%)\\
-    \bottomrule
-    \end{tabular}
-\end{subfigure}
-\caption{Variation of audio captcha length in \re v2.a over time.}
-\label{fig:length}
-\end{figure*}
-
-\textbf{\re adaptive length}.
-While by default the length of \re v2.a was 5 digits, we found %that after multiple captcha solutions by our system,
-that \re would adapt to the large amount of requests issued from our system and return captchas with more digits. 
-In Figure~\ref{fig:length} we present a representative experiment that depicts the number of digits in the captchas
-processed by our system over the course of 7 hours. The first 49 captchas all contained 5 digits, whereas the length
-changed in a seemingly random fashion. As can be seen by the breakdown statistics in the Figure, apart from the default
-version with 5 digits, the most common variation we came across contained 9 digits.
-%Overall, out of the 303 challenged processed in the experiment, 95 (31.3\%)
-%had a length of 5, 14 (4.6\%) had 6 digits, 34 (11.2\%) had 7, 51 (16.8\%) had 8 digits, 68 (22.4\%) had 9, and 41 
-%(13.5\%) had 10 digits.
 
 \begin{table}[t]
 \centering
@@ -131,13 +90,41 @@ accuracy for that captcha scheme.
 
 \note{How many mistakes allowed for a correct answer?}
 
+\textbf{Rate limits and economic analysis.} Our study's goal is to explore the feasibility of low-cost attacks 
+against popular captcha services; thus, the scale of such an attack is naturally constrained by the rate
+limiting enforced by the speech recognition APIs. While an attacker could build an offline solver
+using a deep learning framework like TensorFlow~\cite{abadi2016tensorflow}\footnote{Researchers have already
+released prototypes that build on Tenserflow: {https://github.com/mozilla/DeepSpeech}.} to overcome this constraint,
+our threat model explicitly includes non-sophisticated attackers that do not develop or train their own 
+classifiers. As such, the rate limits of each speech recognition service become relevant as they could significantly 
+constrain our attacks. 
+
+Surprisingly, these services have very lax limits that would enable fraudsters to misuse
+them for maintaining large scale audio captcha solving campaigns. For instance, Google's Speech API allows up
+to 250,000 requests per day, where multiple audio files can be submitted per request, allowing for a maximum 
+480 hours of audio processing\footnote{https://cloud.google.com/speech/limits}. 
+In Table~\ref{tab:money} we provide a rough estimation of the profit that an attacker could yield against 
+each captcha service per day using a single Google API account. We assume a lower end market price of \$2 
+per 1,000 solved captchas, and calculate the number of solved captchas based on the length of audio challenges 
+and the highest accuracy achieved by a Google Speech solver (see Table~\ref{tab:combinations}) for each service.
+\note{Most noteworthy results.} It is important to note, however, that these calculations assume that the attacker 
+is not constrained by other forms of rate limiting (e.g., IP-based limits). Given the workarounds employed
+by existing captcha solving services (e.g., proxies, botnets, etc), in practice these limitations will not 
+pose significant obstacles.
+
+On the other hand, IBM Watson allows 1 free month per account\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}.
+Finally, Wit does not have an explicit rate limit. However, it is open to commercial
+apps and requests notification for rates of 1 request per second. As all three services
+only require a new email address for creating an account, attackers could trivially register 
+new email addresses periodically for increasing their overall allowed throughput.
+
 \begin{table}[t]
 \centering
-\caption{Estimated daily profit per captcha service, for an attacker using a single Google Speech API account
-(with the most accurate accent configuration) for that captcha scheme.}
+\caption{Attacker's estimated daily profit for each captcha service, when using one Google Speech API account
+(with the most accurate accent configuration for that captcha scheme).}
 \begin{tabular}{lccc}
 \toprule
-& & \textbf{Solved} & \textbf{Daily} \\
+& \textbf{Captcha} & \textbf{Solved} & \textbf{Daily} \\
 \textbf{Captcha}&  \textbf{Duration} & \textbf{Challenges} & \textbf{Profit} \\
 \hline
 Recaptcha v2.a & & & \\
@@ -157,29 +144,70 @@ Telerik & 7 sec & 188,892 & \$377.8 \\
 \label{tab:money}
 \end{table}
 
-\textbf{Cost constraints.} Our study's goal is to explore the feasibility of low-cost attacks 
-against popular captcha services; thus, the scale of such an attack is naturally constrained by the rate
-limiting enforced by the speech recognition APIs. While an attacker could build an offline solver
-using a deep learning framework like TensorFlow~\cite{abadi2016tensorflow}\footnote{(researchers are already
-releasing such prototypes--{https://github.com/mozilla/DeepSpeech}.} to overcome this constraint,
-our threat model explicitly includes non-sophisticated attackers that do not develop or train their own 
-classifiers. As such, the rate limits of each speech recognition service become relevant as they could significantly 
-constrain our attacks. 
-
-Surprisingly, these services have very lax limits that would enable fraudsters to misuse
-them for maintaining large scale audio captcha solving campaigns. For instance, Google's Speech API allows up
-to 250,000 requests per day, where multiple audio files can be submitted per request, allowing for a maximum 
-480 hours of audio processing\footnote{https://cloud.google.com/speech/limits}. Assuming an average 
-market price of \$2 per 1,000 solved captchas and the accuracy from Table~\ref{tab:combinations}, 
-in Table~\ref{tab:money} we estimate the profit that an attacker could yield against each captcha service
-per day using a single Google API account.
-
-On the other hand, IBM Watson allows 1 free month per account\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}.
-Finally, Wit does not have an explicit rate limit. However, it is open to commercial
-apps and requests notification for rates of 1 request per second. As all these services 
-only require a new email address for creating an account, attackers could trivially register 
-new email addresses periodically for increasing their overall allowed throughput.
-
 %In comparison Clarifai,
 %the most accurate image annotation service used against \re~\cite{sivakorn:eurosp16}, only allows 5,000
 %free operations per month\footnote{https://developer.clarifai.com/pricing/}.
+
+
+\textbf{Solution flexibility.} \note{How many wrong digits allowed per service?}
+
+\begin{figure*}[t]
+\begin{subfigure}{0.75\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{figures/captcha_length.eps}
+    \label{fig:length_time}
+\end{subfigure} %\hspace{0.03\textwidth}
+\begin{subfigure}{0.2\textwidth}
+    \centering
+    %\caption{Average solution time for each recognition service and accent against the audio captcha services we evaluated.}
+    \label{tab:length}
+    \begin{tabular}{lc}
+    \toprule
+    \textbf{Digits} & \textbf{\# of Captchas} \\
+    \hline
+    5 & 95 (31.3\%) \\
+    \rowcolor{Gray} 
+    6 & 14 (4.6\%) \\
+    7 & 34 (11.2\%) \\
+    \rowcolor{Gray} 
+    8 & 51 (16.8\%) \\
+    9 & 68 (22.4\%) \\
+    \rowcolor{Gray} 
+    10 & 41 (13.5\%)\\
+    \bottomrule
+    \end{tabular}
+\end{subfigure}
+\caption{Variation of audio captcha length in \re v2.a over time.}
+\label{fig:length}
+\end{figure*}
+
+\textbf{\re.} While our study aims to evaluate the robustness of many popular audio captchas, 
+Google's \re is the most prevalent captcha service, so we offer some interesting details 
+and findings from our experiments.
+
+\emph{Bypassing rate limits.} As aforementioned in Section~\ref{sec:recaptcha}, \re enforces 
+rate limiting to prevent large scale attacks from a small number of machines. While in practice
+captcha solving services employ proxies~\cite{captcha_proxies} and botnets (e.g., KoobFace~\cite{captcha_solvers}) 
+to overcome such limits, we further explored this mechanism during our experiments. Initially,
+we employed a straightforward approach of circulating through a list of valid User-Agent strings,
+so as to masquerade as numerous computers connecting from a signle IP address (e.g., users behind a NAT).
+However, in that case \re would enforce the same limit. Surprisingly, though, we found that if we 
+supplied a bogus nonsensical User Agent we were able to completely bypass the rate limiting, solving 
+well over a thousand captchas per day from a single IP address. We surmise that a bug in the risk analysis 
+system does not enforce check the other aspects of the request (e.g., IP address, HTTP cookies) when 
+it encounters an ``invalid'' User Agent\footnote{This issue has now been fixed.}.
+%This incident 
+%further highlights how seemingly complex captcha services ]
+
+\emph{Adaptive length}.
+While by default the length of \re v2.a was 5 digits, we found %that after multiple captcha solutions by our system,
+that \re would adapt to the large amount of requests issued from our system and return captchas with more digits. 
+In Figure~\ref{fig:length} we present a representative experiment that depicts the number of digits in the captchas
+processed by our system over the course of 7 hours. The first 49 captchas all contained 5 digits, whereas the length
+changed in a seemingly random fashion. As can be seen by the breakdown statistics in the Figure, apart from the default
+version with 5 digits, the most common variation we came across contained 9 digits.
+%Overall, out of the 303 challenged processed in the experiment, 95 (31.3\%)
+%had a length of 5, 14 (4.6\%) had 6 digits, 34 (11.2\%) had 7, 51 (16.8\%) had 8 digits, 68 (22.4\%) had 9, and 41 
+%(13.5\%) had 10 digits.
+
+\emph{Evolution through time.} \note{How has recaptcha changed during the years?}

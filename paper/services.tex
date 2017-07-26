@@ -88,6 +88,7 @@ Telerik & \jason{Digits}, NATO alphabet & 5 & None \\
 \end{figure*}
 
 \subsection{Google \re}
+\label{sec:recaptcha}
 
 Google's Recaptcha system, which is the most widely deployed captcha system,
 has evolved significantly from its original form, both for adapting to publicized 
@@ -124,18 +125,29 @@ To offer a more accurate picture of how the system has evolved, we include exper
 This version is part of the latest ``Invisible \re'' version which builds upon the ``No Captcha \re'' attacked in 
 previous work~\cite{sivakorn:eurosp16}. This version spells out 10 consecutive digits with little or no noise at all.
 
-\textbf{Recaptcha 1.0} Although still used in many websites, Google has discontinued this version of \re since 2014.
-Furthermore, signing up for \re now will enable the newest version by default. It must be
-noted that the websites that used this version previously did not automatically upgrade to the No 
-captcha Recaptcha version, and remain open to the vulnerabilities that were fixed in the subsequent 
-version. Again, ten digits are spoken in the audio challenge and there is very little or no noise. This 
-version does not enforce any rate limiting unlike the newer versions of \re. The margin for error 
-is again 1 out of the 10 spoken digits. We have obtained \note{X} samples from the authors 
-of~\cite{meutzner2014using} so as to compare the effectiveness of our attack that uses 
-off-the-shelf speech recognition systems against previous studies that used custom
-machine learning classifiers.
+%\textbf{Recaptcha 1.0} Although still used in many websites, Google has discontinued this version of \re since 2014.
+%Furthermore, signing up for \re now will enable the newest version by default. It must be
+%noted that the websites that used this version previously did not automatically upgrade to the No 
+%captcha Recaptcha version, and remain open to the vulnerabilities that were fixed in the subsequent 
+%version. Again, ten digits are spoken in the audio challenge and there is very little or no noise. This 
+%version does not enforce any rate limiting unlike the newer versions of \re. The margin for error 
+%is again 1 out of the 10 spoken digits. We have obtained \note{X} samples from the authors 
+%of~\cite{meutzner2014using} so as to compare the effectiveness of our attack that uses 
+%off-the-shelf speech recognition systems against previous studies that used custom
+%machine learning classifiers.
 
-\note{Actions.} Google: If the web application is detecting bot behavior based upon time differences.
+\textbf{Automating.} As detailed in previous work~\cite{sivakorn:eurosp16}, \re employs various
+safeguards that compliment the captcha challenges and aim to mitigate the extent of automated 
+actions.
+
+\emph{Form filling.} \re's analysis engine detects bots by measuring the time delay between
+each textbox being filled in and identifying automated actions. To overcome this, we introduce 
+random delays between each action (the engine also flags bots that maintain introduce a constant delay).
+
+\emph{Rate limiting.} A significant safeguard in place aims to throttle automated attacks by limiting 
+the amount of captchas that can be solved by a single machine (similar to the token buckets proposed by 
+Elson et al.~\cite{asirra}). In Section~\ref{sec:evaluation} we describe a but we identified in the system
+that allowed us to bypass this check.
 
 \subsection{Apple}
 
@@ -158,9 +170,10 @@ and resembles a clamor of children.
 %\item Cache activity, including reads from and writes to the media cache.\newline
 %\end{itemize}
 
-\textbf{Crawling.} Apple has introduced various safeguards for obstructing automated actions.
+\textbf{Automating.} Apple has opted for certain design choices that pose obstacles to automated actions,
+which we discuss below.
 
-\emph{Obtain audio.} By deploying their own HTML5 audio player Apple has made it 
+\emph{Obtaining audio.} By deploying their own HTML5 audio player Apple has made it 
 difficult to obtain the audio recording, as opposed to other services like \re
 that allow a straightforward fetching of the mp3 file. As a workaround, we access 
 the browser's media stack\footnote{Through chrome://media-internals.} and obtain the 
