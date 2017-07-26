@@ -210,4 +210,48 @@ version with 5 digits, the most common variation we came across contained 9 digi
 %had a length of 5, 14 (4.6\%) had 6 digits, 34 (11.2\%) had 7, 51 (16.8\%) had 8 digits, 68 (22.4\%) had 9, and 41 
 %(13.5\%) had 10 digits.
 
-\emph{Evolution through time.} \note{How has recaptcha changed during the years?}
+\begin{figure*}[tp]
+\begin{subfigure}{0.24\textwidth}
+\includegraphics[width=\textwidth]{figures/recaptcha_evolution/2011.pdf}
+\caption{\re cca. 2011}
+\label{fig:apple}
+\end{subfigure} \hspace{0.01\textwidth}
+\begin{subfigure}{0.24\textwidth}
+\includegraphics[width=\textwidth]{figures/recaptcha_evolution/2014b.pdf}
+\caption{\re cca. 2014}
+\label{fig:botdetect}
+\end{subfigure}\hspace{0.01\textwidth}
+\begin{subfigure}{0.24\textwidth}
+\includegraphics[width=\textwidth]{figures/recaptcha_evolution/2016.pdf}
+\caption{\re cca. 2015-2016}
+\label{fig:captchas}
+\end{subfigure}
+\begin{subfigure}{0.24\textwidth}
+\includegraphics[width=\textwidth]{figures/recaptcha_evolution/2017.pdf}
+\caption{\re after March 2017}
+\label{fig:live}
+\end{subfigure}
+\caption{The evolution of \re audio challenges through time.}
+\label{fig:evolution}
+\end{figure*}
+
+
+\emph{Evolution through time.} In their extensive user study on the usability of captchas, Burzstein et al.~\cite{captchas-are-hard}
+found that users were able to solve only 47\% of \re's audio challenges (that number was calculated following an optimistic approach
+and is an upper bound to the actual accuracy). Since then \re has modified their audio challenges. % to be more user friendly.
+Here we further explore how audio \re has evolved through time. 
+
+In Figure~\ref{fig:evolution} we visualize audio captchas 
+that highlight \re's evolution through time. Indeed, the audio challenges from 2011 are the least ``user-friendly'' as they contain
+a significant amount of background noise in the form of unintelligible discussions, reversed recordings of speech. While the version
+from 2014 is considerably clearer and only five digits long, the audio quality of the spoken digits remains ``noisy'', while background recordings were
+also sporadically interjected. In the sample plotted here, a background recording uttering ``three'' is almost overlapping with the
+digit spoken as part of the challenge (shown in red). As part of their ``No Captcha Recaptcha'' system released in December 2014, the audio challenges were 
+more simplified as they contained five digits with less noise in the recordings; however, certain recordings are processed and the sounds
+are more drawn out. This could potentially be a countermeasure against automated attacks. 
+Finally, in the current version which was released in March 2017,
+the challenges once again contain 10 digits. While there might have been more intermediary changes apart from the ones presented here,
+this samples show a clear evolution of audio \re challenges towards a more user-friendly scheme. The change in the latest version 
+is most likely an attempt to mitigate automated attacks; however, this can only serve as a temporary measure as our experiments have 
+demonstrated that speech recognition technology has reached a point where such challenges can be trivially bypassed. Thus, it remains 
+to be seen whether \re adopts an approach similar to services like Securimage and BotDetect for further hindering automated attacks.
