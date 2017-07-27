@@ -137,22 +137,35 @@ the ``phrases'' optional argument that allows us to narrow down the keywords the
 results in higher accuracy against captcha schemes that use limited/restricted vocabularies (e.g., only digits). The Google
 speech API also requires a mono form, and supports both WAV and FLAC file formats.
 
-\begin{lstlisting}[language=json,firstnumber=1,mathescape=true,caption={Subset of rules use by our post-processing component for
-converting keywords in transcription to elements of captcha's solution.},label={lst:rules}]
-[BotDetect, *]: {hey,hay} $\longmapsto$ "a"
+\begin{lstlisting}[language=json,firstnumber=1,mathescape=true,caption={Subset of rules used by our post-processing component for
+converting keywords in the transcription to the required transformation for the captcha's solution.},label={lst:rules}]
+// "*" works as a wildcard. 
+// Multiple entities allowed per field -- separated with ";"
+// [Captcha, Speech API]: {keywords} $\longmapsto$ "transformation"
+
+// Phase 1
+[BotDetect;CaptchasNet, *]: {hey,hay} $\longmapsto$ "a"
 [BotDetect, IBM]: {three,through,tree,free,he,very,green} $\longmapsto$ "3"
 [BotDetect, Wit;IBM]: {bee,be} $\longmapsto$ "b"
 [CaptchasNet, Wit]: {gulf} $\longmapsto$ "golf"
 [CaptchasNet, Wit]: {elsa} $\longmapsto$ "alpha"
+
+// Phase 2
+[*, *]: {alpha} $\longmapsto$ "a"
+[*, *]: {bravo} $\longmapsto$ "b"
 \end{lstlisting}
 
 
 \textbf{Post-processing.} Our post-processing component relies on a set of manually created rules that define transformations
 of the transcribed audio to the string that will eventually be provided by our main component as the answer to the audio challenge.
 These rules were created after extensive manual experimentation with each speech recognition service for each captcha scheme.
-By identifying mis-identified words that are homonyms or sound somewhat similar to keywords that belong to the 
+By identifying mis-identified words that are homophones or sound somewhat similar to keywords that belong to the 
 restricted dictionary of each captcha scheme (apart from Microsoft Live that uses common English words). This was motivated
 by our observation of recurring mistakes that were made by each speech recognition service (some of which were common across
 all three engines), which can be attributed to the ``consistent'' type of distortion and noise in each captcha system.
-In Listing~\ref{lst:rules} we provide a few examples of our transformation rules.
+In Listing~\ref{lst:rules} we provide a few examples of our transformation rules. In the first phase, the rules process the 
+transcription and apply transformations based on homophones or recurring mistakes that we have identified. For instance, 
+the number ``3'' can me mis-identified by the speech recognition service as ``tree''. Any keywords that have not been 
+transformed are handled by the more generic rules of phase 2, e.g., mapping words form the NATO phonetic alphabet to 
+their corresponding letter.
 
