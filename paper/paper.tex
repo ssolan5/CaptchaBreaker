@@ -89,10 +89,10 @@ fill=azure,inner sep=2pt] (char) {#1};}}
 \lstdefinelanguage{json}{
     basicstyle=\scriptsize\ttfamily,
     showstringspaces=false,
-    keywords={transcript,confidence,alternatives},
+    keywords={transcript,confidence,alternatives,BotDetect,CaptchasNet},
     keywordstyle=\color{blue},
     breaklines=true,
-    morestring          = [s]{""}{""},
+    morestring = [s]{"}{"},
     stringstyle=\color{red},
     float=t,
     frame=single,
@@ -100,7 +100,8 @@ fill=azure,inner sep=2pt] (char) {#1};}}
     captionpos=b,
     comment=[l]{//},
     commentstyle=\itshape\color{green!40!black},
-    stringstyle=\color{orange},
+    morekeywords={IBM,Wit}
+    %stringstyle=\color{green},
     backgroundcolor=\color{background},
     literate=
      *{0}{{{\color{numb}0}}}{1}
@@ -113,11 +114,6 @@ fill=azure,inner sep=2pt] (char) {#1};}}
       {7}{{{\color{numb}7}}}{1}
       {8}{{{\color{numb}8}}}{1}
       {9}{{{\color{numb}9}}}{1}
-      {A}{{{\color{numb}A}}}{1}
-      {B}{{{\color{numb}B}}}{1}
-      {C}{{{\color{numb}C}}}{1}
-      {E}{{{\color{numb}E}}}{1}
-      {F}{{{\color{numb}F}}}{1}
       {:}{{{\color{punct}{:}}}}{1}
       {,}{{{\color{punct}{,}}}}{1}
       {\{}{{{\color{delim}{\{}}}}{1}

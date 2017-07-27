@@ -1,9 +1,3 @@
-\section{Experimental Evaluation}
-\label{sec:evaluation}
-
-In this section we present the results from our extensive experiments again 
-the audio captcha services presented in Section~\ref{sec:services}.
-
 \begin{table*}[t]
 \centering
 \caption{Accuracy of different speech recognition services and accents against the audio captcha services we evaluated.}
@@ -29,6 +23,12 @@ Telerik  & 21.2\% (142/668)  & \textbf{97\%} (452/466) & 12.9\% (47/364) & 74.2\
 \end{tabular}
 \label{tab:combinations}
 \end{table*}
+
+\section{Experimental Evaluation}
+\label{sec:evaluation}
+
+In this section we present the results from our extensive experiments again 
+the audio captcha services presented in Section~\ref{sec:services}.
 
 \textbf{Attack accuracy.} Table~\ref{tab:combinations} presents the accuracy obtained by each speech recognition service 
 against the audio captcha services. In cases where the speech recognition service has the option to select an accent,
@@ -99,25 +99,6 @@ our threat model explicitly includes non-sophisticated attackers that do not dev
 classifiers. As such, the rate limits of each speech recognition service become relevant as they could significantly 
 constrain our attacks. 
 
-Surprisingly, these services have very lax limits that would enable fraudsters to misuse
-them for maintaining large scale audio captcha solving campaigns. For instance, Google's Speech API allows up
-to 250,000 requests per day, where multiple audio files can be submitted per request, allowing for a maximum 
-480 hours of audio processing\footnote{https://cloud.google.com/speech/limits}. 
-In Table~\ref{tab:money} we provide a rough estimation of the profit that an attacker could yield against 
-each captcha service per day using a single Google API account. We assume a lower end market price of \$2 
-per 1,000 solved captchas, and calculate the number of solved captchas based on the length of audio challenges 
-and the highest accuracy achieved by a Google Speech solver (see Table~\ref{tab:combinations}) for each service.
-\note{Most noteworthy results.} It is important to note, however, that these calculations assume that the attacker 
-is not constrained by other forms of rate limiting (e.g., IP-based limits). Given the workarounds employed
-by existing captcha solving services (e.g., proxies, botnets, etc), in practice these limitations will not 
-pose significant obstacles.
-
-On the other hand, IBM Watson allows 1 free month per account\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}.
-Finally, Wit does not have an explicit rate limit. However, it is open to commercial
-apps and requests notification for rates of 1 request per second. As all three services
-only require a new email address for creating an account, attackers could trivially register 
-new email addresses periodically for increasing their overall allowed throughput.
-
 \begin{table}[t]
 \centering
 \caption{Attacker's estimated daily profit for each captcha service, when using one Google Speech API account
@@ -143,6 +124,25 @@ Telerik & 7 sec & 188,892 & \$377.8 \\
 \end{tabular}
 \label{tab:money}
 \end{table}
+
+Surprisingly, these services have very lax limits that would enable fraudsters to misuse
+them for maintaining large scale audio captcha solving campaigns. For instance, Google's Speech API allows up
+to 250,000 requests per day, where multiple audio files can be submitted per request, allowing for a maximum 
+480 hours of audio processing\footnote{https://cloud.google.com/speech/limits}. 
+In Table~\ref{tab:money} we provide a rough estimation of the profit that an attacker could yield against 
+each captcha service per day using a single Google API account. We assume a lower end market price of \$2 
+per 1,000 solved captchas, and calculate the number of solved captchas based on the length of audio challenges 
+and the highest accuracy achieved by a Google Speech solver (see Table~\ref{tab:combinations}) for each service.
+\note{Most noteworthy results.} It is important to note, however, that these calculations assume that the attacker 
+is not constrained by other forms of rate limiting (e.g., IP-based limits). Given the workarounds employed
+by existing captcha solving services (e.g., proxies, botnets, etc), in practice these limitations will not 
+pose significant obstacles.
+
+On the other hand, IBM Watson allows 1 free month per account\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}.
+Finally, Wit does not have an explicit rate limit. However, it is open to commercial
+apps and requests notification for rates of 1 request per second. As all three services
+only require a new email address for creating an account, attackers could trivially register 
+new email addresses periodically for increasing their overall allowed throughput.
 
 %In comparison Clarifai,
 %the most accurate image annotation service used against \re~\cite{sivakorn:eurosp16}, only allows 5,000
@@ -254,4 +254,5 @@ the challenges once again contain 10 digits. While there might have been more in
 this samples show a clear evolution of audio \re challenges towards a more user-friendly scheme. The change in the latest version 
 is most likely an attempt to mitigate automated attacks; however, this can only serve as a temporary measure as our experiments have 
 demonstrated that speech recognition technology has reached a point where such challenges can be trivially bypassed. Thus, it remains 
-to be seen whether \re adopts an approach similar to services like Securimage and BotDetect for further hindering automated attacks.
+to be seen whether \re adopts an approach similar to services like Securimage and BotDetect and introduce more noise and distortion 
+for further hindering automated attacks.

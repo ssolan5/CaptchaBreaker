@@ -47,14 +47,14 @@ for better results; specifically we restrict the dictionary used by the solver (
 numbers) as well as the accent classifier to use (services may support multiple English accents 
 -- British, American etc.).
 
-\protect\circlea{\small 4} The "transcript"ion of the audio challenge is obtained from the solver 
+\protect\circlea{\small 4} The ``transcription'' of the audio challenge is obtained from the solver 
 and passed to the post-processing component. Based on the originating captcha service, the corresponding  
 module will process the "transcript"ion and prepare the solution to the challenge. If a service employs the 
 NATO phonetic alphabet, the transcribed words will be mapped to the letters they represent. For instance, 
 ``Alpha Bravo'' will be substituted with ``AB''. Furthermore, we have created manually curated dictionaries
 per captcha service and speech recognition engine for further processing the "transcript"ions. This processing
 also handles cases of homophones; for instance, $\{two,too,to\}$ are all
-mapped to $\{2\}$ for captcha services that only contain numerals in the audio challenges.
+mapped to $\{2\}$ for captcha services that only contain digits in the audio challenges.
 
 \protect\circlea{\small 5} The final solution is passed to the browser automation module,
 which is responsible for passing the captcha challenge.
@@ -103,18 +103,18 @@ provide some details regarding these services.
 
 \begin{lstlisting}[language=json,firstnumber=1,caption={Example response from IBM Watson's API for an audio challenge from Google \re v2.a.},label={lst:IBM}]
 {
-"results": [
-{"alternatives": [{"transcript":"eight", "confidence":0.982679}]},
-{"alternatives": [{"transcript":"three", "confidence":0.742102}]},
-{"alternatives": [{"transcript":"eight", "confidence":0.593190}]},
-{"alternatives": [{"transcript":"nine", "confidence":0.6004673}]},
-{"alternatives": [{"transcript":"five", "confidence":0.982679}]}
+results: [
+{alternatives: [{transcript:"eight", confidence:0.982679}]},
+{alternatives: [{transcript:"three", confidence:0.742102}]},
+{alternatives: [{transcript:"eight", confidence:0.593190}]},
+{alternatives: [{transcript:"nine", confidence:0.6004673}]},
+{alternatives: [{transcript:"five", confidence:0.982679}]}
 ]
 }
 
 \end{lstlisting}
 
-\emph{IBM Watson.} IBM Watson's Speech To Text service provides a public REST API, and the website provides 
+\emph{IBM Bluemix (Watson).} IBM Watson's Speech To Text service provides a public REST API, and the website provides 
 sample code in multiple programming languages to facilitate integration.
 %in Curl, Ruby and Node.JS with best practices for using their REST API. The API is also very well documented.
 Their service accepts various audio file formats as input, and returns a 
@@ -125,4 +125,34 @@ like Spanish, Brazilian, Mandarin, Arabic, and two different accents in English 
 %account, after which each additional minute is charged \$0.02. We used multiple accounts each to access the free 
 %version of the software for the term of our project.
 
+\emph{Wit.} Wit, which was acquired by Facebook in 2015, offers an API that leverages their natural language processing
+capabilities and is geared towards developers building voice-activated interfaces (e.g., for home automation). We transform 
+audio files to a WAV format (if required) in a monophonic (\emph{mono}) form as Wit does not currently support stereo format.
+We use the ``free-text'' and ``keywords'' search strategies, that allow us \note{to identify values belonging to a predefined 
+list of keywords}.
+
+\emph{Google Cloud Speech.}  Google has released a RESTful API that offers access to a speech recognition system built on 
+a deep learning neural network that can identify speech in over 80 languages. The API endpoint for recognizing speech supports
+the ``phrases'' optional argument that allows us to narrow down the keywords their classifier model tries to identify, which 
+results in higher accuracy against captcha schemes that use limited/restricted vocabularies (e.g., only digits). The Google
+speech API also requires a mono form, and supports both WAV and FLAC file formats.
+
+\begin{lstlisting}[language=json,firstnumber=1,mathescape=true,caption={Subset of rules use by our post-processing component for
+converting keywords in transcription to elements of captcha's solution.},label={lst:rules}]
+[BotDetect, *]: {hey,hay} $\longmapsto$ "a"
+[BotDetect, IBM]: {three,through,tree,free,he,very,green} $\longmapsto$ "3"
+[BotDetect, Wit;IBM]: {bee,be} $\longmapsto$ "b"
+[CaptchasNet, Wit]: {gulf} $\longmapsto$ "golf"
+[CaptchasNet, Wit]: {elsa} $\longmapsto$ "alpha"
+\end{lstlisting}
+
+
+\textbf{Post-processing.} Our post-processing component relies on a set of manually created rules that define transformations
+of the transcribed audio to the string that will eventually be provided by our main component as the answer to the audio challenge.
+These rules were created after extensive manual experimentation with each speech recognition service for each captcha scheme.
+By identifying mis-identified words that are homonyms or sound somewhat similar to keywords that belong to the 
+restricted dictionary of each captcha scheme (apart from Microsoft Live that uses common English words). This was motivated
+by our observation of recurring mistakes that were made by each speech recognition service (some of which were common across
+all three engines), which can be attributed to the ``consistent'' type of distortion and noise in each captcha system.
+In Listing~\ref{lst:rules} we provide a few examples of our transformation rules.
 

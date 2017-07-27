@@ -122,7 +122,7 @@ speakers may be employed. Accents tend to not differ that much.
 
 \textbf{Recaptcha 2b.} This is the latest version of \re that was released during our experiments (March 2017). 
 To offer a more accurate picture of how the system has evolved, we include experiments against both versions.
-This version is part of the latest ``Invisible \re'' version which builds upon the ``No Captcha \re'' attacked in 
+This version is part of the latest ``Invisible \re'' version which builds upon the ``No Captcha \re'' risk analysis engine attacked in 
 previous work~\cite{sivakorn:eurosp16}. This version spells out 10 consecutive digits with little or no noise at all.
 
 %\textbf{Recaptcha 1.0} Although still used in many websites, Google has discontinued this version of \re since 2014.
@@ -151,8 +151,8 @@ that allowed us to bypass this check.
 
 \subsection{Apple}
 
-Apple's captcha is encountered while signing up for a new iCloud account 
-Before spelling out the audio challenge, 
+Apple's captcha is encountered while signing up for a new iCloud account.
+Before spelling out the audio challenge,
 the voice first says ``Please enter the $n$ numbers that you hear in the textbox provided''. The 
 spoken numbers consist of two digits and are always spoken by a single speaker.
 The page times out after two minutes of inactivity and a pop up appears for confirmation if the user is 
@@ -191,7 +191,7 @@ process using PyWinAuto~\cite{pywinauto}.
 
 \textbf{Pre-processing.} The audio challenge starts with spoken instructions directing the user to 
 ``Please enter the $n$ numbers in the text box provided'', where $n$ denotes how many double digit numbers will be spoken
-in the captcha file. We remove the 4.35 seconds of the message from the audio file that will be sent to the service.
+in the captcha file. We the beginning of the message from the audio file that will be sent to the service.
 
 
 \subsection{BotDetect}
