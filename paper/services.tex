@@ -19,15 +19,15 @@ detecting automated attacks.
 Recaptcha v2.0 & Digits & 5 & None \\
 \rowcolor{Gray}
 Recaptcha v2.1 & Digits & 10 & None \\
-Apple & Numbers (10-99) & 4 & High\\
+Apple & Numbers (10-99) & 4 & Moderate\\
 \rowcolor{Gray}
 BotDetect & Digits, Alphabet & 1-13 & High \\
 Captchas.net & NATO alphabet & 6 & None \\
 \rowcolor{Gray}
 Microsoft Live & Words & 5-7 & Moderate \\
-Securimage & Digits, Alphabet & 6 & Moderate\\
+Securimage & Digits, Alphabet & 6 & High \\
 \rowcolor{Gray}
-Telerik & \jason{Digits}, NATO alphabet & 5 & None \\
+Telerik & Digits, NATO & 5 & None \\
 \bottomrule
 \end{tabular}
 \label{tab:services}
@@ -191,11 +191,10 @@ process using PyWinAuto~\cite{pywinauto}.
 %basically having 
 %something like a js framework or html5 template to create the web application GUI makes it slightly more difficult to bot. (very slightly)
 
-\note{Use user agent spoofing to hide your behaviour.}
+%\note{Use user agent spoofing to hide your behaviour.}
 
-\textbf{Pre-processing.} The audio challenge starts with spoken instructions directing the user to 
-``Please enter the $n$ numbers in the text box provided'', where $n$ denotes how many double digit numbers will be spoken
-in the captcha file. We the beginning of the message from the audio file that will be sent to the service.
+\textbf{Pre-processing.} We remove the spoken instructions at the beginning of the audio file
+before it is sent to the service.
 
 
 \subsection{BotDetect}
@@ -223,7 +222,8 @@ Python, JSP and Ruby. It is a free service, but shows a watermark on the images 
 which can be removed by subscribing to the paid version. 
 The audio challenges employ the NATO phonetic alphabet, and the user has to enter the corresponding letters.
 For instance, ``RIPAZH'' would be read out as 'Romeo India Papa Alpha Zulu Hotel' and the user is expected 
-to enter the first letter of each uttered word. The audio challenges contain little background noise.
+to enter the first letter of each uttered word. The audio challenges contain little background noise during the 
+spoken words. However, the words themselves are distorted and sound like digitally synthesized speech.
 
 %For both the text and the audio challenges, 
 %Captchas.net follows the following method to validate the response:
@@ -241,7 +241,7 @@ Microsoft's Live domain provides access to other Microsoft services, including
  encountered while registering for a new account. The audio challenge contains random English 
  words. On average they are 5-letter words and 5-7 such words are spoken per challenge, which must be typed by the user.
 The words are spoken by 2 different people - one female and one male. The background noise 
-are from a single speaker talking in a foreign language.
+is from speakers talking in a foreign language.
 %although we found that the number of words spoken out by the female voice are much higher. In our opinion, it provided better accessibility 
 %to visually impaired users as they can press '1' on their keyboard to play or repeat the audio challenge 
 %and by requesting a new challenge using the button labeled 'New' on the interface, the focus is set to the 
@@ -276,7 +276,7 @@ spelled out by a single speaker and there is almost no background noise in the a
 %The 
 %audio is not available to download explicitly, but is present on the DOM of the web page 
 %in an <audio> tag, from which the URL of the audio file can be easily grabbed. 
-One of the customizations provided by the service is a rate limit system, which requires the form to 
-be displayed to the user for a particular number of seconds before it can be considered as 
-human-submitted. However, this setting is left to the person who implements the captcha 
+One of the customizations provided by the service is a throttling measure, which requires the form to 
+be displayed to the user for a particular number of seconds before an answer will be considered as 
+human-submitted. However, this setting is left up to the developer who incorporates the captcha 
 service on the target web page.
