@@ -40,13 +40,13 @@ of the audio captcha ecosystem.
 
 In this work we present \system, a modular system that leverages existing speech recognition services
 for solving audio captcha challenges. Specifically, we leverage the
-APIs offered by IBM's Bluemix (Watson), Facebook's Wit, and Google's Cloud Speech. In a nutshell, our system works as
+APIs offered by IBM Bluemix (Watson), Facebook Wit, and Google Cloud Speech. In a nutshell, our system works as
 follows. First, our browser automation module visits a page protected by one of the captcha services,
 and obtains the audio challenge. Next, after minimal preprocessing (removing audio instructions and 
 converting to different format), the audio recording is submitted 
 to one of the speech recognition services. We then process the transcription returned by the service
 based on the properties of the specific captcha scheme (e.g., transcribing to alphanumeric 
-from NATO's phonetic alphabet) and prepare the response to the challenge. This is then handled by
+from NATO phonetic alphabet) and prepare the response to the challenge. This is then handled by
 the browser automation module that inputs the response and checks whether it was accepted by the captcha
 service.
 
@@ -57,7 +57,7 @@ a captcha system broken, with the highest accuracy achieved against \re -- the m
 captcha system.
 
 \note{Surprising findings}: every single one broken. Accent matters. Higher accuracy than prior work. Much higher accuracy than
-visual captchas. Old \re harder than new \re. The most popular is also the easiest to break (?).
+visual captchas. Old \re harder than new \re. The most popular is also the easiest to break \note{(?)}.
 Apart from facilitating visually-impaired users, audio captchas introduce an attack
 surface that presents a significantly smaller obstacle to attackers compared to visual captchas.
 Services employ various safeguards against bots.

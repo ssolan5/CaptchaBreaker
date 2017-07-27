@@ -111,7 +111,7 @@ constrain our attacks.
 Recaptcha v2.0 & 7 sec & 242,413 & \$485.3 \\
 \rowcolor{Gray}
 Recaptcha v2.1 & 15 sec & & \\
-Apple  & & & \\
+Apple  & 14 sec & 65,170 & \$130.3 \\
 \rowcolor{Gray}
 BotDetect  & 6 sec & 28,215 & \$54.7 \\
 Captchas.net & 14 sec & 27,524 & \$55 \\
@@ -193,7 +193,7 @@ we employed a straightforward approach of circulating through a list of valid Us
 so as to masquerade as numerous computers connecting from a single IP address (e.g., users behind a NAT).
 However, in that case \re would enforce the same limit. Surprisingly, though, we found that if we 
 supplied a bogus nonsensical User Agent we were able to completely bypass the rate limiting,
-and only faced issues when issuing many concurrent solvers (which could be flagged as a potential DDoS attempt).
+and only faced issues when issuing many concurrent solvers (which could appear as a potential DDoS attempt).
 %solving  well over a thousand captchas per day from a single IP address. 
 We surmise that a bug in the risk analysis
 system does not enforce the check on the other aspects of the request (e.g., IP address, HTTP cookies) when
@@ -206,7 +206,7 @@ While by default the length of \re v2.0 was 5 digits, we found %that after multi
 that \re would adapt when facing a large amount of requests from our system and return captchas with more digits. 
 In Figure~\ref{fig:length} we present a representative experiment that depicts the number of digits in the captchas
 processed by our system over the course of 7 hours. The first 49 captchas all contained 5 digits, whereas the length
-changed in a seemingly random fashion. As can be seen by the breakdown statistics in the Figure, apart from the default
+changed in a seemingly random fashion. As can be seen by the breakdown statistics in the figure, apart from the default
 version with 5 digits, the most common variation we came across contained 9 digits.
 %Overall, out of the 303 challenged processed in the experiment, 95 (31.3\%)
 %had a length of 5, 14 (4.6\%) had 6 digits, 34 (11.2\%) had 7, 51 (16.8\%) had 8 digits, 68 (22.4\%) had 9, and 41 
