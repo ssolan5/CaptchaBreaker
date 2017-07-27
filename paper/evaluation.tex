@@ -7,9 +7,9 @@
 \cmidrule{2-6}
 \textbf{Captcha Service}& \textbf{Wit}& \textbf{IBM (US)} & \textbf{ IBM (UK)} & \textbf{Google (US)} & \textbf{Google (UK)} \\
 \hline
-Recaptcha v2.a & 67.1\% (671/1000) & 95.8\% (958/1000) & 67.2\% (672/1000) & \textbf{98.3\%} (983/1000) & 81.6\% (816/1000) \\
+Recaptcha v2.0 & 67.1\% (671/1000) & 95.8\% (958/1000) & 67.2\% (672/1000) & \textbf{98.3\%} (983/1000) & 81.6\% (816/1000) \\
 \rowcolor{Gray}
-Recaptcha v2.b &  &  &  &  & \\
+Recaptcha v2.1 &  &  &  &  & \\
 Apple  & 0\% (0/365)  & 2.3\% (6/260) & 6.8\% (17/251) & 35.8\% (126/352) & \textbf{52.8\%} (143/271) \\
 \rowcolor{Gray}
 BotDetect  & 1.23\% (11/894)  & 1.38\% (19/138) & 6.67\% (12/180) & \textbf{9.5\%} (102/1067)  & 6.65\% (79/1187) \\
@@ -38,7 +38,7 @@ rendering all captcha schemes broken.} Nonetheless, there is significant varianc
 the accuracy obtained by each speech recognition engine for a specific captcha service. 
 
 The most alarming finding is 
-that \system achieved the highest accuracy against \re v2.a, the most widely deployed captcha service. When compared 
+that \system achieved the highest accuracy against \re v2.0, the most widely deployed captcha service. When compared 
 to the 70.78\% attack accuracy reported for the image \re~\cite{sivakorn:eurosp16}, it becomes apparent that audio challenges
 weaken the overall security offered by \re, as fraudsters can target audio captchas for deploying highly successful
 attacks. The Apple and Microsoft Live captchas that protect their account creation process, are also highly susceptible to 
@@ -67,9 +67,9 @@ captcha solving services, as humans are often hindered by audio captchas~\cite{c
 & & \textbf{(US)} & \textbf{(UK)} & \textbf{(US)} & \textbf{(UK)} \\
 \textbf{Captcha}&  \textbf{Wit} & \textbf{IBM} & \textbf{IBM} & \textbf{Google} & \textbf{Google} \\
 \hline
-Recaptcha v2.a & 13.85s & 10.56s  & 12.25s & \textbf{18.46s} & 20.41s \\
+Recaptcha v2.0 & 13.85s & 10.56s  & 12.25s & \textbf{18.46s} & 20.41s \\
 \rowcolor{Gray}
-Recaptcha v2.b &  &  &  & & \\
+Recaptcha v2.1 &  &  &  & & \\
 Apple  & 36.4s & 33.4s  & 34.7s & 15.5s & \textbf{13.9s} \\
 \rowcolor{Gray}
 BotDetect  & 5.53s  & 4.21s & 5.72s & \textbf{3.40s} & 3.05s \\
@@ -108,18 +108,18 @@ constrain our attacks.
 & \textbf{Captcha} & \textbf{Solved} & \textbf{Daily} \\
 \textbf{Captcha}&  \textbf{Duration} & \textbf{Challenges} & \textbf{Profit} \\
 \hline
-Recaptcha v2.a & & & \\
+Recaptcha v2.0 & 7 sec & 242,413 & \$485.3 \\
 \rowcolor{Gray}
-Recaptcha v2.b & & & \\
+Recaptcha v2.1 & 15 & & \\
 Apple  & & & \\
 \rowcolor{Gray}
-BotDetect  & 6 sec & 28,215 & \$56.4 \\
-Captchas.net & 14 sec & 28,385 & \$56.8 \\
+BotDetect  & 6 sec & 28,215 & \$54.7 \\
+Captchas.net & 14 sec & 27,524 & \$55 \\
 \rowcolor{Gray}
 Microsoft Live & & & \\
 Securimage & & & \\
 \rowcolor{Gray}
-Telerik & 7 sec & 188,892 & \$377.8 \\
+Telerik & 7 sec & 188,892 & \$366.3 \\
 \bottomrule
 \end{tabular}
 \label{tab:money}
@@ -177,7 +177,7 @@ new email addresses periodically for increasing their overall allowed throughput
     \bottomrule
     \end{tabular}
 \end{subfigure}
-\caption{Variation of audio captcha length in \re v2.a over time.}
+\caption{Variation of audio captcha length in \re v2.0 over time.}
 \label{fig:length}
 \end{figure*}
 
@@ -200,7 +200,7 @@ it encounters an ``invalid'' User Agent\footnote{This issue has now been fixed.}
 %further highlights how seemingly complex captcha services ]
 
 \emph{Adaptive length}.
-While by default the length of \re v2.a was 5 digits, we found %that after multiple captcha solutions by our system,
+While by default the length of \re v2.0 was 5 digits, we found %that after multiple captcha solutions by our system,
 that \re would adapt to the large amount of requests issued from our system and return captchas with more digits. 
 In Figure~\ref{fig:length} we present a representative experiment that depicts the number of digits in the captchas
 processed by our system over the course of 7 hours. The first 49 captchas all contained 5 digits, whereas the length

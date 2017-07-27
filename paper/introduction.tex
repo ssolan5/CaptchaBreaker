@@ -8,9 +8,9 @@ becoming obstacles to legitimate users. Traditionally, captchas comprise a first
 line of defense and attempt to differentiate between actual users and bots by 
 presenting a challenge that requires some form of task that is considered hard 
 for a computer~\cite{captcha}. While visual captchas have evolved significantly 
-since their initial incarnation (from distorted text to semantic images and cognitive games), 
-with Google's recent \re system attempting to bridge the gap between security 
-and usability, accessibility captchas have not evolved as much.
+since their initial incarnation (from distorted text to semantic images and cognitive games),
+accessible captchas have not evolved as drastically. Even Google's recent \re system that 
+attempts to bridge the gap between security and usability, offers audio captchas.
 %have remained 
 %relatively unchanged.
 
@@ -20,18 +20,18 @@ challenge; typically they consist of a series of spoken words/letters/numbers
 and some form of audio distortion or background noise.
 According to the World Health Organization 285 million people have 
 some form of visual impairment~\cite{impaired}, rendering audio captchas a
-crucial component of an accessible world wide web. While audio captchas present
+crucial component of an accessible world wide web. While audio captchas may still present
 an obstacle to these users~\cite{sauer2008towards,bigham2008inspiring,bigham2009evaluating},
 they are currently the de facto alternative offered by captcha services.
 
 While audio captchas have not received as much attention from the security community as visual captchas,
 previous work has presented automated attacks against audio captchas~\cite{Sano2013,Bursztein2009,
 meutzner2014using,tam2009breaking,bursztein2011failure}. These studies have demonstrated attacks
-that achieve high accuracy by building customs classifiers using machine learning techniques.
-However, the tremendous advancements of the past years in deep learning technology have
+that achieve high accuracy by using machine learning to build custom classifiers.
+However, the tremendous advancements of the past several years in deep learning technology have
 resulted in significant improvements in speech recognition systems, recently achieving
 results that approach human performance~\cite{ibm_blog,saon2017english}. Motivated
-by these advancements, and the recent work by Sivakorn et al. against image 
+by these advancements, and the recent work by Sivakorn et al. against the image-based
 \re~\cite{sivakorn:eurosp16}, we investigate how speech recognition services
 can be misused for breaking existing audio captcha systems. By exploring how effective
 widely-available speech recognition systems are at transcribing audio challenges despite 
@@ -66,10 +66,11 @@ In the continuing effort to mitigate harmful automated activities, much effort h
 designing and developing visual captcha systems that raise the bar for attackers while remaining 
 solvable by actual users. Our extensive evaluation of the audio captcha ecosystem highlights
 a troubling reality. Audio captchas currently offer an insecure alternative entry point for fraudsters,
-as off-the-shelf options allow them to solve audio challenges with much higher accuracy than their visual
-counterparts. We argue that it is critical to explore alternative captcha methods for visually-impaired users,
+as off-the-shelf options allow them to solve audio challenges with high accuracy (in the case of \re
+we achieve a \note{X\%} improvement over reported attacks against the image-based challenge of the same version). 
+We argue that it is critical to explore alternative captcha methods for visually-impaired users,
 as audio captchas increase the attack surface of popular web services and undermine the security
-(albeit limited~\cite{185128,sivakorn:eurosp16}) offered by visual challenges.
+(albeit limited~\cite{185128,sivakorn:eurosp16}) offered by their visual counterparts.
 
 Overall, the main contributions of our work are:
 

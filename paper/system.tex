@@ -38,38 +38,39 @@ the page, the audio challenge is extracted.
 \protect\circlea{\small 2} The audio file is passed to the pre-processing component, which is responsible 
 for preparing the audio file that will be passed to the speech recognition service. If there are audio 
 instructions at the beginning of the audio challenge they are removed, and the final audio
-recording is then converted to a lossless format. Then, based on the captcha service, our system
+recording is then converted to a supported format. Then, based on the captcha service, our system
 selects the speech recognition service with the best results for the specific challenge.
 
-\protect\circlea{\small 3} The audio file is uploaded for "transcript"ion by the module that handles that solver, 
+\protect\circlea{\small 3} The audio file is uploaded for transcription by the module that handles that solver, 
 together with a predetermined configuration. The configuration allows us to fine-tune the "transcript"ion process
 for better results; specifically we restrict the dictionary used by the solver (e.g., to only expect  
 numbers) as well as the accent classifier to use (services may support multiple English accents 
 -- British, American etc.).
 
-\protect\circlea{\small 4} The ``transcription'' of the audio challenge is obtained from the solver 
-and passed to the post-processing component. Based on the originating captcha service, the corresponding  
-module will process the "transcript"ion and prepare the solution to the challenge. If a service employs the 
+\protect\circlea{\small 4} The transcription of the audio challenge is obtained from the solver 
+and passed to the post-processing component. The corresponding module will process the transcription 
+based on a set of rules %(e.g., based on the captcha's dictionary and common homophones) 
+and prepare the solution to the challenge. If a service employs the 
 NATO phonetic alphabet, the transcribed words will be mapped to the letters they represent. For instance, 
-``Alpha Bravo'' will be substituted with ``AB''. Furthermore, we have created manually curated dictionaries
-per captcha service and speech recognition engine for further processing the "transcript"ions. This processing
-also handles cases of homophones; for instance, $\{two,too,to\}$ are all
+``Alpha Bravo'' will be substituted with ``AB''. Furthermore, we have manually prepared rulesets
+per captcha service and speech recognition engine %for further processing the transcriptions. This processing
+that handle cases of homophones or recurring mis-identifications; for instance, $\{two,too,to\}$ are all
 mapped to $\{2\}$ for captcha services that only contain digits in the audio challenges.
 
-\protect\circlea{\small 5} The final solution is passed to the browser automation module,
+\protect\circlea{\small 5} The final solution is forwarded to the browser automation module,
 which is responsible for passing the captcha challenge.
 
 \protect\circlea{\small 6} The browser automation module inputs the solution while mimicking 
 user behavior, as certain captcha services have deployed extra checks for identifying bots.
-It also verifies whether the solution was accepted by the captcha service.
+It also verifies that the solution was accepted by the captcha service.
 
 \subsection{Implementation Details}
 
 \textbf{Browser automation.}
-Our browser automation components is built upon the Selenium framework~\cite{selenium}. This offers
+Our browser automation component is built upon the Selenium framework~\cite{selenium}. This offers
 flexibility in setting up our environment (e.g., browser), as well as advanced functionality
 and configurability that allow us to implement scraping behavior that does not trigger bot detection
-mechanisms currently deployed by certain services\footnote{There is no straightforward way to detect 
+mechanisms currently deployed by certain services.\footnote{There is no straightforward way to detect 
 automation apart for checking some predefined variables (which can be easily modified).}
 %Most websites do not check these in practice.}.
 Selenium communicates with the browser via a special protocol 
@@ -97,8 +98,8 @@ which handles the browser from outside.
 \note{how do you automatically identify the captcha service being used on a random page?}
 
 \textbf{Speech recognition APIs.}
-We used three different voice recognition services for our system: Google's Cloud Speech API,
-IBM Watsons Text-to-Speech API, and Facebook's Wit.ai voice recognition service. Below we 
+We have incorporated support for three widely-available voice recognition services: Google's Cloud Speech API,
+IBM Watson's Text-to-Speech API, and Facebook's Wit.ai service. Below we 
 provide some details regarding these services.
 
 \begin{lstlisting}[language=json,firstnumber=1,caption={Example response from IBM Watson's API for an audio challenge from Google \re v2.a.},label={lst:IBM}]
@@ -117,8 +118,8 @@ results: [
 \emph{IBM Bluemix (Watson).} IBM Watson's Speech To Text service provides a public REST API, and the website provides 
 sample code in multiple programming languages to facilitate integration.
 %in Curl, Ruby and Node.JS with best practices for using their REST API. The API is also very well documented.
-Their service accepts various audio file formats as input, and returns a 
-with the timestamps of each recognized word, a confidence score, and alternative an hypothesis (if there is 
+The service accepts various audio file formats as input, and returns a JSON object
+with the timestamps of each recognized word, a confidence score, and alternative hypothesis (if there is 
 another interpretation for the word). It provides support for various languages 
 like Spanish, Brazilian, Mandarin, Arabic, and two different accents in English - British and American.
 %is available for free for the first 1000 min/per month for each 
@@ -137,16 +138,16 @@ the ``phrases'' optional argument that allows us to narrow down the keywords the
 results in higher accuracy against captcha schemes that use limited/restricted vocabularies (e.g., only digits). The Google
 speech API also requires a mono form, and supports both WAV and FLAC file formats.
 
+%// Multiple entities allowed per field -- separated with ";"
 \begin{lstlisting}[language=json,firstnumber=1,mathescape=true,caption={Subset of rules used by our post-processing component for
 converting keywords in the transcription to the required transformation for the captcha's solution.},label={lst:rules}]
 // "*" works as a wildcard. 
-// Multiple entities allowed per field -- separated with ";"
 // [Captcha, Speech API]: {keywords} $\longmapsto$ "transformation"
 
 // Phase 1
-[BotDetect;CaptchasNet, *]: {hey,hay} $\longmapsto$ "a"
-[BotDetect, IBM]: {three,through,tree,free,he,very,green} $\longmapsto$ "3"
-[BotDetect, Wit;IBM]: {bee,be} $\longmapsto$ "b"
+[BotDetect, *]: {hey,hay} $\longmapsto$ "a"
+[BotDetect, IBM]: {three,through,tree,free,he,green} $\longmapsto$ "3"
+[BotDetect, Wit]: {bee,be} $\longmapsto$ "b"
 [CaptchasNet, Wit]: {gulf} $\longmapsto$ "golf"
 [CaptchasNet, Wit]: {elsa} $\longmapsto$ "alpha"
 
@@ -155,17 +156,17 @@ converting keywords in the transcription to the required transformation for the 
 [*, *]: {bravo} $\longmapsto$ "b"
 \end{lstlisting}
 
-
 \textbf{Post-processing.} Our post-processing component relies on a set of manually created rules that define transformations
 of the transcribed audio to the string that will eventually be provided by our main component as the answer to the audio challenge.
-These rules were created after extensive manual experimentation with each speech recognition service for each captcha scheme.
-By identifying mis-identified words that are homophones or sound somewhat similar to keywords that belong to the 
+These rules were created after extensive manual experimentation with each speech recognition service for each captcha scheme,
+by determining mis-identified words that are homophones or sound somewhat similar to keywords that belong to the 
 restricted dictionary of each captcha scheme (apart from Microsoft Live that uses common English words). This was motivated
 by our observation of recurring mistakes that were made by each speech recognition service (some of which were common across
 all three engines), which can be attributed to the ``consistent'' type of distortion and noise in each captcha system.
+
 In Listing~\ref{lst:rules} we provide a few examples of our transformation rules. In the first phase, the rules process the 
 transcription and apply transformations based on homophones or recurring mistakes that we have identified. For instance, 
-the number ``3'' can me mis-identified by the speech recognition service as ``tree''. Any keywords that have not been 
-transformed are handled by the more generic rules of phase 2, e.g., mapping words form the NATO phonetic alphabet to 
-their corresponding letter.
+the number ``3'' can me mis-labelled by the speech recognition service as ``tree'' that sounds similar.
+Any keywords that have not been transformed are handled by the more generic rules of phase 2, e.g., mapping 
+words form the NATO phonetic alphabet to their corresponding letter.
 
