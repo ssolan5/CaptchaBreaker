@@ -116,7 +116,7 @@ Apple  & 14 sec & 65,170 & \$130.3 \\
 BotDetect  & 6 sec & 28,215 & \$54.7 \\
 Captchas.net & 14 sec & 27,524 & \$55 \\
 \rowcolor{Gray}
-Microsoft Live & & & \\
+Microsoft Live & 11 sec &  & \\
 Securimage & 10 sec & 5,184 & \$10.3 \\
 \rowcolor{Gray}
 Telerik & 7 sec & 188,892 & \$366.3 \\
@@ -136,11 +136,11 @@ and the highest accuracy achieved by a Google Speech solver (see Table~\ref{tab:
 \note{Most noteworthy results.} It is important to note, however, that these calculations assume that the attacker 
 is not constrained by other forms of rate limiting (e.g., IP-based limits). Given the workarounds employed
 by existing captcha solving services (e.g., proxies, botnets, etc), in practice these limitations will not 
-pose insurmountable obstacles.
+pose an insurmountable obstacle.
 
 On the other hand, IBM Watson allows 1 free month per account\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}.
 Finally, Wit does not have an explicit rate limit. However, it is open to commercial
-apps and requests notification for rates approaching one request per second. As all three services
+apps and requires notification for rates approaching one request per second. As all three services
 only require an email address for creating an account, attackers could trivially register 
 new email addresses periodically for increasing their overall allowed throughput.
 
@@ -149,7 +149,7 @@ new email addresses periodically for increasing their overall allowed throughput
 %free operations per month\footnote{https://developer.clarifai.com/pricing/}.
 
 
-\textbf{Solution flexibility.} \note{How many wrong digits allowed per service?}
+%\textbf{Solution flexibility.} \note{How many wrong digits allowed per service?}
 
 \begin{figure*}[t]
 \begin{subfigure}{0.75\textwidth}
@@ -181,9 +181,9 @@ new email addresses periodically for increasing their overall allowed throughput
 \label{fig:length}
 \end{figure*}
 
-\textbf{\re.} While our study aims to evaluate the robustness of many popular audio captchas, 
-Google's \re is the most prevalent captcha service, so we offer some interesting details 
-and findings from our experiments.
+\textbf{\re.} While our study aims to evaluate the robustness of many popular audio captcha schemes,
+Google's \re is the most prevalent captcha service, so we further elaborate on those experiments 
+and offer more interesting details and findings.
 
 \emph{Bypassing rate limits.} As aforementioned in Section~\ref{sec:recaptcha}, \re enforces 
 rate limiting to prevent large scale attacks from a small number of machines. While in practice
@@ -197,7 +197,7 @@ and only faced issues when issuing many concurrent solvers (which could appear a
 %solving  well over a thousand captchas per day from a single IP address. 
 We surmise that a bug in the risk analysis
 system does not enforce the check on the other aspects of the request (e.g., IP address, HTTP cookies) when
-it encounters an ``invalid'' User Agent\footnote{This issue has now been fixed.}.
+it encounters an ``invalid'' User Agent.\footnote{This issue has now been fixed.}
 %This incident 
 %further highlights how seemingly complex captcha services ]
 

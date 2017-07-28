@@ -1,7 +1,7 @@
 \section{Discussion}
 \label{sec:discussion}
 
-Even though text-based captchas have been the most common type of challenge for years they should now be considered
+Even though text-based captchas have been prevalent for years they should now be considered
 obsolete, as prior work has demonstrated generic solvers that do not require specific training per captcha system~\cite{185128}.
 Moreover, researchers recently demonstrated how deep learning neural networks can be leveraged for breaking image-based 
 semantic captchas~\cite{sivakorn:eurosp16}. In a similar vain, our work highlights the ineffectiveness of audio 
@@ -13,7 +13,7 @@ attacks~\cite{mohamed2017security}.
 One could argue that the inclusion of additional noise can prohibit automated attacks. However, we believe this to be
 a short-lived approach as machine learning technologies continue to improve and evolve at a radical rate and may soon
 match or even surpass human abilities at such tasks.
-Furthermore, audio captchas face an important inherent limitation from a design standpoint, as they are considerably
+Furthermore, audio captchas face an important inherent limitation from a design standpoint, as they are particularly
 constrained by the ``security versus usability'' tradeoff. Generally, adding more noise (or distortion) 
 to combat automated solvers can have a severely negative effect on the ability of users to actually solve challenges.
 In the case of audio captchas specifically, this constraint is more pronounced, as human hearing is more error prone 
@@ -22,10 +22,11 @@ one's ability to focus on a specific segment, as opposed to a visual challenge w
 time focusing on a specific segment of the challenge.
 
 When taking into consideration that prior work has found popular audio captchas to be much more difficult 
-than their visual counterparts~\cite{bigham2009evaluating}, also corroborated by a subsequent 
-systematic evaluation of users' ability to solve various types of captchas~\cite{captchas-are-hard}, adding
-additional distortion to existing audio captchas would further hinder visually impaired users from accessing the Web.
-Thus, while designing a robust captcha scheme remains an open problem, it is important 
+than their visual counterparts~\cite{bigham2009evaluating,captchas-are-hard},
+%, also corroborated by a subsequent 
+%systematic evaluation of users' ability to solve various types of captchas~\cite{captchas-are-hard}, 
+adding additional distortion to existing audio captchas would further hinder visually impaired users from accessing the Web.
+Thus, even though designing a robust captcha scheme remains an open problem, it is important 
 to explore designs that do not present obstacles to certain groups of users (e.g., the visually impaired).
 While this may prove to be an insurmountable constraint, we argue that the current approach of offering audio
 challenges is a half-measure, as they remain an obstacle to visually impaired users while offering 

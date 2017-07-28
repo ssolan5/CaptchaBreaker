@@ -95,7 +95,7 @@ which handles the browser from outside.
 %has reduced functional test coverage. 
 
 
-\note{how do you automatically identify the captcha service being used on a random page?}
+%\note{how do you automatically identify the captcha service being used on a random page?}
 
 \textbf{Speech recognition APIs.}
 We have incorporated support for three widely-available voice recognition services: Google's Cloud Speech API,
@@ -129,8 +129,9 @@ like Spanish, Brazilian, Mandarin, Arabic, and two different accents in English 
 \emph{Wit.} Wit, which was acquired by Facebook in 2015, offers an API that leverages their natural language processing
 capabilities and is geared towards developers building voice-activated interfaces (e.g., for home automation). We transform 
 audio files to a WAV format (if required) in a monophonic (\emph{mono}) form as Wit does not currently support stereo format.
-We use the ``free-text'' and ``keywords'' search strategies, that allow us \note{to identify values belonging to a predefined 
-list of keywords}.
+We use the ``free-text'' and ``keywords'' search strategies for obtaining the keywords from the submitted audio files.
+%that allow us to identify values belonging to a predefined 
+%list of keywords for captcha schemes with limited .
 
 \emph{Google Cloud Speech.}  Google has released a RESTful API that offers access to a speech recognition system built on 
 a deep learning neural network that can identify speech in over 80 languages. The API endpoint for recognizing speech supports
