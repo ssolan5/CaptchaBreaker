@@ -1,9 +1,9 @@
 \section{Audio Captcha Services}
 \label{sec:services}
 
-In this section we provide an overview of all the captcha services that we have found deployed in the wild,
+In this section we provide an overview of the captcha services that we found in the wild
 that also provide audio captchas. We provide information on the characteristics of the audio challenges, as
-well as some details about extra steps needed to avoid safeguards deployed by each service for 
+well as some details about extra steps needed to avoid safeguards deployed by certain services for 
 detecting automated attacks.
 
 %\jason{What are the checks deployed by each service? How do we bypass them? E.g., highlighting boxes etc.}
@@ -94,7 +94,7 @@ Telerik & Digits, NATO & 5 & None \\
 Google's Recaptcha system, which is the most widely deployed captcha system,
 has evolved significantly from its original form, both for adapting to publicized 
 attacks (e.g.,~\cite{GoodfellowBIAS13}) and for minimizing the nuisance 
-presented by captchas. While the audio version has not evolved as drastically from its original 
+presented to users. While the audio version has not evolved as drastically from its original 
 form, during our experiments there was a change in the audio challenges; we 
 differentiate between the 2 versions in the remainder of the paper.
 
@@ -107,7 +107,7 @@ differentiate between the 2 versions in the remainder of the paper.
 
 \textbf{Recaptcha v2.0.} The audio challenge provided by the \re system spells out 5 digits
 consecutively with little or noise, while the interval between the digits fluctuates. 
-Each digit may be spoken out by the same individual (male or female) or multiple 
+Each digit may be spoken out by the same individual (male or female), or multiple 
 speakers may be employed. While the challenges do not contain background noise, certain 
 spoken digits have a more distorted nature and sound drawn out or slowed down.  %Accents tend to not differ that much.
 
@@ -143,8 +143,8 @@ recordings of digits that sound distorted.
 safeguards that compliment the captcha challenges and aim to mitigate the extent of automated 
 actions.
 
-\emph{Form filling.} \re's analysis engine detects bots by measuring the time delay between
-each textbox being filled in and identifying automated actions. To overcome this, we introduce 
+\emph{Form filling.} \re's analysis engine also detects bots by measuring the time delay between
+each text box being filled in for identifying automated actions. To overcome this we introduce 
 random delays between each action (the engine also flags bots that maintain a constant delay 
 between actions).
 
@@ -158,10 +158,11 @@ that allowed us to bypass this check.
 Apple's captcha is encountered while signing up for a new iCloud account.
 Before spelling out the audio challenge,
 the voice first says ``Please enter the $n$ numbers that you hear in the textbox provided''. The 
-spoken numbers consist of two digits and are always spoken by a single speaker.
-The page times out after two minutes of inactivity and a pop up appears for confirmation if the user is 
-still in the process of creating the account. The noise is only present when the numbers are spoken,
+spoken numbers consist of two digits spoken by a single speaker with a synthetic/robotic voice.
+Backgorund noise is only present when the numbers are spoken,
 and resembles a clamor of children.
+The page times out after two minutes of inactivity and a pop up appears for confirmation if the user is 
+still in the process of creating the account. 
 %Apple does not allow downloading the audio file and is 
 %loaded and played via JavaScript and not stored in any cache or temporary storage.
 

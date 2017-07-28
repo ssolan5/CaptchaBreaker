@@ -34,21 +34,21 @@ the audio captcha services presented in Section~\ref{sec:services}.
 against the audio captcha services. In cases where the speech recognition service has the option to select an accent,
 we experiment with both American and British English. For \re v2.1 that was released during our experiments, we run
 an extensive experiment using only the configuration that had the best results again v2.0, so as to minimize the 
-overhead of our experiments on the \re service.
+impact of our experiments on the \re service.
 
-Surprisingly we find that for every single captcha scheme, at least
+Surprisingly we find that for every single captcha scheme at least
 one of the speech recognition services is able to solve more challenges than the 1\% threshold, thus, \emph{practically 
 rendering all captcha schemes broken.} Nonetheless, there is significant variance, not only across captcha schemes, but
-the accuracy obtained by each speech recognition engine for a specific captcha service.
-The most alarming finding is that \system achieves one of the best results \re, the most widely deployed captcha service.
+even for the accuracy obtained by each speech recognition engine for a specific captcha service.
+The most alarming finding is that \system achieves one of the best results against \re, the most widely deployed captcha service.
 When considering the 70.78\% attack accuracy reported for the image challenges of v2.0~\cite{sivakorn:eurosp16},
-it becomes apparent that audio challenges weaken the overall security offered by \re, as fraudsters can target 
+it becomes apparent that audio challenges weaken the overall security offered by \re, as fraudsters can target the
 audio captchas for deploying highly successful attacks. 
 The Apple and Microsoft Live captchas that protect their account creation process, are also highly susceptible to 
 automated attacks, as our approach correctly solves up to 52.8\% and \note{X\%} respectively.
 
 As expected, the services that have more noise, prove to be more robust.
-However, despite the presence of noise impacting the accuracy of the transcription process for all the respective captcha schemes
+However, despite the presence of noise impacting the accuracy of the transcription process for all the respective captcha schemes,
 none of the services is completely impervious to our attacks. Nonetheless, we
 found that the audio captchas from Securimage are the most robust due to the presence of background semantic noise,
 as \system was only able to solve 3\% of the challenges when using Google's Speech API and the British English accent
@@ -90,8 +90,8 @@ Telerik  & 7.53s & \textbf{5.56s} & 6.65s & 3.86s & 3.83s \\
 
 \textbf{Solution time.} In Table~\ref{tab:solution_time} we include the average time required by each speech recognition 
 service for returning a transcription of the audio captcha. The bold values denote the combination that achieved the highest 
-accuracy for that captcha scheme. As can be seen, there is considerable variation on the time required by the different speech 
-recognition services for each captcha scheme. \system solves the Telerik challenges in the least amount of time, while both
+attack accuracy for that captcha scheme. As can be seen, there is considerable variation on the time required by the different speech 
+recognition services for each captcha scheme. \system solves the Telerik challenges in the least amount of time, yet both
 Apple and Securimage require considerably more effort to obtain the transcription. While Google Speech requires $\sim$18.4 
 seconds on average for most accurate attacks against \re v2.0, that increases significantly for v2.1 as it has the longest
 audio challenges (see Table~\ref{tab:money} below). Interestingly, in several cases the speech recognition systems return
@@ -135,7 +135,7 @@ Telerik & 7 sec & 188,892 & \$366.3 \\
 \end{table}
 
 Surprisingly, these services have very lax limits that would enable fraudsters to misuse
-them for maintaining large scale audio captcha solving campaigns. For instance, Google's Speech API allows up
+them for maintaining large-scale captcha-solving campaigns. For instance, Google's Speech API allows up
 to 250,000 requests per day, where multiple audio files can be submitted per request, allowing for a maximum of
 480 hours of audio processing.\footnote{https://cloud.google.com/speech/limits}
 In Table~\ref{tab:money} we provide a rough estimation of the profit that an attacker could yield against 
@@ -143,12 +143,12 @@ each captcha service per day using a single Google API account. We assume a lowe
 per 1,000 solved captchas, and calculate the number of solved captchas based on the length of audio challenges 
 and the highest accuracy achieved by a Google Speech solver (see Table~\ref{tab:combinations}) for each service.
 There is a large variance between the potential profit for each captcha service due to the difference in challenge
-durations as well as the attacks' accuracy. Deploying a solving service for \re would be a highly lucrative
+durations as well as the attacks' accuracy. Nonetheless, deploying a solving service for \re would be a highly lucrative
 operation given its prevalence.
 It is important to note, however, that these calculations assume that the attacker 
 is not constrained by other forms of rate limiting (e.g., IP-based limits). Given the workarounds employed
-by existing captcha solving services (e.g., proxies, botnets, etc), in practice these limitations will not 
-pose an insurmountable obstacle.
+by existing captcha solving services (e.g., proxies~\cite{captcha_proxies}, botnets~\cite{captcha_solvers} etc), 
+in practice these limitations will not pose an insurmountable obstacle.
 
 On the other hand, IBM Watson allows 1 free month per account.\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}
 Finally, Wit does not have an explicit rate limit. However, it is open to commercial
@@ -199,13 +199,15 @@ and offer more interesting details and findings.
 
 \emph{Bypassing rate limits.} As aforementioned in Section~\ref{sec:recaptcha}, \re enforces 
 rate limiting to prevent large scale attacks from a small number of machines. While in practice
-captcha solving services employ proxies~\cite{captcha_proxies} and botnets (e.g., KoobFace~\cite{captcha_solvers}) 
+captcha solving services employ proxies and botnets
 to overcome such limits, we further explored this mechanism during our experiments. Initially,
 we employed a straightforward approach of circulating through a list of valid User Agent strings,
-so as to masquerade as numerous computers connecting from a single IP address (e.g., users behind a NAT).
-However, in that case \re would enforce the same limit. Surprisingly, though, we found that if we 
-supplied a bogus nonsensical User Agent we were able to completely bypass the rate limiting,
-and only faced issues when issuing many concurrent solvers (which could appear as a potential DDoS attempt).
+in an attempt to masquerade as numerous computers connecting from a single IP address (e.g., users behind a NAT).
+However, in that case \re would enforce the same limit; our trick could easily be uncovered
+through browser fingerprinting~\cite{laperdrix2016beauty}. Surprisingly, though, we found that if we 
+supplied a bogus nonsensical User Agent we were able to completely bypass the rate limiting
+and solve well over a thousand challenges per day.
+We only faced issues when deploying many concurrent solvers (which could appear as a potential DDoS attempt).
 %solving  well over a thousand captchas per day from a single IP address. 
 We surmise that a bug in the risk analysis
 system does not enforce the check on the other aspects of the request (e.g., IP address, HTTP cookies) when
@@ -268,7 +270,7 @@ Finally, in the current version which was released in March 2017,
 the challenges once again contain 10 digits. 
 
 While there might have been more intermediary changes apart from the ones presented here,
-this samples show a clear evolution of audio \re challenges towards a more user-friendly scheme. The change in the latest version 
+these samples demonstrate an evolution of audio \re challenges towards more user-friendly schemes. The change in the latest version 
 is most likely an attempt to mitigate automated attacks; however, this can only serve as a temporary measure as our experiments
 demonstrate that speech recognition technology has reached a point where such challenges can be trivially bypassed. Thus, it remains 
 to be seen whether \re adopts an approach similar to services like Securimage and BotDetect and reverts back to challenges with 
