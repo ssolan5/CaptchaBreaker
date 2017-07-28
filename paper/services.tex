@@ -196,6 +196,32 @@ process using PyWinAuto~\cite{pywinauto}.
 \textbf{Pre-processing.} We remove the spoken instructions at the beginning of the audio file
 before it is sent to the service.
 
+\begin{table*}[t]
+\centering
+\caption{Accuracy of different speech recognition services and accents against the audio captcha services we evaluated.}
+\begin{tabular}{lccccc}
+\toprule
+&\multicolumn{5}{c}{\textbf{Speech Recognition Service (Accent)}}\\
+\cmidrule{2-6}
+\textbf{Captcha Service}& \textbf{Wit}& \textbf{IBM (US)} & \textbf{ IBM (UK)} & \textbf{Google (US)} & \textbf{Google (UK)} \\
+\hline
+Recaptcha v2.0 & 67.1\% (671/1000) & 95.8\% (958/1000) & 67.2\% (672/1000) & \textbf{98.3\%} (983/1000) & 81.6\% (816/1000) \\
+\rowcolor{Gray}
+Recaptcha v2.1 & -  & - & -  & \textbf{83.9\%} (1786/2128) & - \\
+Apple  & 0\% (0/365)  & 2.3\% (6/260) & 6.8\% (17/251) & 35.8\% (126/352) & \textbf{52.8\%} (143/271) \\
+\rowcolor{Gray}
+BotDetect  & 1.23\% (11/894)  & 1.38\% (19/138) & 6.67\% (12/180) & \textbf{9.5\%} (102/1067)  & 6.65\% (79/1187) \\
+Captchas.net  & 0\% (0/1008) & 1.1\% (9/778)  & 0.3\% (3/1010)  & 2.7\% (16/593) & \textbf{22.3\%} (230/1030) \\
+\rowcolor{Gray}
+Microsoft Live & 24.7\% (71/287) &  &  & 21.2\$ (28/132)  & 18.6\$ (27/145) \\
+Securimage  & 0\% (0/1000)  & 0\% (0/1000) & 0\% (0/1000) & 0.1\% (0/1000) & \textbf{3\%} (30/1000) \\
+\rowcolor{Gray}
+Telerik  & 21.2\% (142/668)  & \textbf{97\%} (452/466) & 12.9\% (47/364) & 74.2\% (150/202) & 49.3\% (112/217) \\
+\bottomrule
+\end{tabular}
+\label{tab:combinations}
+\end{table*}
+
 
 \subsection{BotDetect}
 %BotDetect offers free and paid versions of its captcha system. In the free version, the 
@@ -233,6 +259,7 @@ spoken words. However, the words themselves are distorted and sound like digital
 %\item The secret key and a random string sent by the client are used to generate the password.
 %\item The password is computed by Captchas.net's server to generate the image and by the client server to validate the user's input.
 %\end{itemize}
+
 
 \subsection{Live.com}
 
@@ -280,3 +307,4 @@ One of the customizations provided by the service is a throttling measure, which
 be displayed to the user for a particular number of seconds before an answer will be considered as 
 human-submitted. However, this setting is left up to the developer who incorporates the captcha 
 service on the target web page.
+

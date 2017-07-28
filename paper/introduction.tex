@@ -54,21 +54,27 @@ service.
 We evaluate \system again \no captcha schemes, including popular services like Google \re,
 and Apple's and Microsoft's captchas. Our experiments demonstrate the effectiveness of our approach
 against all schemes as we surpass the threshold commonly set in prior work for considering
-a captcha system broken. Most surprisingly we achieve \note{our highest accuracy} against \re, 
-the most prevalent captcha service.
+a captcha system broken. We find that \re audio challenges can be trivially passed, which is 
+very alarming given the adoption coverage of \re as an anti-bot mechanism. Among other results, 
+we also found that the accent configuration, when supported by the speech recognition engine, 
+can impact the accuracy of the attack by as much as 84.1\% as was the case with the Telerik audio 
+captcha. Based on our attacks' performance and the rate limit constraints set by the speech 
+recognition services, we estimate the profitability of automated attacks as a replacement of
+human workers of captcha-solving services.
 
-\note{Surprising findings}: every single one broken. Accent matters. Higher accuracy than prior work. Much higher accuracy than
-visual captchas. Old \re harder than new \re. The most popular is also the easiest to break \note{(?)}.
-Apart from facilitating visually-impaired users, audio captchas introduce an attack
-surface that presents a significantly smaller obstacle to attackers compared to visual captchas.
-Services employ various safeguards against bots.
+%Accent matters. Higher accuracy than prior work. Much higher accuracy than
+%visual captchas. Old \re harder than new \re. The most popular is also the easiest to break \note{(?)}.
+%Apart from facilitating visually-impaired users, audio captchas introduce an attack
+%surface that presents a significantly smaller obstacle to attackers compared to visual captchas.
+%Services employ various safeguards against bots.
 
 In the continuing effort to mitigate harmful automated activities, much effort has been applied in 
 designing and developing visual captcha systems that raise the bar for attackers while remaining 
 solvable by actual users. Our extensive evaluation of the audio captcha ecosystem highlights
 a troubling reality. Audio captchas currently offer an insecure entry point to fraudsters,
-as off-the-shelf options allow them to solve audio challenges with higher accuracy (in the case of \re
-we achieve a \note{X\%} improvement over reported attacks against the image-based challenge of the same version).
+as off-the-shelf options allow them to solve audio challenges with higher accuracy; in the case of \re
+we achieve a 27.5\% improvement over reported attacks against the image-based challenge of the same version --
+even against the current version our attack is 13.1\% more accurate.
 We believe that it is critical to explore alternative captcha methods for visually-impaired users,
 as audio captchas increase the attack surface of popular web services and undermine the security
 (albeit limited~\cite{185128,sivakorn:eurosp16}) offered by their visual counterparts.
@@ -86,8 +92,8 @@ off-the-shelf speech recognition services, and demonstrate the effectiveness and
 of our low-cost attacks against all services.
 
 \item We look at the evolution of \re audio challenges through time
- and identify a change of course in the latest version, indicating 
- an attempt to counteract the feasibility of automated attacks. While 
+ and identify a change of course in the latest version %, indicating 
+ in an attempt to counteract the feasibility of automated attacks. While 
  their audio captcha has evolved towards increasingly more user-friendly versions,
  their latest instantiation presents a clear change of direction by 
  opting for a harder challenge.
