@@ -1,9 +1,9 @@
 \section{Audio Captcha Services}
 \label{sec:services}
 
-In this section we provide an overview of all the captcha services that we have found deployed in the wild,
+In this section we provide an overview of the captcha services that we found in the wild
 that also provide audio captchas. We provide information on the characteristics of the audio challenges, as
-well as some details about extra steps needed to avoid safeguards deployed by each service for 
+well as some details about extra steps needed to avoid safeguards deployed by certain services for 
 detecting automated attacks.
 
 %\jason{What are the checks deployed by each service? How do we bypass them? E.g., highlighting boxes etc.}
@@ -94,7 +94,7 @@ Telerik & Digits, NATO & 5 & None \\
 Google's Recaptcha system, which is the most widely deployed captcha system,
 has evolved significantly from its original form, both for adapting to publicized 
 attacks (e.g.,~\cite{GoodfellowBIAS13}) and for minimizing the nuisance 
-presented by captchas. While the audio version has not evolved as drastically from its original 
+presented to users. While the audio version has not evolved as drastically from its original 
 form, during our experiments there was a change in the audio challenges; we 
 differentiate between the 2 versions in the remainder of the paper.
 
@@ -107,7 +107,7 @@ differentiate between the 2 versions in the remainder of the paper.
 
 \textbf{Recaptcha v2.0.} The audio challenge provided by the \re system spells out 5 digits
 consecutively with little or noise, while the interval between the digits fluctuates. 
-Each digit may be spoken out by the same individual (male or female) or multiple 
+Each digit may be spoken out by the same individual (male or female), or multiple 
 speakers may be employed. While the challenges do not contain background noise, certain 
 spoken digits have a more distorted nature and sound drawn out or slowed down.  %Accents tend to not differ that much.
 
@@ -143,8 +143,8 @@ recordings of digits that sound distorted.
 safeguards that compliment the captcha challenges and aim to mitigate the extent of automated 
 actions.
 
-\emph{Form filling.} \re's analysis engine detects bots by measuring the time delay between
-each textbox being filled in and identifying automated actions. To overcome this, we introduce 
+\emph{Form filling.} \re's analysis engine also detects bots by measuring the time delay between
+each text box being filled in for identifying automated actions. To overcome this we introduce 
 random delays between each action (the engine also flags bots that maintain a constant delay 
 between actions).
 
@@ -158,10 +158,11 @@ that allowed us to bypass this check.
 Apple's captcha is encountered while signing up for a new iCloud account.
 Before spelling out the audio challenge,
 the voice first says ``Please enter the $n$ numbers that you hear in the textbox provided''. The 
-spoken numbers consist of two digits and are always spoken by a single speaker.
-The page times out after two minutes of inactivity and a pop up appears for confirmation if the user is 
-still in the process of creating the account. The noise is only present when the numbers are spoken,
+spoken numbers consist of two digits spoken by a single speaker with a synthetic/robotic voice.
+Backgorund noise is only present when the numbers are spoken,
 and resembles a clamor of children.
+The page times out after two minutes of inactivity and a pop up appears for confirmation if the user is 
+still in the process of creating the account. 
 %Apple does not allow downloading the audio file and is 
 %loaded and played via JavaScript and not stored in any cache or temporary storage.
 
@@ -195,6 +196,32 @@ process using PyWinAuto~\cite{pywinauto}.
 
 \textbf{Pre-processing.} We remove the spoken instructions at the beginning of the audio file
 before it is sent to the service.
+
+\begin{table*}[t]
+\centering
+\caption{Accuracy of different speech recognition services and accents against the audio captcha services we evaluated.}
+\begin{tabular}{lccccc}
+\toprule
+&\multicolumn{5}{c}{\textbf{Speech Recognition Service (Accent)}}\\
+\cmidrule{2-6}
+\textbf{Captcha Service}& \textbf{Wit}& \textbf{IBM (US)} & \textbf{ IBM (UK)} & \textbf{Google (US)} & \textbf{Google (UK)} \\
+\hline
+Recaptcha v2.0 & 67.1\% (671/1000) & 95.8\% (958/1000) & 67.2\% (672/1000) & \textbf{98.3\%} (983/1000) & 81.6\% (816/1000) \\
+\rowcolor{Gray}
+Recaptcha v2.1 & -  & - & -  & \textbf{83.9\%} (1786/2128) & - \\
+Apple  & 0\% (0/365)  & 2.3\% (6/260) & 6.8\% (17/251) & 35.8\% (126/352) & \textbf{52.8\%} (143/271) \\
+\rowcolor{Gray}
+BotDetect  & 1.23\% (11/894)  & 1.38\% (19/138) & 6.67\% (12/180) & \textbf{9.5\%} (102/1067)  & 6.65\% (79/1187) \\
+Captchas.net  & 0\% (0/1008) & 1.1\% (9/778)  & 0.3\% (3/1010)  & 2.7\% (16/593) & \textbf{22.3\%} (230/1030) \\
+\rowcolor{Gray}
+Microsoft Live & 24.7\% (71/287) &  &  & 21.2\$ (28/132)  & 18.6\$ (27/145) \\
+Securimage  & 0\% (0/1000)  & 0\% (0/1000) & 0\% (0/1000) & 0.1\% (0/1000) & \textbf{3\%} (30/1000) \\
+\rowcolor{Gray}
+Telerik  & 21.2\% (142/668)  & \textbf{97\%} (452/466) & 12.9\% (47/364) & 74.2\% (150/202) & 49.3\% (112/217) \\
+\bottomrule
+\end{tabular}
+\label{tab:combinations}
+\end{table*}
 
 
 \subsection{BotDetect}
@@ -233,6 +260,7 @@ spoken words. However, the words themselves are distorted and sound like digital
 %\item The secret key and a random string sent by the client are used to generate the password.
 %\item The password is computed by Captchas.net's server to generate the image and by the client server to validate the user's input.
 %\end{itemize}
+
 
 \subsection{Live.com}
 
@@ -280,3 +308,4 @@ One of the customizations provided by the service is a throttling measure, which
 be displayed to the user for a particular number of seconds before an answer will be considered as 
 human-submitted. However, this setting is left up to the developer who incorporates the captcha 
 service on the target web page.
+

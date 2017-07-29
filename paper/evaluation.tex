@@ -1,29 +1,29 @@
-\begin{table*}[h]
-\centering
-\caption{Accuracy of different speech recognition services and accents against the audio captcha services we evaluated.}
-\begin{tabular}{lccccc}
-\toprule
-&\multicolumn{5}{c}{\textbf{Speech Recognition Service (Accent)}}\\
-\cmidrule{2-6}
-\textbf{Captcha Service}& \textbf{Wit}& \textbf{IBM (US)} & \textbf{ IBM (UK)} & \textbf{Google (US)} & \textbf{Google (UK)} \\
-\hline
-Recaptcha v2.0 & 67.1\% (671/1000) & 95.8\% (958/1000) & 67.2\% (672/1000) & \textbf{98.3\%} (983/1000) & 81.6\% (816/1000) \\
-\rowcolor{Gray}
-Recaptcha v2.1 &  &  &  &  & \\
-Apple  & 0\% (0/365)  & 2.3\% (6/260) & 6.8\% (17/251) & 35.8\% (126/352) & \textbf{52.8\%} (143/271) \\
-\rowcolor{Gray}
-BotDetect  & 1.23\% (11/894)  & 1.38\% (19/138) & 6.67\% (12/180) & \textbf{9.5\%} (102/1067)  & 6.65\% (79/1187) \\
-Captchas.net  & 0\% (0/1008) & 1.1\% (9/778)  & 0.3\% (3/1010)  & 2.7\% (16/593) & \textbf{22.3\%} (230/1030) \\
-\rowcolor{Gray}
-Microsoft Live & &  &  & & \\
-Securimage  & 0\% (0/1000)  & 0\% (0/1000) & 0\% (0/1000) & 0.1\% (0/1000) & \textbf{3\%} (30/1000) \\
-\rowcolor{Gray}
-Telerik  & 21.2\% (142/668)  & \textbf{97\%} (452/466) & 12.9\% (47/364) & 74.2\% (150/202) & 49.3\% (112/217) \\
-\bottomrule
-\end{tabular}
-\label{tab:combinations}
-\end{table*}
-
+%\begin{table*}[t]
+%\centering
+%\caption{Accuracy of different speech recognition services and accents against the audio captcha services we evaluated.}
+%\begin{tabular}{lccccc}
+%\toprule
+%&\multicolumn{5}{c}{\textbf{Speech Recognition Service (Accent)}}\\
+%\cmidrule{2-6}
+%\textbf{Captcha Service}& \textbf{Wit}& \textbf{IBM (US)} & \textbf{ IBM (UK)} & \textbf{Google (US)} & \textbf{Google (UK)} \\
+%\hline
+%Recaptcha v2.0 & 67.1\% (671/1000) & 95.8\% (958/1000) & 67.2\% (672/1000) & \textbf{98.3\%} (983/1000) & 81.6\% (816/1000) \\
+%\rowcolor{Gray}
+%Recaptcha v2.1 & -  & - & -  & \textbf{83.9\%} (1786/2128) & - \\
+%Apple  & 0\% (0/365)  & 2.3\% (6/260) & 6.8\% (17/251) & 35.8\% (126/352) & \textbf{52.8\%} (143/271) \\
+%\rowcolor{Gray}
+%BotDetect  & 1.23\% (11/894)  & 1.38\% (19/138) & 6.67\% (12/180) & \textbf{9.5\%} (102/1067)  & 6.65\% (79/1187) \\
+%Captchas.net  & 0\% (0/1008) & 1.1\% (9/778)  & 0.3\% (3/1010)  & 2.7\% (16/593) & \textbf{22.3\%} (230/1030) \\
+%\rowcolor{Gray}
+%Microsoft Live & 24.7\% (71/287) &  &  & 21.2\$ (28/132)  & 18.6\$ (27/145) \\
+%Securimage  & 0\% (0/1000)  & 0\% (0/1000) & 0\% (0/1000) & 0.1\% (0/1000) & \textbf{3\%} (30/1000) \\
+%\rowcolor{Gray}
+%Telerik  & 21.2\% (142/668)  & \textbf{97\%} (452/466) & 12.9\% (47/364) & 74.2\% (150/202) & 49.3\% (112/217) \\
+%\bottomrule
+%\end{tabular}
+%\label{tab:combinations}
+%\end{table*}
+%
 \section{Experimental Evaluation}
 \label{sec:evaluation}
 
@@ -32,34 +32,38 @@ the audio captcha services presented in Section~\ref{sec:services}.
 
 \textbf{Attack accuracy.} Table~\ref{tab:combinations} presents the accuracy obtained by each speech recognition service 
 against the audio captcha services. In cases where the speech recognition service has the option to select an accent,
-we experiment with both American and British English. Surprisingly, we find that for every single captcha scheme, at least
+we experiment with both American and British English. For \re v2.1 that was released during our experiments, we run
+an extensive experiment using only the configuration that had the best results again v2.0, so as to minimize the 
+impact of our experiments on the \re service.
+
+Surprisingly we find that for every single captcha scheme at least
 one of the speech recognition services is able to solve more challenges than the 1\% threshold, thus, \emph{practically 
 rendering all captcha schemes broken.} Nonetheless, there is significant variance, not only across captcha schemes, but
-the accuracy obtained by each speech recognition engine for a specific captcha service. 
+even for the accuracy obtained by each speech recognition engine for a specific captcha service.
+The most alarming finding is that \system achieves one of the best results against \re, the most widely deployed captcha service.
+When considering the 70.78\% attack accuracy reported for the image challenges of v2.0~\cite{sivakorn:eurosp16},
+it becomes apparent that audio challenges weaken the overall security offered by \re, as fraudsters can target the
+audio captchas for deploying highly successful attacks. 
+The Apple and Microsoft Live captchas that protect their account creation process, are also highly susceptible to 
+automated attacks, as our approach correctly solves up to 52.8\% and \note{X\%} respectively.
 
-The most alarming finding is 
-that \system achieved the highest accuracy against \re v2.0, the most widely deployed captcha service. When compared 
-to the 70.78\% attack accuracy reported for the image \re~\cite{sivakorn:eurosp16}, it becomes apparent that audio challenges
-weaken the overall security offered by \re, as fraudsters can target audio captchas for deploying highly successful
-attacks. The Apple and Microsoft Live captchas that protect their account creation process, are also highly susceptible to 
-automated attacks, as our approach correctly solves up to \note{52.8\% and X\%} respectively.
-
-Despite the presence of noise impacting the accuracy of the transcription process for all the respective captcha schemes
-(see Table~\ref{tab:services}), none of the services is completely impervious to our attacks. Nonetheless, we
+As expected, the services that have more noise, prove to be more robust.
+However, despite the presence of noise impacting the accuracy of the transcription process for all the respective captcha schemes,
+none of the services is completely impervious to our attacks. Nonetheless, we
 found that the audio captchas from Securimage are the most robust due to the presence of background semantic noise,
 as \system was only able to solve 3\% of the challenges when using Google's Speech API and the British English accent
 configuration. Another interesting observation was that no single speech recognition system or configuration
 was consistently more accurate across all captchas; however, Google's speech recognition achieved the best
-results for \note{X} out of the \note{Y} captcha schemes. While attackers could increase the attacks' accuracy
+results for \note{X} of the captcha schemes. While attackers could increase the attacks' accuracy
 by first pre-processing the audio challenges so as to reduce the noise, the motivation behind our study is to 
 demonstrate how attackers can employ off-the-shelf systems for breaking existing captcha systems.
 Based on these results, we find that \system would be an effective replacement to the human solvers employed by
-captcha solving services, as humans are often troubled by audio captchas~\cite{captchas-are-hard}.
+captcha solving services, as humans are often troubled by audio challenges~\cite{captchas-are-hard}.
 
 
 \begin{table}[t]
 \centering
-\caption{Average solution time for each recognition service and accent against the audio captcha services we evaluated.}
+\caption{Average solution time (seconds) for each recognition service and accent against the audio captcha services we evaluated.}
 \begin{tabular}{lccccc}
 \toprule
 &\multicolumn{5}{c}{\textbf{Speech Recognition Service}}\\
@@ -69,13 +73,13 @@ captcha solving services, as humans are often troubled by audio captchas~\cite{c
 \hline
 Recaptcha v2.0 & 13.85s & 10.56s  & 12.25s & \textbf{18.46s} & 20.41s \\
 \rowcolor{Gray}
-Recaptcha v2.1 &  &  &  & & \\
+Recaptcha v2.1 & -  & -  & - & \textbf{43.24s} & - \\
 Apple  & 36.4s & 33.4s  & 34.7s & 15.5s & \textbf{13.9s} \\
 \rowcolor{Gray}
 BotDetect  & 5.53s  & 4.21s & 5.72s & \textbf{3.40s} & 3.05s \\
 Captchas.net  & 19.92s  & 14.62s  & 15.65s  & 7.56s & \textbf{7.79s} \\
 \rowcolor{Gray}
-Microsoft Live & &  &  & & \\
+Microsoft Live & 14.37s  &  &  & 10.52s  & 9.07s \\
 Securimage  & 34.31s & 23.60s & 25.10s  & 27.29s & \textbf{35.28s} \\
 \rowcolor{Gray}
 Telerik  & 7.53s & \textbf{5.56s} & 6.65s & 3.86s & 3.83s \\
@@ -86,9 +90,14 @@ Telerik  & 7.53s & \textbf{5.56s} & 6.65s & 3.86s & 3.83s \\
 
 \textbf{Solution time.} In Table~\ref{tab:solution_time} we include the average time required by each speech recognition 
 service for returning a transcription of the audio captcha. The bold values denote the combination that achieved the highest 
-accuracy for that captcha scheme. \note{Talk about results.}
+attack accuracy for that captcha scheme. As can be seen, there is considerable variation on the time required by the different speech 
+recognition services for each captcha scheme. \system solves the Telerik challenges in the least amount of time, yet both
+Apple and Securimage require considerably more effort to obtain the transcription. While Google Speech requires $\sim$18.4 
+seconds on average for most accurate attacks against \re v2.0, that increases significantly for v2.1 as it has the longest
+audio challenges (see Table~\ref{tab:money} below). Interestingly, in several cases the speech recognition systems return
+a transcription in less time than the actual duration of the challenge, resulting in very efficient automated attacks.
 
-\note{How many mistakes allowed for a correct answer?}
+%\note{How many mistakes allowed for a correct answer?}
 
 \textbf{Rate limits and economic analysis.} Our study's goal is to explore the feasibility of low-cost attacks 
 against popular captcha services; thus, the scale of such an attack is naturally constrained by the rate
@@ -110,7 +119,7 @@ constrain our attacks.
 \hline
 Recaptcha v2.0 & 7 sec & 242,413 & \$485.3 \\
 \rowcolor{Gray}
-Recaptcha v2.1 & 15 sec & & \\
+Recaptcha v2.1 & 15 sec & 96,652 & \$193.3 \\
 Apple  & 14 sec & 65,170 & \$130.3 \\
 \rowcolor{Gray}
 BotDetect  & 6 sec & 28,215 & \$54.7 \\
@@ -126,19 +135,22 @@ Telerik & 7 sec & 188,892 & \$366.3 \\
 \end{table}
 
 Surprisingly, these services have very lax limits that would enable fraudsters to misuse
-them for maintaining large scale audio captcha solving campaigns. For instance, Google's Speech API allows up
+them for maintaining large-scale captcha-solving campaigns. For instance, Google's Speech API allows up
 to 250,000 requests per day, where multiple audio files can be submitted per request, allowing for a maximum of
-480 hours of audio processing\footnote{https://cloud.google.com/speech/limits}. 
+480 hours of audio processing.\footnote{https://cloud.google.com/speech/limits}
 In Table~\ref{tab:money} we provide a rough estimation of the profit that an attacker could yield against 
 each captcha service per day using a single Google API account. We assume a lower end market price of \$2 
 per 1,000 solved captchas, and calculate the number of solved captchas based on the length of audio challenges 
 and the highest accuracy achieved by a Google Speech solver (see Table~\ref{tab:combinations}) for each service.
-\note{Most noteworthy results.} It is important to note, however, that these calculations assume that the attacker 
+There is a large variance between the potential profit for each captcha service due to the difference in challenge
+durations as well as the attacks' accuracy. Nonetheless, deploying a solving service for \re would be a highly lucrative
+operation given its prevalence.
+It is important to note, however, that these calculations assume that the attacker 
 is not constrained by other forms of rate limiting (e.g., IP-based limits). Given the workarounds employed
-by existing captcha solving services (e.g., proxies, botnets, etc), in practice these limitations will not 
-pose an insurmountable obstacle.
+by existing captcha solving services (e.g., proxies~\cite{captcha_proxies}, botnets~\cite{captcha_solvers} etc), 
+in practice these limitations will not pose an insurmountable obstacle.
 
-On the other hand, IBM Watson allows 1 free month per account\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}.
+On the other hand, IBM Watson allows 1 free month per account.\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}
 Finally, Wit does not have an explicit rate limit. However, it is open to commercial
 apps and requires notification for rates approaching one request per second. As all three services
 only require an email address for creating an account, attackers could trivially register 
@@ -187,13 +199,15 @@ and offer more interesting details and findings.
 
 \emph{Bypassing rate limits.} As aforementioned in Section~\ref{sec:recaptcha}, \re enforces 
 rate limiting to prevent large scale attacks from a small number of machines. While in practice
-captcha solving services employ proxies~\cite{captcha_proxies} and botnets (e.g., KoobFace~\cite{captcha_solvers}) 
+captcha solving services employ proxies and botnets
 to overcome such limits, we further explored this mechanism during our experiments. Initially,
 we employed a straightforward approach of circulating through a list of valid User Agent strings,
-so as to masquerade as numerous computers connecting from a single IP address (e.g., users behind a NAT).
-However, in that case \re would enforce the same limit. Surprisingly, though, we found that if we 
-supplied a bogus nonsensical User Agent we were able to completely bypass the rate limiting,
-and only faced issues when issuing many concurrent solvers (which could appear as a potential DDoS attempt).
+in an attempt to masquerade as numerous computers connecting from a single IP address (e.g., users behind a NAT).
+However, in that case \re would enforce the same limit; our trick could easily be uncovered
+through browser fingerprinting~\cite{laperdrix2016beauty}. Surprisingly, though, we found that if we 
+supplied a bogus nonsensical User Agent we were able to completely bypass the rate limiting
+and solve well over a thousand challenges per day.
+We only faced issues when deploying many concurrent solvers (which could appear as a potential DDoS attempt).
 %solving  well over a thousand captchas per day from a single IP address. 
 We surmise that a bug in the risk analysis
 system does not enforce the check on the other aspects of the request (e.g., IP address, HTTP cookies) when
@@ -202,12 +216,13 @@ it encounters an ``invalid'' User Agent.\footnote{This issue has now been fixed.
 %further highlights how seemingly complex captcha services ]
 
 \emph{Adaptive length}.
-While by default the length of \re v2.0 was 5 digits, we found %that after multiple captcha solutions by our system,
-that \re would adapt when facing a large amount of requests from our system and return captchas with more digits. 
+While by default the length of \re v2.0 was 5 digits, we found %that after multiple captcha_lengthptcha solutions by our system,
+that \re would adapt when facing a large amount of requests from our system (when not ).
+Specifically, the system adapts by returning captchas with more digit so as to impact automated attacks.
 In Figure~\ref{fig:length} we present a representative experiment that depicts the number of digits in the captchas
 processed by our system over the course of 7 hours. The first 49 captchas all contained 5 digits, whereas the length
 changed in a seemingly random fashion. As can be seen by the breakdown statistics in the figure, apart from the default
-version with 5 digits, the most common variation we came across contained 9 digits.
+version with 5 digits, the most common variation we came across contained 9 digits. 
 %Overall, out of the 303 challenged processed in the experiment, 95 (31.3\%)
 %had a length of 5, 14 (4.6\%) had 6 digits, 34 (11.2\%) had 7, 51 (16.8\%) had 8 digits, 68 (22.4\%) had 9, and 41 
 %(13.5\%) had 10 digits.
@@ -255,7 +270,7 @@ Finally, in the current version which was released in March 2017,
 the challenges once again contain 10 digits. 
 
 While there might have been more intermediary changes apart from the ones presented here,
-this samples show a clear evolution of audio \re challenges towards a more user-friendly scheme. The change in the latest version 
+these samples demonstrate an evolution of audio \re challenges towards more user-friendly schemes. The change in the latest version 
 is most likely an attempt to mitigate automated attacks; however, this can only serve as a temporary measure as our experiments
 demonstrate that speech recognition technology has reached a point where such challenges can be trivially bypassed. Thus, it remains 
 to be seen whether \re adopts an approach similar to services like Securimage and BotDetect and reverts back to challenges with 

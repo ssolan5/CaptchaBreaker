@@ -18,10 +18,10 @@ services against a large number of different audio captcha services. To that end
 a modular design for \system, as that provides flexibility in adding support for new captcha 
 systems and speech recognition APIs. Our system is comprised of 3 basic components. The main 
 component is responsible for the browser automation and handles all browser-related actions,
-including crawling and rendering webpages, extracting the audio captchas, and providing the solutions
-to the challenges. It also performs specific actions to mimic a user's steps and avoid triggering  
-checks implemented by the captcha services for detecting bots (e.g., mouse over actions, or text 
-box highlighting before solutions are input).
+including crawling and rendering webpages, extracting the audio captchas, and submitting the solutions
+to the challenges. It also performs specific actions to mimic a user's behavior and avoid triggering  
+checks implemented by the captcha services for detecting bots (e.g., mouse over actions, or highlighting the 
+text boxes before solutions are input).
 The second component completes some pre-processing and configuration steps 
 necessary before the audio recordings are passed to the speech recognition services. The final 
 component handles the post-processing of the transcribed text for preparing the solution that will
@@ -38,16 +38,16 @@ the page, the audio challenge is extracted.
 \protect\circlea{\small 2} The audio file is passed to the pre-processing component, which is responsible 
 for preparing the audio file that will be passed to the speech recognition service. If there are audio 
 instructions at the beginning of the audio challenge they are removed, and the final audio
-recording is then converted to a supported format. Then, based on the captcha service, our system
-selects the speech recognition service with the best results for the specific challenge.
+recording is then converted to a supported format. Then, based on the captcha scheme, our system
+can select the speech recognition service with the best results for the specific challenge.
 
-\protect\circlea{\small 3} The audio file is uploaded for transcription by the module that handles that solver, 
-together with a predetermined configuration. The configuration allows us to fine-tune the "transcript"ion process
+\protect\circlea{\small 3} The audio file is uploaded for transcription by the module that handles that API, 
+together with a predetermined configuration. The configuration allows us to fine-tune the transcription process
 for better results; specifically we restrict the dictionary used by the solver (e.g., to only expect  
 numbers) as well as the accent classifier to use (services may support multiple English accents 
 -- British, American etc.).
 
-\protect\circlea{\small 4} The transcription of the audio challenge is obtained from the solver 
+\protect\circlea{\small 4} The transcription of the audio challenge is obtained from the API
 and passed to the post-processing component. The corresponding module will process the transcription 
 based on a set of rules %(e.g., based on the captcha's dictionary and common homophones) 
 and prepare the solution to the challenge. If a service employs the 
@@ -135,7 +135,7 @@ We use the ``free-text'' and ``keywords'' search strategies for obtaining the ke
 
 \emph{Google Cloud Speech.}  Google has released a RESTful API that offers access to a speech recognition system built on 
 a deep learning neural network that can identify speech in over 80 languages. The API endpoint for recognizing speech supports
-the ``phrases'' optional argument that allows us to narrow down the keywords their classifier model tries to identify, which 
+the ``phrases'' optional argument that allows us to narrow down the keywords their classifier model will try to identify, which 
 results in higher accuracy against captcha schemes that use limited/restricted vocabularies (e.g., only digits). The Google
 speech API also requires a mono form, and supports both WAV and FLAC file formats.
 
@@ -147,8 +147,8 @@ converting keywords in the transcription to the required transformation for the 
 
 // Phase 1
 [BotDetect, *]: {hey,hay} $\longmapsto$ "a"
+[BotDetect, *]: {bee,be} $\longmapsto$ "b"
 [BotDetect, IBM]: {three,through,tree,free,he,green} $\longmapsto$ "3"
-[BotDetect, Wit]: {bee,be} $\longmapsto$ "b"
 [CaptchasNet, Wit]: {gulf} $\longmapsto$ "golf"
 [CaptchasNet, Wit]: {elsa} $\longmapsto$ "alpha"
 
@@ -159,7 +159,7 @@ converting keywords in the transcription to the required transformation for the 
 
 \textbf{Post-processing.} Our post-processing component relies on a set of manually created rules that define transformations
 of the transcribed audio to the string that will eventually be provided by our main component as the answer to the audio challenge.
-These rules were created after extensive manual experimentation with each speech recognition service for each captcha scheme,
+These rules were created after manual experimentation with each speech recognition service for each captcha scheme,
 by determining mis-identified words that are homophones or sound somewhat similar to keywords that belong to the 
 restricted dictionary of each captcha scheme (apart from Microsoft Live that uses common English words). This was motivated
 by our observation of recurring mistakes that were made by each speech recognition service (some of which were common across
