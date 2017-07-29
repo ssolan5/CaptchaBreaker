@@ -44,8 +44,8 @@ The most alarming finding is that \system achieves one of the best results again
 When considering the 70.78\% attack accuracy reported for the image challenges of v2.0~\cite{sivakorn:eurosp16},
 it becomes apparent that audio challenges weaken the overall security offered by \re, as fraudsters can target the
 audio captchas for deploying highly successful attacks. 
-The Apple and Microsoft Live captchas that protect their account creation process, are also highly susceptible to 
-automated attacks, as our approach correctly solves up to 52.8\% and \note{X\%} respectively.
+The Apple and Microsoft Live captchas that protect their respective account creation process are also highly susceptible to 
+automated attacks, as our system correctly passes up to 52.8\% and 24.7\% respectively.
 
 As expected, the services that have more noise, prove to be more robust.
 However, despite the presence of noise impacting the accuracy of the transcription process for all the respective captcha schemes,
@@ -54,10 +54,13 @@ found that the audio captchas from Securimage are the most robust due to the pre
 as \system was only able to solve 3\% of the challenges when using Google's Speech API and the British English accent
 configuration. Another interesting observation was that no single speech recognition system or configuration
 was consistently more accurate across all captchas; however, Google's speech recognition achieved the best
-results for \note{X} of the captcha schemes. \note{Wit the best against Live, which is the one service that
-doesn't have a limited dictionary. Also with doesn't allow you to limit the dictionary.}
+results for six of the captcha schemes. An interesting finding is that Wit, which is the only service that does not 
+allow us to supply a collection of possible keywords, was the most accurate speech recognition service against the 
+Microsoft Live captcha which contains random English words and not a limited dictionary. On the other hand, Google Speech
+is the most robust in the presence of noise, while IBM Watson performs the best when there is no noise and the dictionary
+of keywords can be limited.
 
-While attackers could increase the attacks' accuracy
+While attackers could increase the overall accuracy of the attacks
 by first pre-processing the audio challenges so as to reduce the noise, the motivation behind our study is to 
 demonstrate how attackers can employ off-the-shelf systems for breaking existing captcha systems.
 Based on these results, we find that \system would be an effective replacement to the human solvers employed by
@@ -74,18 +77,18 @@ captcha solving services, as humans are often troubled by audio challenges~\cite
 & & \textbf{(US)} & \textbf{(UK)} & \textbf{(US)} & \textbf{(UK)} \\
 \textbf{Captcha}&  \textbf{Wit} & \textbf{IBM} & \textbf{IBM} & \textbf{Google} & \textbf{Google} \\
 \hline
-Recaptcha v2.0 & 13.85s & 10.56s  & 12.25s & \textbf{18.46s} & 20.41s \\
+Recaptcha v2.0 & 13.85 & 10.56  & 12.25 & \textbf{18.46} & 20.41 \\
 \rowcolor{Gray}
-Recaptcha v2.1 & -  & -  & - & \textbf{43.24s} & - \\
-Apple  & 36.4s & 33.4s  & 34.7s & 15.5s & \textbf{13.9s} \\
+Recaptcha v2.1 & -  & -  & - & \textbf{43.24} & - \\
+Apple  & 36.4 & 33.4  & 34.7 & 15.5 & \textbf{13.9} \\
 \rowcolor{Gray}
-BotDetect  & 5.53s  & 4.21s & 5.72s & \textbf{3.40s} & 3.05s \\
-Captchas.net  & 19.92s  & 14.62s  & 15.65s  & 7.56s & \textbf{7.79s} \\
+BotDetect  & 5.53  & 4.21 & 5.72 & \textbf{3.40} & 3.05 \\
+Captchas.net  & 19.92  & 14.62  & 15.65  & 7.56 & \textbf{7.79} \\
 \rowcolor{Gray}
-Microsoft Live & 14.37s  &  & 20.2  & 10.52s  & 9.07s \\
-Securimage  & 34.31s & 23.60s & 25.10s  & 27.29s & \textbf{35.28s} \\
+Microsoft Live & \textbf{14.37}  & 16.33 & 20.2  & 10.52  & 9.07 \\
+Securimage  & 34.31 & 23.60 & 25.10  & 27.29 & \textbf{35.28} \\
 \rowcolor{Gray}
-Telerik  & 7.53s & \textbf{5.56s} & 6.65s & 3.86s & 3.83s \\
+Telerik  & 7.53 & \textbf{5.56} & 6.65 & 3.86 & 3.83 \\
 \bottomrule
 \end{tabular}
 \label{tab:solution_time}
@@ -137,35 +140,6 @@ Telerik & 7 sec & 188,892 & \$366.3 \\
 \label{tab:money}
 \end{table}
 
-Surprisingly, these services have very lax limits that would enable fraudsters to misuse
-them for maintaining large-scale captcha-solving campaigns. For instance, Google's Speech API allows up
-to 250,000 requests per day, where multiple audio files can be submitted per request, allowing for a maximum of
-480 hours of audio processing.\footnote{https://cloud.google.com/speech/limits}
-In Table~\ref{tab:money} we provide a rough estimation of the profit that an attacker could yield against 
-each captcha service per day using a single Google API account. We assume a lower end market price of \$2 
-per 1,000 solved captchas, and calculate the number of solved captchas based on the length of audio challenges 
-and the highest accuracy achieved by a Google Speech solver (see Table~\ref{tab:combinations}) for each service.
-There is a large variance between the potential profit for each captcha service due to the difference in challenge
-durations as well as the attacks' accuracy. Nonetheless, deploying a solving service for \re would be a highly lucrative
-operation given its prevalence.
-It is important to note, however, that these calculations assume that the attacker 
-is not constrained by other forms of rate limiting (e.g., IP-based limits). Given the workarounds employed
-by existing captcha solving services (e.g., proxies~\cite{captcha_proxies}, botnets~\cite{captcha_solvers} etc), 
-in practice these limitations will not pose an insurmountable obstacle.
-
-On the other hand, IBM Watson allows 1 free month per account.\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}
-Finally, Wit does not have an explicit rate limit. However, it is open to commercial
-apps and requires notification for rates approaching one request per second. As all three services
-only require an email address for creating an account, attackers could trivially register 
-new email addresses periodically for increasing their overall allowed throughput.
-
-%In comparison Clarifai,
-%the most accurate image annotation service used against \re~\cite{sivakorn:eurosp16}, only allows 5,000
-%free operations per month\footnote{https://developer.clarifai.com/pricing/}.
-
-
-%\textbf{Solution flexibility.} \note{How many wrong digits allowed per service?}
-
 \begin{figure*}[t]
 \begin{subfigure}{0.75\textwidth}
     \centering
@@ -195,6 +169,35 @@ new email addresses periodically for increasing their overall allowed throughput
 \caption{Variation of audio captcha length in \re v2.0 over time.}
 \label{fig:length}
 \end{figure*}
+
+Surprisingly, these services have very lax limits that would enable fraudsters to misuse
+them for maintaining large-scale captcha-solving campaigns. For instance, Google's Speech API allows up
+to 250,000 requests per day, where multiple audio files can be submitted per request, allowing for a maximum of
+480 hours of audio processing.\footnote{https://cloud.google.com/speech/limits}
+In Table~\ref{tab:money} we provide a rough estimation of the profit that an attacker could yield against 
+each captcha service per day using a single Google API account. We assume a lower end market price of \$2 
+per 1,000 solved captchas, and calculate the number of solved captchas based on the length of audio challenges 
+and the highest accuracy achieved by a Google Speech solver (see Table~\ref{tab:combinations}) for each service.
+There is a large variance between the potential profit for each captcha service due to the difference in challenge
+durations as well as the attacks' accuracy. Nonetheless, deploying a solving service for \re would be a highly lucrative
+operation given its prevalence.
+It is important to note, however, that these calculations assume that the attacker 
+is not constrained by other forms of rate limiting (e.g., IP-based limits). Given the workarounds employed
+by existing captcha solving services (e.g., proxies~\cite{captcha_proxies}, botnets~\cite{captcha_solvers} etc), 
+in practice these limitations will not pose an insurmountable obstacle.
+
+On the other hand, IBM Watson allows 1 free month per account.\footnote{https://www.ibm.com/watson/services/natural-language-classifier/}
+Finally, Wit does not have an explicit rate limit. However, it is open to commercial
+apps and requires notification for rates approaching one request per second. As all three services
+only require an email address for creating an account, attackers could trivially register 
+new email addresses periodically for increasing their overall allowed throughput.
+
+%In comparison Clarifai,
+%the most accurate image annotation service used against \re~\cite{sivakorn:eurosp16}, only allows 5,000
+%free operations per month\footnote{https://developer.clarifai.com/pricing/}.
+
+
+%\textbf{Solution flexibility.} \note{How many wrong digits allowed per service?}
 
 \textbf{\re.} While our study aims to evaluate the robustness of many popular audio captcha schemes,
 Google's \re is the most prevalent captcha service, so we further elaborate on those experiments 
