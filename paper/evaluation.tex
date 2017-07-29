@@ -54,7 +54,10 @@ found that the audio captchas from Securimage are the most robust due to the pre
 as \system was only able to solve 3\% of the challenges when using Google's Speech API and the British English accent
 configuration. Another interesting observation was that no single speech recognition system or configuration
 was consistently more accurate across all captchas; however, Google's speech recognition achieved the best
-results for \note{X} of the captcha schemes. While attackers could increase the attacks' accuracy
+results for \note{X} of the captcha schemes. \note{Wit the best against Live, which is the one service that
+doesn't have a limited dictionary. Also with doesn't allow you to limit the dictionary.}
+
+While attackers could increase the attacks' accuracy
 by first pre-processing the audio challenges so as to reduce the noise, the motivation behind our study is to 
 demonstrate how attackers can employ off-the-shelf systems for breaking existing captcha systems.
 Based on these results, we find that \system would be an effective replacement to the human solvers employed by
@@ -79,7 +82,7 @@ Apple  & 36.4s & 33.4s  & 34.7s & 15.5s & \textbf{13.9s} \\
 BotDetect  & 5.53s  & 4.21s & 5.72s & \textbf{3.40s} & 3.05s \\
 Captchas.net  & 19.92s  & 14.62s  & 15.65s  & 7.56s & \textbf{7.79s} \\
 \rowcolor{Gray}
-Microsoft Live & 14.37s  &  &  & 10.52s  & 9.07s \\
+Microsoft Live & 14.37s  &  & 20.2  & 10.52s  & 9.07s \\
 Securimage  & 34.31s & 23.60s & 25.10s  & 27.29s & \textbf{35.28s} \\
 \rowcolor{Gray}
 Telerik  & 7.53s & \textbf{5.56s} & 6.65s & 3.86s & 3.83s \\
