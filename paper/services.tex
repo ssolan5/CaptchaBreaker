@@ -158,8 +158,8 @@ that allowed us to bypass this check.
 Apple's captcha is encountered while signing up for a new iCloud account.
 Before spelling out the audio challenge,
 the voice first says ``Please enter the $n$ numbers that you hear in the textbox provided''. The 
-spoken numbers consist of two digits spoken by a single speaker with a synthetic/robotic voice.
-Backgorund noise is only present when the numbers are spoken,
+spoken numbers consist of a total of n double digit numbers spoken by a single speaker with a synthetic/robotic voice with a pause between each double digit number.
+Background noise is only present when the numbers are spoken,
 and resembles a clamor of children.
 The page times out after two minutes of inactivity and a pop up appears for confirmation if the user is 
 still in the process of creating the account. 
@@ -182,21 +182,23 @@ which we discuss below.
 difficult to obtain the audio recording, as opposed to other services like \re
 that allow a straightforward fetching of the mp3 file. As a workaround, we access 
 the browser's media stack\footnote{Through chrome://media-internals.} and obtain the 
-audio recording in base64 format.
-
-\emph{Form filling.} Form elements are not accessible via HTML ids/tags; instead we enumerate them 
-using XPath (input[@type='text']), and access them according to attribute values.
+audio recording in base64 format, this is converted to a wav format file and uploaded to the voice recognition services for solving. 
+\
+\emph{Form filling.} \note{Form elements are not accessible via HTML ids/tags; instead we enumerate them 
+using XPath (input[@type='text']), and access them according to attribute values. The username needs to be unique every time as the username validation script runs once the username has been input into the textbox. 
 Furthermore, the system requires mouse interaction for actually accessing an element, otherwise the 
-form's validation script will not execute if the answer box has not been ``touched''. We automate this 
-process using PyWinAuto~\cite{pywinauto}.
+form's validation script will not execute if the password boxes have not been ``touched'' i.e accessed via a mouse. We automate this 
+process using PyWinAuto}~\cite{pywinauto}. \note{ No other form elements require this form of explicit interaction, we hypothesize that there is an additional script that run a check whether the password is legitimate or conforms to the pattern expected by the service and this is why that additional interaction is required.}
+\note{
+Apart from the above two complexities in comparison to google, apple does not employ any form of rate limiting in the form of checking for standardized behaviour and or considering an IP address as suspicious if its behind a proxy, or VPN. Unlike google it does not throw harder challenges or ban the ip after seven to eight attempts. This makes it easier to in a sense "farm" apple ids. 
+}
 %basically having 
 %something like a js framework or html5 template to create the web application GUI makes it slightly more difficult to bot. (very slightly)
-
 %\note{Use user agent spoofing to hide your behaviour.}
 
-\textbf{Pre-processing.} We remove the spoken instructions at the beginning of the audio file
+\textbf{Pre-processing.}\note{ We remove the spoken instructions at the beginning of the audio file
 before it is sent to the service.
-
+}
 \begin{table*}[t]
 \centering
 \caption{Attack accuracy for each speech recognition service and accent configuration, against the audio captcha services we evaluated.}
@@ -238,7 +240,15 @@ the number of alphanumeric characters in the challenge can be chosen between
 1-13 (the default being a random selection between 4-6). The background noise can be random or selected from one of 
 the 10 noise types and the sound type can be customized as well (choice of 8 Bit Mono audio or 16 Bit 
 Mono audio). The default demo version that we experimented with contains intermittent electronic noise that 
-coincides with the spoken letters.
+coincides with the spoken letters. The background noise can be characterized as microphone noise. 
+\note{
+The demo site unlike the google demo page, or the apple account creation page did not use any form of rate limiting or timing out check. The demo page also did not react differently after repeated accesses and hence does not need to a VPN or proxy to hide behind, which makes for easier botting. Obtaining the audio sample was trivial as there was a URL available on the source of this page pointing to the network object which could be retrieved by use of standard python libraries. We do not add delays for accessing the form elements as it is not checked on the demo page. It appears the demo page provides no other checks apart from the captcha for checking automated behaviour at client side, someone utilizing this would need to employ their own bot detection mechanisms. 
+}
+\textbf{Preprocessing}\note{ The audio file obtained is in wav format and needs to be converted to flac only for the google solver. We do not apply any form of editing apart from that.}
+
+
+\textbf{Post-Processing}\note{ Based upon the audio transcript received and the audio solvers chosen common mis-translations that we observed were replaced with their homophones.  As we know the alphanumeric pattern of captcha text BotDetect expects we are able to accurately ascertain what the mis-transcriptions each service is likely to make and map to. 
+}
 %We found that this service is used widely, and we encountered it on the Visa status check 
 %page of US CEAC website here: https://ceac.state.gov/ceacstattracker/status.aspx \newline
 
@@ -251,7 +261,14 @@ The audio challenges employ the NATO phonetic alphabet, and the user has to ente
 For instance, ``RIPAZH'' would be read out as 'Romeo India Papa Alpha Zulu Hotel' and the user is expected 
 to enter the first letter of each uttered word. The audio challenges contain little background noise during the 
 spoken words. However, the words themselves are distorted and sound like digitally synthesized speech.
+\note{
+The captchasnet demo page does not provide any form of rate limiting or detection of suspicious activity at client side, and the demo page does not identify suspicious repeated accesses from the same ip address, therefore we need not employ any form of source network traffic obfuscation, or hide our accesses behind a proxy or VPN. Obtaining the audio file is again trivial compared to apple as URL is provided in the html source for the network object which can be easily retrieved. It does not look for timing delays between accessing form elements as well. As with botdetect, it does not check for automated behaviour apart from employing the captcha, anyone utilizing this service would need to employ their own botdetection.}
 
+\textbf{Preprocessing}\note{ The audio file obtained is in mp3 and is required to be converted to flac for the google solver, and is required to be converted to wav for the other two solvers. The file requires no additional preprocessing. However, we do set the Google Solver to look for certain words ie send the phonetic NATO alphabet phrases with the request for transcription. This allows for the google solver to more accurately pick transcriptions and with higher confidence.  The audio file has additional near 5 seconds of empty space at the end of each audio file which we chop off before sending as well.}
+
+
+\textbf{Post - processing} \note{The cloud speech services commonly mis-transcribes certain of the NATO phrases and we find relevant homonyms in the NATO alphabet for each and replace them. We take the first letter of each of the words transcribed as the captcha solution. 
+}
 %For both the text and the audio challenges, 
 %Captchas.net follows the following method to validate the response:
 %
@@ -270,6 +287,14 @@ Microsoft's Live domain provides access to other Microsoft services, including
  words. On average they are 5-letter words and 5-7 such words are spoken per challenge, which must be typed by the user.
 The words are spoken by 2 different people - one female and one male. The background noise 
 is from speakers talking in a foreign language.
+\note{
+As this is not a demo page but an account creation page it employs its own form of rate limiting and detection however does not consider repeated acesses from the same ip suspicious which hence does not require hiding behind a proxy or otherwise obfuscating our network traffic, we create a new username everytime and require mouse interaction with the password box to trigger the password validation scripts. Accessing script elements on the page is harder as they have utilized class names with spaces in them leading it to be harder to reference them via simple xpath. 
+}
+\textbf {pre-processing} \note{The audio file obtained is through accessing the media-stack as described in the apple section, and the file obtained is in base64 which we convert to the desired format for each of the cloud speech recognition services.
+}
+
+\textbf{post-processing} \note{ We do minimal post processing as the service uses dictionary phrases such as "tree", "woman", etc and there is no reliable regular pattern formed, this makes it harder to create mappings nor is there regularity observed in the mis-transcriptions provided by the cloud speech recognition services.
+}
 %although we found that the number of words spoken out by the female voice are much higher. In our opinion, it provided better accessibility 
 %to visually impaired users as they can press '1' on their keyboard to play or repeat the audio challenge 
 %and by requesting a new challenge using the button labeled 'New' on the interface, the focus is set to the 
@@ -288,6 +313,15 @@ human clamor.
 %Some other customization options are that one can 
 %specify a word list for the challenges and using a read-aloud math puzzle that is to be solved 
 %by the user.
+
+\note{Secureimage has a demo page, and does not employ any form of rate limiting and detection on its own nor does it consider repeated accesses from the same ip suspicious again not requiring obfuscation of our network traffic to the site. We do not utilize any VPN or proxy for accessing the demo page in our experiments. Similar to captchas.net and botdetect we add no additional delay for accessing each of the form elements. The audio file is easily accessible via its URL in the page.
+}
+\textbf {pre-processing}\note{ The audio file obtained is in wav format which we convert to the desired format i.e flac for google solver and send as is to IBM  bluemix and wit ai solver. The audio file is otherwise not edited.}
+
+\textbf{post-processing}\note{ This service uses only alphabets hence we are able to notice a pattern in the regularity of mistranscriptions obtained from each service, and map them to their correct letter transcriptions. For example, "bee" to "b", etc
+}
+
+
 
 \subsection{RadCaptcha by Telerik}
 
@@ -309,3 +343,9 @@ be displayed to the user for a particular number of seconds before an answer wil
 human-submitted. However, this setting is left up to the developer who incorporates the captcha 
 service on the target web page.
 
+\note{Telerik also has a demo page, and does not employ any form of rate limiting and detection on its own and same as above nor does it consider repeated accesses from the same ip suspicious again not requiring obfuscation of our network traffic to the site.Again, We do not utilize any VPN or proxy for accessing the demo page in our experiments. Similar to captchas.net and botdetect we add no additional delay for accessing each of the form elements. The audio file is easily accessible via its URL in the page using standard python libraries.}
+
+\textbf {pre-processing} \note{ The audio file obtained is in wav format which we convert to the desired format i.e flac for google solver and send as is to IBM  bluemix and wit ai solver. The audio file is otherwise not edited.}
+
+\textbf{post-processing} \note{ This service uses only NATO alphabets hence we are able to find relevant homonyms in the NATO alphabet for each mistranscription and replace them. We take the first letter of each of the words transcribed as the captcha solution. }
+}
