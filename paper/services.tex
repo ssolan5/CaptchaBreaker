@@ -5,7 +5,7 @@ In this section we provide an overview of the captcha services that we found in 
 that also provide audio captchas. We provide information on the characteristics of the audio challenges, as
 well as some details about extra steps needed to avoid safeguards deployed by certain services for 
 detecting automated attacks. Figure~\ref{fig:re_examples} and Figure~\ref{fig:examples} depict the waveform
-and spectogram of sample challenges from each captcha service, allowing for a visual comparison
+and spectrogram of sample challenges from each captcha service, allowing for a visual comparison
 of the amount of background noise employed by each service.
 
 %\jason{What are the checks deployed by each service? How do we bypass them? E.g., highlighting boxes etc.}
@@ -159,7 +159,7 @@ that allowed us to bypass this check.
 
 Apple's captcha is encountered while signing up for a new iCloud account.
 Before spelling out the audio challenge,
-the voice first says ``Please enter the $n$ numbers that you hear in the textbox provided''. The 
+the voice first says ``Please enter the $n$ numbers that you hear in the text box provided''. The 
 spoken numbers consist of a total of n double digit numbers spoken by a single speaker with a synthetic/robotic voice with a pause between each double digit number.
 Background noise is only present when the numbers are spoken,
 and resembles a clamor of children.
@@ -184,11 +184,11 @@ which we discuss below.
 difficult to obtain the audio recording, as opposed to other services like \re
 that allow a straightforward fetching of the mp3 file. As a workaround, we access 
 the browser's media stack\footnote{Through chrome://media-internals.} and obtain the 
-audio recording in base64 format, this is converted to a wav format file and uploaded to the voice recognition services for solving. 
+audio recording in base64 format, this is converted to a \texttt{wav} format file and uploaded to the voice recognition services for solving. 
 
 \emph{Form filling.} Form elements are not accessible via HTML IDs/tags; instead we enumerate them 
 using XPath (input[@type='text']), and access them according to attribute values. The username needs to be 
-unique every time as the username validation script runs once the username has been input into the textbox.
+unique every time as the username validation script runs once the username has been input into the text box.
 Furthermore, the system requires mouse interaction for actually accessing an element, otherwise the 
 form's validation script will not execute if the password boxes have not been ``touched'',  i.e, accessed via mouse. We automate this
 process using PyWinAuto~\cite{pywinauto}. As no other form elements require this form of explicit interaction,
@@ -199,35 +199,35 @@ Apart from the two aforementioned complexities, Apple does not employ any form o
 the form of checking for standardized behavior, or considering an IP address as suspicious if its behind a proxy, or VPN.
 Furthermore, unlike Google \re it does not present harder challenges or ban the IP address after several attempts. 
 
-\textbf{Pre-processing.} We remove the spoken instructions at the beginning of the audio file
+\textbf{Preprocessing.} We remove the spoken instructions at the beginning of the audio file
 before it is sent to the service.
 
-\begin{table*}[t]
-\centering
-\caption{Attack accuracy for each speech recognition service and accent configuration, against the audio captcha services we evaluated.}
-\begin{tabular}{lccccc}
-\toprule
-&\multicolumn{5}{c}{\textbf{Speech Recognition Service (Accent)}}\\
-\cmidrule{2-6}
-\textbf{Captcha Service}& \textbf{Wit}& \textbf{IBM (US)} & \textbf{ IBM (UK)} & \textbf{Google (US)} & \textbf{Google (UK)} \\
-\hline
-Recaptcha v2.0 & 67.1\% (671/1000) & 95.8\% (958/1000) & 67.2\% (672/1000) & \textbf{98.3\%} (983/1000) & 81.6\% (816/1000) \\
-\rowcolor{Gray}
-Recaptcha v2.1 & -  & - & -  & \textbf{83.9\%} (1786/2128) & - \\
-Apple  & 0\% (0/365)  & 2.3\% (6/260) & 6.8\% (17/251) & 35.8\% (126/352) & \textbf{52.8\%} (143/271) \\
-\rowcolor{Gray}
-BotDetect  & 1.23\% (11/894)  & 1.38\% (19/138) & 6.67\% (12/180) & \textbf{9.5\%} (102/1067)  & 6.65\% (79/1187) \\
-Captchas.net  & 0\% (0/1008) & 1.1\% (9/778)  & 0.3\% (3/1010)  & 2.7\% (16/593) & \textbf{22.3\%} (230/1030) \\
-\rowcolor{Gray}
-Microsoft Live & \textbf{24.7\%} (71/287) & 10.6\% (23/216)  & 13.1\% (28/213)  & 21.2\% (28/132)  & 18.6\% (27/145) \\
-Securimage  & 0\% (0/1000)  & 0\% (0/1000) & 0\% (0/1000) & 0.1\% (0/1000) & \textbf{3\%} (30/1000) \\
-\rowcolor{Gray}
-Telerik  & 21.2\% (142/668)  & \textbf{97\%} (452/466) & 12.9\% (47/364) & 74.2\% (150/202) & 49.3\% (112/217) \\
-\bottomrule
-\end{tabular}
-\label{tab:combinations}
-\end{table*}
-
+%\begin{table*}[t]
+%\centering
+%\caption{Attack accuracy for each speech recognition service and accent configuration, against the audio captcha services we evaluated.}
+%\begin{tabular}{lccccc}
+%\toprule
+%&\multicolumn{5}{c}{\textbf{Speech Recognition Service (Accent)}}\\
+%\cmidrule{2-6}
+%\textbf{Captcha Service}& \textbf{Wit}& \textbf{IBM (US)} & \textbf{ IBM (UK)} & \textbf{Google (US)} & \textbf{Google (UK)} \\
+%\hline
+%Recaptcha v2.0 & 67.1\% (671/1000) & 95.8\% (958/1000) & 67.2\% (672/1000) & \textbf{98.3\%} (983/1000) & 81.6\% (816/1000) \\
+%\rowcolor{Gray}
+%Recaptcha v2.1 & -  & - & -  & \textbf{83.9\%} (1786/2128) & - \\
+%Apple  & 0\% (0/365)  & 2.3\% (6/260) & 6.8\% (17/251) & 35.8\% (126/352) & \textbf{52.8\%} (143/271) \\
+%\rowcolor{Gray}
+%BotDetect  & 1.23\% (11/894)  & 1.38\% (19/138) & 6.67\% (12/180) & \textbf{9.5\%} (102/1067)  & 6.65\% (79/1187) \\
+%Captchas.net  & 0\% (0/1008) & 1.1\% (9/778)  & 0.3\% (3/1010)  & 2.7\% (16/593) & \textbf{22.3\%} (230/1030) \\
+%\rowcolor{Gray}
+%Microsoft Live & \textbf{24.7\%} (71/287) & 10.6\% (23/216)  & 13.1\% (28/213)  & 21.2\% (28/132)  & 18.6\% (27/145) \\
+%Securimage  & 0\% (0/1000)  & 0\% (0/1000) & 0\% (0/1000) & 0.1\% (0/1000) & \textbf{3\%} (30/1000) \\
+%\rowcolor{Gray}
+%Telerik  & 21.2\% (142/668)  & \textbf{97\%} (452/466) & 12.9\% (47/364) & 74.2\% (150/202) & 49.3\% (112/217) \\
+%\bottomrule
+%\end{tabular}
+%\label{tab:combinations}
+%\end{table*}
+%
 
 \subsection{BotDetect}
 %BotDetect offers free and paid versions of its captcha system. In the free version, the 
@@ -253,7 +253,7 @@ not add delays for accessing the form elements as it is not checked on the demo 
 checks apart from the captcha itself, someone utilizing this service would need to implement
 additional safeguards.
 
-\textbf{Pre-processing.} The audio file obtained is in \texttt{wav} format and needs to be converted to \texttt{flac} only for 
+\textbf{Preprocessing.} The audio file obtained is in \texttt{wav} format and needs to be converted to \texttt{flac} only for 
 the Google Speech solver. We do not apply any other form of processing apart from that.
 
 
@@ -278,13 +278,13 @@ The demo page does not provide any form of rate limiting or detection of suspici
 and the demo page does not flag repeated accesses from the same IP address as suspicious, therefore there was no need 
 to employ a proxy or VPN during our experiments. Obtaining the audio file is again trivial as a URL is contained in the 
 HTML source for the network object, which can be easily retrieved. Furthermore, it does not look for timing delays between 
-accessing form elements. As with BotDetect, it does not check for automated behaviour apart from employing the captcha, 
+accessing form elements. As with BotDetect, it does not check for automated behavior apart from employing the captcha, 
 and anyone utilizing this service would need to develop their own safeguards.
 
-\textbf{Pre-processing.} The audio file obtained is an \texttt{mp3} and is once again converted to \text{flac} for the Google Speech solver, 
-and is required to be converted to wav for the other two solvers. The file requires no additional pre-processing. However, we do
-set the Google Solver to look for certain words ie send the phonetic NATO alphabet phrases with the request for transcription. 
-This allows for the google solver to more accurately pick transcriptions and with higher confidence.  The audio file has additional 
+\textbf{Preprocessing.} The audio file obtained is an \texttt{mp3} and is once again converted to \text{flac} for the Google Speech solver, 
+and is required to be converted to \texttt{wav} for the other two solvers. The file requires no additional preprocessing. However, we do
+set the Google Solver to look for certain words, i.e., send the phonetic NATO alphabet phrases with the request for transcription. 
+This allows for the Google solver to more accurately pick transcriptions and with higher confidence.  The audio file has additional 
 near 5 seconds of empty space at the end of each audio file which we chop off before sending as well.
 
 
@@ -316,7 +316,7 @@ We create a new random username for every single experiment, and simulate mouse 
 trigger the password validation scripts. %Accessing script elements on the page is harder as they have utilized class names 
 %with spaces in them leading it to be harder to reference them via simple xpath. 
 
-\textbf{Pre-processing.} The audio file obtained is through accessing the media-stack as described in the Apple section, 
+\textbf{Preprocessing.} The audio file obtained is through accessing the media-stack as described in the Apple section, 
 and the file obtained is encoded in Base64, which we convert to the desired format for each of the cloud speech recognition services.
 
 \textbf{Post-processing.} We do minimal post-processing, as the service uses dictionary words, and there is no reliable regular 
@@ -331,7 +331,7 @@ pattern of mistaken transcriptions that we can leverage for increasing the attac
 
 Securimage is an open source captcha system that has been under active development and maintenance 
 since 2005. It offers plugins/modules for major content management systems, with a lot of customization 
-options for both image and audio based challenges. For each audio challenge, the system generates a WAV 
+options for both image and audio based challenges. For each audio challenge, the system generates a \texttt{wav} 
 file from a corpus of audio files of 26 alphabets (A-Z) and 10 digits (0-9). The digits and alphabets are 
 spoken by a single person. The audio is generated by picking 6 word/digit files at random, combining them and adding one 
 of the 5 noise files. The default number of digits/characters per challenge is 6, but this can 
@@ -345,7 +345,7 @@ Secureimage has a demo page, and does not employ any form of rate limiting and d
 consider repeated accesses from the same IP address as suspicious. Similar to captchas.net and BotDetect we not add
 additional delays for accessing each of the form elements. The audio file is easily accessible via the URL contained in the page.
 
-\textbf{Pre-processing.} The audio file obtained is in \texttt{wav} format, which we convert to the desired format. 
+\textbf{Preprocessing.} The audio file obtained is in \texttt{wav} format, which we convert to the desired format. 
 The audio file is otherwise not edited.
 
 \textbf{Post-processing.} This service uses only letters of the alphabet, hence we are able to identify regular mistakes in the 
@@ -373,10 +373,10 @@ human-submitted. However, this setting is left up to the developer who incorpora
 service on the target web page.
 
 Telerik also has a demo page, and does not employ any form of rate limiting nor does it consider repeated 
-accesses from the same IP address as suspicious. ALso, there is no need for additional delays when accessing 
+accesses from the same IP address as suspicious. Also, there is no need for additional delays when accessing 
 each of the form elements. The audio file is easily accessible via its URL.
 
-\textbf{Pre-processing.} The audio file obtained is in \texttt{wav} format, which we convert to the desired format.
+\textbf{Preprocessing.} Again, the audio file obtained is in \texttt{wav} format, which we convert to the desired format.
 The audio file is otherwise not edited.
 
 \textbf{Post-processing.} This service uses only the NATO alphabet, and we find relevant homonyms for the common mistakes.

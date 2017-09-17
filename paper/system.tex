@@ -22,7 +22,7 @@ including crawling and rendering webpages, extracting the audio captchas, and su
 to the challenges. It also performs specific actions to mimic a user's behavior and avoid triggering  
 checks implemented by the captcha services for detecting bots (e.g., mouse over actions, or highlighting the 
 text boxes before solutions are input).
-The second component completes some pre-processing and configuration steps 
+The second component completes some preprocessing and configuration steps 
 necessary before the audio recordings are passed to the speech recognition services. The final 
 component handles the post-processing of the transcribed text for preparing the solution that will
 be submitted to the captcha service.
@@ -35,7 +35,7 @@ service that also supports audio challenges.
 (e.g., account creation, message posting, etc.). After identifying the captcha element within 
 the page, the audio challenge is extracted.
 
-\protect\circlea{\small 2} The audio file is passed to the pre-processing component, which is responsible 
+\protect\circlea{\small 2} The audio file is passed to the preprocessing component, which is responsible 
 for preparing the audio file that will be passed to the speech recognition service. If there are audio 
 instructions at the beginning of the audio challenge they are removed, and the final audio
 recording is then converted to a supported format. Then, based on the captcha scheme, our system
@@ -70,8 +70,9 @@ It also verifies that the solution was accepted by the captcha service.
 Our browser automation component is built upon the Selenium framework~\cite{selenium}. This offers
 flexibility in setting up our environment (e.g., browser), as well as advanced functionality
 and configurability that allow us to implement scraping behavior that does not trigger bot detection
-mechanisms currently deployed by certain services.\footnote{There is no straightforward way to detect 
-automation apart for checking some predefined variables (which can be easily modified).}
+mechanisms currently deployed by certain services.
+%\footnote{There is no straightforward way to detect 
+%automation apart for checking some predefined variables (which can be easily modified).}
 %Most websites do not check these in practice.}.
 Selenium communicates with the browser via a special protocol 
 native to each browser, and has access to everything loaded for the visited web site, including all Javascript, DOM 

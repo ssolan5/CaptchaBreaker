@@ -69,21 +69,22 @@ of safeguards across certain captcha services. Interestingly, our experiments de
 underlining the importance of finding suitable alternatives for accessible captchas, as the availability of audio captchas 
 exposes services to significant risks.
 
-In an independent concurrent study, Bock et al.~\cite{bock17uncaptcha} recently presented an attack against \re.
+In an independent concurrent study Bock et al.~\cite{bock17uncaptcha} presented an attack against \re.
 While their approach presents several similarities with our work, there are considerable differences. First of all,
-their work focuses on \re, whereas we conduct an extensive evaluation of the audio captcha ecosystem by analyzing
-and attacking seven different captcha services and two versions of \re. As a result, their attack is limited to
-numerical digits, whereas our attacks cover services incorporating a wide range of dictionaries.
-Furthermore, we are able to demonstrate 
-an attack that is $\sim$13\% more accurate; we believe this is due to our system leveraging each speech recognition
-separately, which allows us to identify the distinct patterns of mistakes in transcriptions per captcha scheme and speech 
-recognition service in our post-processing. On the other hand, their approach is to break down each audio challenge into the separate digits,
-submit all the digits to \note{5} speech recognition services, and then construct the solution based on the output of 
-the various services by considering the confidence scores assigned during their analysis. Moreover, this results in their attack 
-having a significantly higher ``cost'' as multiple online services are used for transcribing a single challenge.
+their work focuses only on \re, whereas we conduct an extensive evaluation of the audio captcha ecosystem by analyzing
+and attacking seven different captcha services and two versions of \re. As a result, their attack evaluation is limited to
+numerical digits, whereas our attacks cover captcha schemes incorporating a wide range of dictionaries.
+Furthermore, for their attack they break down each audio challenge into the separate digits,
+submit all the digits to 5 online speech recognition services (and one offline solver), and then construct the solution based 
+on the output of the various engines by considering the confidence scores assigned during their analysis.
+This results in their attack having a significantly higher cost as multiple services are used for 
+transcribing a single challenge. On the other hand we demonstrate an equally accurate attack (our attack against 
+that version of \re is $\sim$1.2\% less accurate) while using a single speech recognition service, thus, incurring a much lower cost.
+As our attacks leverage each speech recognition engine separately, we are able to identify the distinct patterns 
+of mistakes in transcriptions per captcha scheme and speech recognition service during the post-processing.
 Overall, while their study is an important contribution to the research community that demonstrates an effective attack and 
-sheds light on this significant threat, our work presents a more comprehensive evaluation of the threat landscape while achieving 
-better results at a significantly lower cost.
+sheds light on this significant threat, our work presents a more comprehensive evaluation of the threat landscape while achieving
+those results at a significantly lower cost.
 
 %The problem statement that they approach is purely for numbers as audio captcha, whereas our attack focuses on alpha-numeric, NATO phonetic 
 %spelling, phrases which are dictionary words as well (As said before we attack 8 other services). Like our attack they also apply mappings to improve 

@@ -1,28 +1,28 @@
-%\begin{table*}[t]
-%\centering
-%\caption{Accuracy of different speech recognition services and accents against the audio captcha services we evaluated.}
-%\begin{tabular}{lccccc}
-%\toprule
-%&\multicolumn{5}{c}{\textbf{Speech Recognition Service (Accent)}}\\
-%\cmidrule{2-6}
-%\textbf{Captcha Service}& \textbf{Wit}& \textbf{IBM (US)} & \textbf{ IBM (UK)} & \textbf{Google (US)} & \textbf{Google (UK)} \\
-%\hline
-%Recaptcha v2.0 & 67.1\% (671/1000) & 95.8\% (958/1000) & 67.2\% (672/1000) & \textbf{98.3\%} (983/1000) & 81.6\% (816/1000) \\
-%\rowcolor{Gray}
-%Recaptcha v2.1 & -  & - & -  & \textbf{83.9\%} (1786/2128) & - \\
-%Apple  & 0\% (0/365)  & 2.3\% (6/260) & 6.8\% (17/251) & 35.8\% (126/352) & \textbf{52.8\%} (143/271) \\
-%\rowcolor{Gray}
-%BotDetect  & 1.23\% (11/894)  & 1.38\% (19/138) & 6.67\% (12/180) & \textbf{9.5\%} (102/1067)  & 6.65\% (79/1187) \\
-%Captchas.net  & 0\% (0/1008) & 1.1\% (9/778)  & 0.3\% (3/1010)  & 2.7\% (16/593) & \textbf{22.3\%} (230/1030) \\
-%\rowcolor{Gray}
-%Microsoft Live & 24.7\% (71/287) &  &  & 21.2\$ (28/132)  & 18.6\$ (27/145) \\
-%Securimage  & 0\% (0/1000)  & 0\% (0/1000) & 0\% (0/1000) & 0.1\% (0/1000) & \textbf{3\%} (30/1000) \\
-%\rowcolor{Gray}
-%Telerik  & 21.2\% (142/668)  & \textbf{97\%} (452/466) & 12.9\% (47/364) & 74.2\% (150/202) & 49.3\% (112/217) \\
-%\bottomrule
-%\end{tabular}
-%\label{tab:combinations}
-%\end{table*}
+\begin{table*}[t]
+\centering
+\caption{Accuracy of different speech recognition services and accents against the audio captcha services we evaluated.}
+\begin{tabular}{lccccc}
+\toprule
+&\multicolumn{5}{c}{\textbf{Speech Recognition Service (Accent)}}\\
+\cmidrule{2-6}
+\textbf{Captcha Service}& \textbf{Wit}& \textbf{IBM (US)} & \textbf{ IBM (UK)} & \textbf{Google (US)} & \textbf{Google (UK)} \\
+\hline
+Recaptcha v2.0 & 67.1\% (671/1000) & 95.8\% (958/1000) & 67.2\% (672/1000) & \textbf{98.3\%} (983/1000) & 81.6\% (816/1000) \\
+\rowcolor{Gray}
+Recaptcha v2.1 & -  & - & -  & \textbf{83.9\%} (1786/2128) & - \\
+Apple  & 0\% (0/365)  & 2.3\% (6/260) & 6.8\% (17/251) & 35.8\% (126/352) & \textbf{52.8\%} (143/271) \\
+\rowcolor{Gray}
+BotDetect  & 1.23\% (11/894)  & 1.38\% (19/138) & 6.67\% (12/180) & \textbf{9.5\%} (102/1067)  & 6.65\% (79/1187) \\
+Captchas.net  & 0\% (0/1008) & 1.1\% (9/778)  & 0.3\% (3/1010)  & 2.7\% (16/593) & \textbf{22.3\%} (230/1030) \\
+\rowcolor{Gray}
+Microsoft Live & \textbf{24.7\%} (71/287) & 10.6\% (23/216)  & 13.1\% (28/213)  & 21.2\% (28/132)  & 18.6\% (27/145) \\
+Securimage  & 0\% (0/1000)  & 0\% (0/1000) & 0\% (0/1000) & 0.1\% (0/1000) & \textbf{3\%} (30/1000) \\
+\rowcolor{Gray}
+Telerik  & 21.2\% (142/668)  & \textbf{97\%} (452/466) & 12.9\% (47/364) & 74.2\% (150/202) & 49.3\% (112/217) \\
+\bottomrule
+\end{tabular}
+\label{tab:combinations}
+\end{table*}
 %
 \section{Experimental Evaluation}
 \label{sec:evaluation}
@@ -52,7 +52,11 @@ However, despite the presence of noise impacting the accuracy of the transcripti
 none of the services is completely impervious to our attacks. Nonetheless, we
 found that the audio captchas from Securimage are the most robust due to the presence of background semantic noise,
 as \system was only able to solve 3\% of the challenges when using Google's Speech API and the British English accent
-configuration. Another interesting observation was that no single speech recognition system or configuration
+configuration. As this type of semantic noise currently poses a significant obstacle for off-the-shelf speech recognition,
+in practice, attackers would need to apply some form of audio preprocessing to reduce or remove that noise. However, this does
+raise the bar for the attacker.
+
+Another interesting observation was that no single speech recognition system or configuration
 was consistently more accurate across all captchas; however, Google's speech recognition achieved the best
 results for six of the captcha schemes. An interesting finding is that Wit, which is the only service that does not 
 allow us to supply a collection of possible keywords, was the most accurate speech recognition service against the 
@@ -61,7 +65,7 @@ is the most robust in the presence of noise, while IBM Watson performs the best 
 of keywords can be limited.
 
 While attackers could increase the overall accuracy of the attacks
-by first pre-processing the audio challenges so as to reduce the noise, the motivation behind our study is to 
+by first preprocessing the audio challenges so as to reduce the noise, the motivation behind our study is to 
 demonstrate how attackers can employ off-the-shelf systems for breaking existing captcha systems.
 Based on these results, we find that \system would be an effective replacement to the human solvers employed by
 captcha solving services, as humans are often troubled by audio challenges~\cite{captchas-are-hard}.
@@ -123,7 +127,7 @@ constrain our attacks.
 & \textbf{Captcha} & \textbf{Expected} & \textbf{Daily} \\
 \textbf{Captcha}&  \textbf{Duration} & \textbf{Solutions} & \textbf{Profit} \\
 \hline
-Recaptcha v2.0 & 7 sec & 242,413 & \$485.3 \\
+Recaptcha v2.0 & 7 sec & 242,660 & \$485.3 \\
 \rowcolor{Gray}
 Recaptcha v2.1 & 15 sec & 96,652 & \$193.3 \\
 Apple  & 14 sec & 65,170 & \$130.3 \\
@@ -131,7 +135,7 @@ Apple  & 14 sec & 65,170 & \$130.3 \\
 BotDetect  & 6 sec & 28,215 & \$54.7 \\
 Captchas.net & 14 sec & 27,524 & \$55 \\
 \rowcolor{Gray}
-Microsoft Live & 11 sec &  & \\
+Microsoft Live & 11 sec & 33,303 & \$66.6 \\
 Securimage & 10 sec & 5,184 & \$10.3 \\
 \rowcolor{Gray}
 Telerik & 7 sec & 188,892 & \$366.3 \\
