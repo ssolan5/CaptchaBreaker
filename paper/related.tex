@@ -69,18 +69,35 @@ of safeguards across certain captcha services. Interestingly, our experiments de
 underlining the importance of finding suitable alternatives for accessible captchas, as the availability of audio captchas 
 exposes services to significant risks.
 
+In an independent concurrent study, Bock et al.~\cite{bock17uncaptcha} recently presented an attack against \re.
+While their approach presents several similarities with our work, there are considerable differences. First of all,
+their work focuses on \re, whereas we conduct an extensive evaluation of the audio captcha ecosystem by analyzing
+and attacking seven different captcha services and two versions of \re. As a result, their attack is limited to
+numerical digits, whereas our attacks cover services incorporating a wide range of dictionaries.
+Furthermore, we are able to demonstrate 
+an attack that is $\sim$13\% more accurate; we believe this is due to our system leveraging each speech recognition
+separately, which allows us to identify the distinct patterns of mistakes in transcriptions per captcha scheme and speech 
+recognition service in our post-processing. On the other hand, their approach is to break down each audio challenge into the separate digits,
+submit all the digits to \note{5} speech recognition services, and then construct the solution based on the output of 
+the various services by considering the confidence scores assigned during their analysis. Moreover, this results in their attack 
+having a significantly higher ``cost'' as multiple online services are used for transcribing a single challenge.
+Overall, while their study is an important contribution to the research community that demonstrates an effective attack and 
+sheds light on this significant threat, our work presents a more comprehensive evaluation of the threat landscape while achieving 
+better results at a significantly lower cost.
 
-\note{Comparison to low resource attack in w00t paper}
-
-\note{The paper focuses only on Google ReCaptcha and only the second version of it. Unlike this paper our attack focuses on audio captchas from 8 captcha services. It utilizes 6 audio services (Google cloud, bing speech recognition, ibm bluemix, google speech api, wit ai, sphinx) to tackle the google recaptca v2. On the surface level our attack and the one described in the paper may seem similar however there are some important distinctions.} 
-
-\note{Our attack consists of taking the entire audio file and sending it to the cloud services, and with some post processing i.e mapping consistent erroneous transcriptions checking it against the captcha service. Each solver works individually. This allows us to map the errors from each service better as distinct patterns arise per service and cloud speech recognition service. We believe this causes us to get similar rates to the one described in the w00t paper. We also observed variance in performance when each service checks the audio while set to a particular accent. We also observe that they wOOT paper does not run as extensive an evaluation as we do. (From their paper  -- After successfully running against over 450 captchas, it can defeat reCaptcha with over 85% accuracy)
-}
-
-\note{The problem statement that they approach is purely for numbers as audio captcha, whereas our attack focuses on alpha-numeric, NATO phonetic spelling, phrases which are dictionary words as well (As said before we attack 8 other services). Like our attack they also apply mappings to improve the efficiency of transcriptions received from each cloud service. They have added different categories for it whereas we lump them as one. They divide them as exact-homophone and a near homophone. They describe an exact homophone as when the word transcribed by the audio service is describing how the number sounds (for example “four” as “for” ) and a near homophone as a slightly erroneous but close enough transcription of the number (for example “six” as “sex”). }
-
-
-\note{The attack method in the woot paper involves dividing the audio file into its constituent digit audio snippets and then sending those audio snippets to multiple cloud based audio services which send back a number of different valid answers and then utilizing homophone predictions to accurately decide which of those transcriptions are correct, then they assemble the digits from each service based upon a confidence score assigned as per their analysis.}
-
-\note{Our attack method is markedly different from theirs, Their method yields comparable accuracy value as our attack does, however they do not try to use the existing features in the cloud based speech recognition i.e different accents nor do they attack other captcha services utilizing this method. Their paper additionally covers offline speech recognition based on extracting features from the audio which our paper does not consider.
-}
+%The problem statement that they approach is purely for numbers as audio captcha, whereas our attack focuses on alpha-numeric, NATO phonetic 
+%spelling, phrases which are dictionary words as well (As said before we attack 8 other services). Like our attack they also apply mappings to improve 
+%the efficiency of transcriptions received from each cloud service. They have added different categories for it whereas we lump them as one. They divide 
+%them as exact-homophone and a near homophone. They describe an exact homophone as when the word transcribed by the audio service is describing how the 
+%number sounds (for example “four” as “for” ) and a near homophone as a slightly erroneous but close enough transcription of the number (for example “six” 
+%as “sex”).
+%
+%
+%The attack method in the woot paper involves dividing the audio file into its constituent digit audio snippets and then sending those audio snippets 
+%to multiple cloud based audio services which send back a number of different valid answers and then utilizing homophone predictions to accurately decide 
+%which of those transcriptions are correct, then they assemble the digits from each service based upon a confidence score assigned as per their analysis.
+%
+%Our attack method is markedly different from theirs, Their method yields comparable accuracy value as our attack does, however they do not try to use 
+%    the existing features in the cloud based speech recognition i.e different accents nor do they attack other captcha services utilizing this method. Their 
+%    paper additionally covers offline speech recognition based on extracting features from the audio which our paper does not consider.
+%
